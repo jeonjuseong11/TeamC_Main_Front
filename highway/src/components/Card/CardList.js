@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import { Card, List } from "antd";
@@ -95,12 +95,21 @@ const School = [
     followList: ["1", "2"],
   },
 ];
-const CardList = () => {
+const CardList = ({filterValue}) => {
+
+  const filtedSchool = School.map((it)=>{
+    const tags = it.tags;
+    const FiltedTag = tags.map((item)=>item.includes(filterValue));
+    if(FiltedTag.includes(true)){
+      return it;
+    }
+  });
+  const removeUndefinedList = filtedSchool.filter(it => it !== undefined);
   return (
     <ListWrapper>
       <List
         grid={{ gutter: 16, column: 5 }}
-        dataSource={School}
+        dataSource={removeUndefinedList}
         renderItem={(item) => (
           <List.Item>
             <Card
