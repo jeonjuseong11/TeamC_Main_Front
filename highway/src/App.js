@@ -12,6 +12,8 @@ import SignUp from "./pages/SignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
 import Terms from "./pages/Terms";
+import PromotionNews from "./components/Promotion/PromotionNews";
+import PromotionVideo from "./components/Promotion/PromotionVideos";
 
 function App() {
   return (
@@ -28,7 +30,10 @@ function App() {
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/promotion" element={<Promotion />} />
+            <Route exact path="/promotion" element={<Promotion />}>
+              <Route exact path="/promotion/news" element={<PromotionNews />} />
+              <Route exact path="/promotion/videos" element={<PromotionVideo />} />
+            </Route>
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
           </Route>
         </Routes>
