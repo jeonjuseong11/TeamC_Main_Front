@@ -11,6 +11,6 @@ export const SearchInput = styled(Input)`
 export const FilterButton = styled(Button)`
     height: 4em;
     width: 4em;
-    marginTop: 1rem;
-    marginRight: 1rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
 `;
