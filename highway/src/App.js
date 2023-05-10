@@ -12,6 +12,11 @@ import SignUp from "./pages/SignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
 import JoinPresenter from "./pages/JoinPresenter";
+import SchoolDetail from "./pages/SchoolDetail";
+import SchoolDetailInfo from "./components/SchoolDetailInfo";
+import SchoolDetailJob from "./components/SchoolDetailJob";
+import SchoolDetailReview from "./components/SchoolDetailReview";
+import SchoolDetailQuestion from "./components/SchoolDetailQuestion";
 
 function App() {
   return (
@@ -29,6 +34,22 @@ function App() {
             <Route exact path="/search" element={<Search />} />
             <Route exact path="/promotion" element={<Promotion />} />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
+            <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
+              <Route>
+                <Route exact path="/schooldetail/:schoolId/" element={<SchoolDetailInfo />} />
+                <Route exact path="/schooldetail/:schoolId/job" element={<SchoolDetailJob />} />
+                <Route
+                  exact
+                  path="/schooldetail/:schoolId/review"
+                  element={<SchoolDetailReview />}
+                />
+                <Route
+                  exact
+                  path="/schooldetail/:schoolId/question"
+                  element={<SchoolDetailQuestion />}
+                />
+              </Route>
+            </Route>
           </Route>
         </Routes>
       </div>
