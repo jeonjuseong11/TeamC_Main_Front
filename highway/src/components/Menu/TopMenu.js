@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../Header";
 import { Menu } from "antd";
@@ -12,8 +12,11 @@ const MenuHeader = styled.header`
 `;
 const TopMenu = () => {
   const location = useLocation();
+  const [testUrl, setTestUrl] = useState('/');
   useEffect(() => {
-    // console.log(location.pathname);
+    if(location.pathname === "/promotion" || location.pathname === "/promotion/news" || location.pathname === "/promotion/videos"){
+      setTestUrl("/promotion");
+    }else{setTestUrl(location.pathname)}
   }, [location]);
   return (
     <div>
@@ -30,7 +33,7 @@ const TopMenu = () => {
           <Menu
             mode="horizontal"
             items={MenuLists}
-            selectedKeys={location.pathname}
+            selectedKeys={testUrl}
           />
         </Wrapper>
       </MenuHeader>
