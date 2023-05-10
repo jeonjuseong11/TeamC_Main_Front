@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import React from "react";
 import { useLocation } from "react-router-dom";
-import RecommendItem from "../components/Promotion/RecommendItem";
+import RecommendList from "../components/Promotion/RecommendList";
 import { PromotionWrapper, RecommendImage, RecommendWrapper } from "../styles/PromotionStyle";
 import {items} from "../utils/PromotionList";
 
@@ -10,7 +10,7 @@ const Promotion = () => {
 
   return (
     <PromotionWrapper>
-      <RecommendItem />
+      <RecommendList />
         <Menu
           mode="horizontal"
           items={items}
