@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const MenuWrapper = styled.header`
-  border-top: 1px solid #c2c2c2;
-  border-bottom: 1px solid #c2c2c2;
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 `;
 export const MenuLists = [
   //메뉴 리스트 key : Menu 컴포넌트에 해당 항목 밑줄 쳐짐
