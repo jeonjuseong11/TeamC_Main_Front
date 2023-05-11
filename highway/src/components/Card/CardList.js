@@ -104,7 +104,7 @@ const CardList = () => {
         dataSource={School}
         renderItem={(item) => (
           <List.Item key={item.id}>
-            <Link to={`/schooldetail/${item.id}`}>
+            <Link to={`/schooldetail/${item.id}/review`}>
               <Card
                 hoverable
                 bodyStyle={{
