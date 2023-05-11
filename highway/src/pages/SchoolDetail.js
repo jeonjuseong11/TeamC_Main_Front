@@ -1,32 +1,22 @@
 import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
-import styled from "styled-components";
+import {
+  SchoolDetailWrapper,
+  SchoolImg,
+  SchoolInfo,
+  SchoolLogo,
+} from "../components/SchoolDetail/SchoolDetailStyle";
+import { SubWrapper, Wrapper } from "../styles/PageStyle";
 import { MenuWrapper } from "../components/Menu/MenuList";
-import { Wrapper } from "../styles/PageStyle";
-const SchoolDetailWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  height: auto;
-`;
-const SchoolImg = styled.div`
-  width: 60%;
-  background-color: gray;
-  height: 10rem;
-  text-align: center;
-  justify-content: center;
-`;
+
 const SchoolDetail = () => {
   const location = useLocation();
   const { schoolId } = useParams();
-
   const [path, setPath] = useState("/review"); //선택 메뉴를 표시하기 위함
   useEffect(() => {
     switch (location.pathname) {
-      case `/schooldetail/${schoolId}/`:
+      case `/schooldetail/${schoolId}/info`:
         setPath("/info");
         break;
       case `/schooldetail/${schoolId}/review`:
@@ -42,7 +32,7 @@ const SchoolDetail = () => {
   }, [location]);
 
   const subMenuLists = [
-    { key: `/info`, label: <NavLink to={`/schooldetail/${schoolId}/`}>정보</NavLink> },
+    { key: `/info`, label: <NavLink to={`/schooldetail/${schoolId}/info`}>정보</NavLink> },
     {
       key: `/review`,
       label: <NavLink to={`/schooldetail/${schoolId}/review`}>리뷰</NavLink>,
@@ -60,38 +50,22 @@ const SchoolDetail = () => {
     <div>
       <SchoolDetailWrapper>
         <SchoolImg>
-          이미지 칸
-          <div
-            style={{
-              backgroundColor: "white",
-              display: "inline-block",
-              border: "1px solid #C2C2C2",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "5rem",
-              width: "4rem",
-              borderRadius: "5px",
-              position: "relative",
-              top: "6.5rem",
-              right: "25vw",
-            }}
-          >
-            학교 로고
-          </div>
+          이미지 칸<SchoolLogo>학교 로고</SchoolLogo>
         </SchoolImg>
-        <div style={{ width: "60%", textAlign: "left", paddingLeft: "10vw" }}>
-          <h2 style={{ paddingTop: "2rem", margin: "0" }}>학교 이름</h2>
+        <SchoolInfo>
+          <h2 style={{ margin: "0" }}>학교 이름</h2>
           <div>별점, 학교학과, 학교페이지</div>
-        </div>
-        <Wrapper>
+        </SchoolInfo>
+        <SubWrapper>
           <MenuWrapper>
-            <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+            <Wrapper>
+              <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+            </Wrapper>
           </MenuWrapper>
-
           <main>
             <Outlet />
           </main>
-        </Wrapper>
+        </SubWrapper>
       </SchoolDetailWrapper>
     </div>
   );
