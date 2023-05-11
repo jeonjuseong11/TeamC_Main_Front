@@ -4,12 +4,7 @@ import Header from "../Header";
 import { Menu } from "antd";
 import { Wrapper } from "../../styles/PageStyle";
 import { MenuLists } from "./MenuList";
-import styled from "styled-components";
-
-const MenuHeader = styled.header`
-  border-top: 1px solid #c2c2c2;
-  border-bottom: 1px solid #c2c2c2;
-`;
+import { MenuWrapper } from "./MenuList";
 
 const TopMenu = () => {
   const location = useLocation();
@@ -21,15 +16,11 @@ const TopMenu = () => {
       <Wrapper>
         <Header />
       </Wrapper>
-      <MenuHeader>
+      <MenuWrapper>
         <Wrapper>
-          <Menu
-            mode="horizontal"
-            items={MenuLists}
-            selectedKeys={location.pathname}
-          />
+          <Menu mode="horizontal" items={MenuLists} selectedKeys={location.pathname} />
         </Wrapper>
-      </MenuHeader>
+      </MenuWrapper>
       <main>
         <Outlet />
       </main>
