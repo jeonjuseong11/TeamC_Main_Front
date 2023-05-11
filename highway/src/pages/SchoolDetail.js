@@ -2,6 +2,8 @@ import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { MenuWrapper } from "../components/Menu/MenuList";
+import { Wrapper } from "../styles/PageStyle";
 const SchoolDetailWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -17,15 +19,15 @@ const SchoolImg = styled.div`
   text-align: center;
   justify-content: center;
 `;
-
 const SchoolDetail = () => {
   const location = useLocation();
   const { schoolId } = useParams();
-  const [path, setPath] = useState("/");
+
+  const [path, setPath] = useState("/review"); //선택 메뉴를 표시하기 위함
   useEffect(() => {
     switch (location.pathname) {
       case `/schooldetail/${schoolId}/`:
-        setPath("/");
+        setPath("/info");
         break;
       case `/schooldetail/${schoolId}/review`:
         setPath("/review");
@@ -40,7 +42,7 @@ const SchoolDetail = () => {
   }, [location]);
 
   const subMenuLists = [
-    { key: `/`, label: <NavLink to={`/schooldetail/${schoolId}/`}>정보</NavLink> },
+    { key: `/info`, label: <NavLink to={`/schooldetail/${schoolId}/`}>정보</NavLink> },
     {
       key: `/review`,
       label: <NavLink to={`/schooldetail/${schoolId}/review`}>리뷰</NavLink>,
@@ -63,7 +65,9 @@ const SchoolDetail = () => {
             style={{
               backgroundColor: "white",
               display: "inline-block",
-              border: "1px solid black",
+              border: "1px solid #C2C2C2",
+              justifyContent: "center",
+              alignItems: "center",
               height: "5rem",
               width: "4rem",
               borderRadius: "5px",
@@ -79,17 +83,15 @@ const SchoolDetail = () => {
           <h2 style={{ paddingTop: "2rem", margin: "0" }}>학교 이름</h2>
           <div>별점, 학교학과, 학교페이지</div>
         </div>
-        <div
-          style={{
-            width: "60%",
-            display: "inline-block",
-          }}
-        >
-          <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+        <Wrapper>
+          <MenuWrapper>
+            <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+          </MenuWrapper>
+
           <main>
             <Outlet />
           </main>
-        </div>
+        </Wrapper>
       </SchoolDetailWrapper>
     </div>
   );
