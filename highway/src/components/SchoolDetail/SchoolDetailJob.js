@@ -1,7 +1,8 @@
 import React from "react";
+import { SubPageWrapper } from "./SchoolDetailStyle";
 
 const SchoolDetailJob = () => {
-  return <div>취업</div>;
+  return <SubPageWrapper>취업</SubPageWrapper>;
 };
 
 export default SchoolDetailJob;

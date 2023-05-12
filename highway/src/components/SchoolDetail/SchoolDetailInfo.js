@@ -1,7 +1,8 @@
 import React from "react";
+import { SubPageWrapper } from "./SchoolDetailStyle";
 
 const SchoolDetailInfo = () => {
-  return <div>정보</div>;
+  return <SubPageWrapper>정보</SubPageWrapper>;
 };
 
 export default SchoolDetailInfo;

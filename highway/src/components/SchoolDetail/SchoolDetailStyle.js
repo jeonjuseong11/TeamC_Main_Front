@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ReviewWrapper = styled.div`
+export const SubPageWrapper = styled.div`
   background-color: #f2f2f2;
   padding-top: 1rem;
   padding-bottom: 2rem;
