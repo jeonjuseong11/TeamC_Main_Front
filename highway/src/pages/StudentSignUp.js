@@ -160,6 +160,7 @@ const SignUp = () => {
         
         <Form.Item>
           <AgeGenderWrapper
+
             name="userSex"
             rules={[
               {
@@ -180,6 +181,7 @@ const SignUp = () => {
             <label>나이</label>
             <Input placeholder="나이를 입력해주세요!"/>
           </AgeGenderWrapper>
+
         </Form.Item>
 
         <Form.Item

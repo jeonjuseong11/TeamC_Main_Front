@@ -57,6 +57,7 @@ export const CancelBtn = styled(Button)`
 export const BackToLogin = styled(Button)`
   width: 40%;
   margin-top : 7%;
+  color: #FFFFFF;
   height: 3rem;
   color: #FFFFFF;
   background-color: #8282ff;
@@ -66,6 +67,8 @@ export const RadioGroup = styled(Form)`
 `
 
 export const AgeGenderWrapper = styled(Form.Item)`
-  display: inline-block;
-  width: 50%;
-`
+
+// export const GenderRadio = styled(Form.Item)`
+//   display: 'inline-block'
+//   width: 'calc(40% - 8px)'
+// `

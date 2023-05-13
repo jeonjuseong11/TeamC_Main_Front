@@ -10,6 +10,7 @@ const MenuHeader = styled.header`
   border-top: 1px solid #c2c2c2;
   border-bottom: 1px solid #c2c2c2;
 `;
+
 const TopMenu = () => {
   const location = useLocation();
   const [testUrl, setTestUrl] = useState('/');
@@ -23,12 +24,7 @@ const TopMenu = () => {
       <Wrapper>
         <Header />
       </Wrapper>
-      <MenuHeader
-        style={{
-          borderTop: "1px solid #c2c2c2",
-          borderBottom: "1px solid #c2c2c2",
-        }}
-      >
+      <MenuHeader>
         <Wrapper>
           <Menu
             mode="horizontal"

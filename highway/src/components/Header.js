@@ -1,6 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -28,38 +28,40 @@ const BlackLink = styled(Link)`
   floatl: right;
   text-decoration: none;
   color: black;
+  margin-right: 5px;
 `;
 const Header = () => {
-  const {isLogIn} = useSelector((state)=>state.user);
-  const {me}= useSelector((state)=>state.user);
+  const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onLogOut = () => {
+    alert("로그아웃");
     dispatch({
-      type:LOGOUT_REQUEST
-    })
-  }
+      type: LOGOUT_REQUEST,
+    });
+  };
 
-  useEffect(()=>{},[isLogIn])
-
+  useEffect(() => {
+    // console.log(me);
+    // if (me) {
+    //   console.log(me.userName);
+    // }
+  }, [me]);
   return (
     <HeaderWrapper>
       <Title to="/">HIGHWAY</Title>
       <ProfileWrapper>
-        {isLogIn ? (
-          <BlackLink to="/profile">
-            <Avatar
-              size={28}
-              icon={<UserOutlined />}
-              style={{ marginRight: "5px" }}
-            />
-            {me.userName}
-            <Link to = "/"
-              onClick={onLogOut}
-            >
-            로그아웃
-            </Link>
-          </BlackLink>
+        {me ? (
+          <>
+            <BlackLink to="/profile">
+              <Avatar size={28} style={{ marginRight: "5px" }}>
+                {me.userName[0]}
+              </Avatar>
+            </BlackLink>
+            <BlackLink to="/" onClick={onLogOut}>
+              로그아웃
+            </BlackLink>
+          </>
         ) : (
           <BlackLink to="/login">로그인</BlackLink>
         )}

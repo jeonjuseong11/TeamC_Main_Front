@@ -10,7 +10,7 @@ const School = [
     id: 1,
     name: "학교 이름1",
     descript: "학교 랭킹1",
-    tags: ["1", "2"],
+    tags: ["IT", "미디어"],
     comments: [
       {
         id: 1,
@@ -36,7 +36,7 @@ const School = [
     id: 2,
     name: "학교 이름2",
     descript: "학교 랭킹2",
-    tags: ["2", "1"],
+    tags: ["IT", "체육"],
     comments: [],
     good: 9,
     followList: ["1", "2"],
@@ -45,7 +45,7 @@ const School = [
     id: 3,
     name: "학교 이름3",
     descript: "학교 랭킹3",
-    tags: ["1", "4"],
+    tags: ["전자", "디자인"],
     comments: [],
     good: 1,
     followList: ["1", "2"],
@@ -54,7 +54,7 @@ const School = [
     id: 4,
     name: "학교 이름4",
     descript: "학교 랭킹4",
-    tags: ["4", "5"],
+    tags: ["경영", "회계"],
     comments: [
       {
         id: 1,
@@ -80,7 +80,7 @@ const School = [
     id: 5,
     name: "학교 이름5",
     descript: "학교 랭킹5",
-    tags: ["5", "7"],
+    tags: ["회계", "경영"],
     comments: [
       {
         id: 1,
@@ -113,7 +113,10 @@ const CardList = ({filterValue}) => {
         renderItem={(item) => (
           <List.Item>
             <Card
-              bodyStyle={{ padding: "1rem", textAlign: "left" }}
+              bodyStyle={{
+                padding: "1rem",
+                textAlign: "left",
+              }}
               cover={
                 <img
                   alt="example"

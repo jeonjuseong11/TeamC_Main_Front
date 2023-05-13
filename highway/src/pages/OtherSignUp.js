@@ -6,6 +6,7 @@ import {
   CHECK_DUPLICATE_ID_REQUEST,
   SIGNUP_REQUEST,
 } from "../constants/actionTypes";
+
 import {
   ButtonWrapper,
   CancelBtn,

@@ -1,8 +1,8 @@
 import { produce } from "immer";
 import {
-  CHECK_DUPLICATE_ID_FAILURE,
   CHECK_DUPLICATE_ID_REQUEST,
   CHECK_DUPLICATE_ID_SUCCESS,
+  CHECK_DUPLICATE_ID_FAILURE,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -12,9 +12,12 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from "../constants/actionTypes";
 
-export const initalState = {
+export const initialState = {
   checkIdLoading: false, // 유저 아이디 중복확인 시도중
   checkIdDone: false,
   checkIdError: null,
@@ -27,12 +30,16 @@ export const initalState = {
   logOutLoading: false, // 로그아웃 시도중
   logOutDone: false,
   logOutError: null,
-  isLogIn: false,
-  me:null,
+  loadUserLoading: false, //유저 정보 로딩 시도중
+  loadUserDone: false,
+  loadUserError: null,
+  myNo: null, //로그인한 유저 번호(백엔드쪽)
+  me: null, //로그인한 유저 정보
   idValid: false,
+  token: localStorage.getItem("token"), //jwt 토큰
 };
 
-const reducer = (state = initalState, action) =>
+const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case CHECK_DUPLICATE_ID_REQUEST:
@@ -57,10 +64,10 @@ const reducer = (state = initalState, action) =>
         draft.logInDone = false;
         break;
       case LOGIN_SUCCESS:
-        draft.isLogIn = true;
+        // draft.token = action.data.token;
         draft.logInLoading = false;
         draft.logInDone = true;
-        draft.me = action.data;
+        draft.myNo = action.data;
         break;
       case LOGIN_FAILURE:
         draft.logInLoading = false;
@@ -87,14 +94,28 @@ const reducer = (state = initalState, action) =>
         draft.logOutDone = false;
         break;
       case LOGOUT_SUCCESS:
-        draft.isLogIn = false;
         draft.logOutLoading = false;
         draft.logOutDone = true;
-        draft.me = action.data;
+        draft.me = null;
+        draft.token = action.data;
         break;
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
+        break;
+      case LOAD_USER_REQUEST:
+        draft.loadUserLoading = true;
+        draft.loadUserError = null;
+        draft.loadUserDone = false;
+        break;
+      case LOAD_USER_SUCCESS:
+        draft.loadUserLoading = false;
+        draft.me = action.data;
+        draft.loadUserDone = true;
+        break;
+      case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
+        draft.loadUserError = action.error;
         break;
 
       default:
