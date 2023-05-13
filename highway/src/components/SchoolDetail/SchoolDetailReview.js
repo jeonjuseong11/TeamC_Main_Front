@@ -1,17 +1,12 @@
 import React from "react";
 import { Col, Rate, Row } from "antd";
-import {
-  OneLineReviewWrapper,
-  ReviewDetailWrapper,
-  SubPageWrapper,
-  StarRateWrapper,
-} from "./SchoolDetailStyle";
-import { useDispatch, useSelector } from "react-redux";
+import { ReviewDetailWrapper, SubPageWrapper, StarRateWrapper } from "./SchoolDetailStyle";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import OneLineReview from "./OneLineReview";
 
 const SchoolDetailReview = () => {
   const { school } = useSelector((state) => state.school);
-  const dispatch = useDispatch();
   const schoolId = useParams();
   const StarRate = school[schoolId.schoolId - 1].rate;
   const totalRate =
@@ -23,7 +18,11 @@ const SchoolDetailReview = () => {
     5;
   return (
     <SubPageWrapper>
-      <Row gutter={[16, 16]} style={{ justifyContent: "center" }}>
+      <Row
+        gutter={[16, 16]}
+        style={{ justifyContent: "center" }}
+        // grid={{ gutter: 8, xs: 1, sm: 1, md: 2, lg: 2, xl: 2, xxl: 2 }}
+      >
         <Col xs={22} md={8} style={{ minWidth: "30rem" }}>
           <StarRateWrapper>
             <div style={{ width: "60%" }}>
@@ -101,7 +100,7 @@ const SchoolDetailReview = () => {
           <ReviewDetailWrapper>상세 리뷰</ReviewDetailWrapper>
         </Col>
         <Col xs={22} md={6} style={{ minWidth: "25rem" }}>
-          <OneLineReviewWrapper>한줄평</OneLineReviewWrapper>
+          <OneLineReview />
         </Col>
       </Row>
     </SubPageWrapper>
