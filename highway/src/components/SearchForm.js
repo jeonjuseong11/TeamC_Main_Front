@@ -21,7 +21,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("1");
+          setFilterValue("운동");
         }}
       >
         <DribbbleOutlined style={{ fontSize: "1.2rem" }} />
@@ -29,7 +29,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("2");
+          setFilterValue("IT");
         }}
       >
         <DesktopOutlined style={{ fontSize: "1.2rem" }} />
@@ -37,7 +37,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("3");
+          setFilterValue("의료");
         }}
       >
         <MedicineBoxOutlined style={{ fontSize: "1.2rem" }} />
@@ -45,7 +45,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("4");
+          setFilterValue("회계");
         }}
       >
         <DollarCircleOutlined style={{ fontSize: "1.2rem" }} />
@@ -53,7 +53,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("5");
+          setFilterValue("과학");
         }}
       >
         <ExperimentOutlined style={{ fontSize: "1.2rem" }} />
@@ -61,7 +61,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("6");
+          setFilterValue("디자인");
         }}
       >
         <FormatPainterOutlined style={{ fontSize: "1.2rem" }} />
@@ -69,7 +69,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("7");
+          setFilterValue("전자");
         }}
       >
         <ToolOutlined style={{ fontSize: "1.2rem" }} />
@@ -77,7 +77,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("8");
+          setFilterValue("경영");
         }}
       >
         <BankFilled style={{ fontSize: "1.2rem" }} />
@@ -85,7 +85,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("9");
+          setFilterValue("미정");
         }}
       >
         <BankFilled style={{ fontSize: "1.2rem" }} />
@@ -93,7 +93,7 @@ const SearchForm = ({ setFilterValue }) => {
       <FilterButton
         shape="circle"
         onClick={(e) => {
-          setFilterValue("10");
+          setFilterValue("미정");
         }}
       >
         <BankFilled style={{ fontSize: "1.2rem" }} />
