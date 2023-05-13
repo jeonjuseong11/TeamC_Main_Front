@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "../components/Slider/AdSlider";
 import AppLayout from "../components/AppLayout";
 import SearchForm from "../components/SearchForm";
@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 const Home = () => {
   const dispatch = useDispatch();
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
-
+  const [filterValue, setFilterValue] = useState("");
   useEffect(() => {
     console.log(userInfo);
     if (userInfo) {
@@ -22,8 +22,8 @@ const Home = () => {
   return (
     <AppLayout>
       <Slider />
-      <SearchForm />
-      <CardList />
+      <SearchForm filterValue={filterValue} setFilterValue={setFilterValue} />
+      <CardList filterValue={filterValue} />
     </AppLayout>
   );
 };

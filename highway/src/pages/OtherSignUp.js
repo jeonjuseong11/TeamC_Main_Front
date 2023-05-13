@@ -11,7 +11,6 @@ import {
   SignUpInput,
   SignUpInputPassword,
   SignUpWrapper,
-  RadioGroup,
   SmallFormItem,
 } from "../styles/SignUpStyle";
 import {

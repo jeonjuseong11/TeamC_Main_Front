@@ -26,6 +26,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const identity = "student";
 
   const { idValid } = useSelector((state) => state.user);
   useEffect(() => {
@@ -82,9 +83,8 @@ const SignUp = () => {
         }}
         scrollToFirstError
       >
-        <h2>회원가입</h2>
+        <h2>재학생 회원가입</h2>
         <label>아이디</label>
-
         <Form.Item
           name="userId"
           tooltip="아이디는 영어로 시작해여 숫자와의 조합으로 작성해주세요"
@@ -168,7 +168,10 @@ const SignUp = () => {
 
         <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: agreeValidate }]}>
           <Checkbox>
-            <Link to="/terms">이용약관</Link>에 동의합니다
+            <Link to={`/signup/student/terms`} state={{ data: identity }}>
+              이용약관
+            </Link>
+            에 동의합니다
           </Checkbox>
         </Form.Item>
         <Form.Item>
@@ -178,7 +181,7 @@ const SignUp = () => {
             </StudentSignUpBtn>
             <CancelBtn
               onClick={() => {
-                navigate(-1);
+                navigate(`/signup`);
               }}
             >
               취소하기

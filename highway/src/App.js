@@ -19,10 +19,8 @@ import SignUp from "./pages/SignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
 import Terms from "./pages/Terms";
-import TermOfPrivate from "./components/Terms/Private";
-import Service from "./components/Terms/Service";
-import Private from "./components/Terms/Private";
-import YoungPrivate from "./components/Terms/YoungPrivate";
+import PromotionNews from "./components/Promotion/PromotionNews";
+import PromotionVideo from "./components/Promotion/PromotionVideos";
 
 function App() {
   return (
@@ -34,11 +32,15 @@ function App() {
           <Route exact path="/profile" element={<UserProfile />} />
           <Route exact path="/signup/student" element={<StudentSignUp />} />
           <Route exact path="/signup/other" element={<OtherSignUp />} />
-
+          <Route exact path="/signup/student/terms" element={<Terms />} />
+          <Route exact path="/signup/other/terms" element={<Terms />} />
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/promotion" element={<Promotion />} />
+            <Route exact path="/promotion" element={<Promotion />}>
+              <Route exact path="/promotion/news" element={<PromotionNews />} />
+              <Route exact path="/promotion/videos" element={<PromotionVideo />} />
+            </Route>
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
             <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
               <Route>
@@ -57,7 +59,6 @@ function App() {
               </Route>
             </Route>
           </Route>
-          <Route exact path="/terms" element={<Terms />} />
         </Routes>
       </div>
     </ConfigProvider>

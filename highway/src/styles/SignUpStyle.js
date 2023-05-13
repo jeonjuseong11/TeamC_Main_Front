@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Form, Input } from "antd";
 //회원가입 페이지 전체를 감싸고 배경색을 담당
 //안에 것들을 화면 중앙에 배치함
 export const SignUpWrapper = styled.div`
