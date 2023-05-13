@@ -1,6 +1,6 @@
 import { UsergroupAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Form } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { SignUpWrapper, SignUpBtn, BackToLogin } from "../styles/SignUpStyle";
 
