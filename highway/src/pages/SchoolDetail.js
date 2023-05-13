@@ -9,11 +9,25 @@ import {
 } from "../components/SchoolDetail/SchoolDetailStyle";
 import { SubWrapper, Wrapper } from "../styles/PageStyle";
 import { MenuWrapper } from "../components/Menu/MenuList";
+import { useSelector } from "react-redux";
+import { StarFilled } from "@ant-design/icons";
+import DepartsTags from "../components/DepartsTags";
 
 const SchoolDetail = () => {
   const location = useLocation();
   const { schoolId } = useParams();
   const [path, setPath] = useState("/review"); //선택 메뉴를 표시하기 위함
+
+  const { school } = useSelector((state) => state.school);
+  console.log(school[schoolId - 1]);
+  const schoolInfo = school[schoolId - 1];
+  const totalRate =
+    (schoolInfo.rate.trafficRate +
+      schoolInfo.rate.facilityRate +
+      schoolInfo.rate.cafeteriaRate +
+      schoolInfo.rate.educationRate +
+      schoolInfo.rate.employmentRate) /
+    5;
   useEffect(() => {
     switch (location.pathname) {
       case `/schooldetail/${schoolId}/info`:
@@ -53,8 +67,13 @@ const SchoolDetail = () => {
           이미지 칸<SchoolLogo>학교 로고</SchoolLogo>
         </SchoolImg>
         <SchoolInfo>
-          <h2 style={{ margin: "0" }}>학교 이름</h2>
-          <div>별점, 학교학과, 학교페이지</div>
+          <h2 style={{ margin: "0" }}>{schoolInfo.name}</h2>
+          <div>
+            <StarFilled style={{ color: "#FFDC82" }} />
+            {totalRate}
+            <DepartsTags schoolInfo={schoolInfo} />
+            <span style={{}}> {schoolInfo.schoolWebsite}</span>
+          </div>
         </SchoolInfo>
         <SubWrapper>
           <MenuWrapper>

@@ -7,18 +7,21 @@ export const SubPageWrapper = styled.div`
 `;
 export const StarRateWrapper = styled.div`
   background-color: white;
-  border-radius: 5px;
-  height: 15rem;
+  border-radius: 10px;
+  height: 13rem;
   margin-bottom: 1rem;
+  padding: 2rem;
+  text-align: left;
+  display: flex;
 `;
 export const OneLineReviewWrapper = styled.div`
   background-color: white;
-  border-radius: 5px;
-  height: 46rem;
+  border-radius: 10px;
+  height: 48rem;
 `;
 export const ReviewDetailWrapper = styled.div`
   background-color: white;
-  border-radius: 5px;
+  border-radius: 10px;
   height: 30rem;
 `;
 export const SchoolDetailWrapper = styled.div`
