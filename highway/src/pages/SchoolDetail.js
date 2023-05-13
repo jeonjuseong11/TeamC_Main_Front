@@ -19,7 +19,7 @@ const SchoolDetail = () => {
   const [path, setPath] = useState("/review"); //선택 메뉴를 표시하기 위함
 
   const { school } = useSelector((state) => state.school);
-  console.log(school[schoolId - 1]);
+  // console.log(school[schoolId - 1]);
   const schoolInfo = school[schoolId - 1];
   const totalRate =
     (schoolInfo.rate.trafficRate +
@@ -42,8 +42,10 @@ const SchoolDetail = () => {
       case `/schooldetail/${schoolId}/question`:
         setPath("/question");
         break;
+      default:
+        break;
     }
-  }, [location]);
+  }, [location, schoolId]);
 
   const subMenuLists = [
     { key: `/info`, label: <NavLink to={`/schooldetail/${schoolId}/info`}>정보</NavLink> },
