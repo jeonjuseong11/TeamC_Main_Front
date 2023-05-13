@@ -11,7 +11,7 @@ const Home = () => {
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const [filterValue, setFilterValue] = useState("");
   useEffect(() => {
-    console.log(userInfo);
+    // console.log(userInfo);
     if (userInfo) {
       dispatch({
         type: LOAD_USER_REQUEST,

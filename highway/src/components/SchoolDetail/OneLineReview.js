@@ -23,7 +23,6 @@ const OneLineReview = () => {
   const { school } = useSelector((state) => state.school);
   const schoolId = useParams();
   const schoolComment = school[schoolId.schoolId - 1].comments;
-  console.log(schoolComment);
   const items = me
     ? [
         {
