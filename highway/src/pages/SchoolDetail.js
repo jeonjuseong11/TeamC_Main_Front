@@ -70,7 +70,7 @@ const SchoolDetail = () => {
           <h2 style={{ margin: "0" }}>{schoolInfo.name}</h2>
           <div>
             <StarFilled style={{ color: "#FFDC82" }} />
-            {totalRate}
+            <span style={{ marginRight: "10px" }}>{totalRate}</span>
             <DepartsTags schoolInfo={schoolInfo} />
             <span style={{}}> {schoolInfo.schoolWebsite}</span>
           </div>
