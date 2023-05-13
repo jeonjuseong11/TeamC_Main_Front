@@ -12,6 +12,7 @@ export const ListWrapper = styled.div`
 export const CardItem = styled.div`
   margin-top: 3px;
   margin-bottom: 3px;
+  display: inline-block;
 `;
 //좋아요 갯수, 댓글 갯수, 찜하기 갯수를 나타내는 리스트
 export const IconList = styled(Space)`
@@ -28,6 +29,7 @@ export const IconText = ({ icon, text }) => (
 //학과를 tag로 하여 어떤 학과가 있는지 버튼으로 보여줌
 export const TagsItem = styled(Button)`
   display: inline-block;
+  padding: 5px;
   height: 20px;
   line-height: 10px;
   background-color: rgba(80, 62, 157, 0.1);

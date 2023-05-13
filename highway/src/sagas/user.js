@@ -13,21 +13,15 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from "../constants/actionTypes";
 
 const checkUserIdAPI = (data) => {
   // console.log(data);
   return axios.get(`/user/idCheck?userId=${data}`);
 };
-
-const logInAPI = (data) => {
-  return axios.get(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data)
-}
-
-const signUpAPI = (data) => {
-  return axios.post(`/user/join?userId=${data.userId}&userPw=${data.userPw}&userName=${data.userName}&userEmail=${data.userEmail}&userSex=${data.userSex}&userAge=${data.userAge}`);
-}
-
 function* checkUserId(action) {
   try {
     // console.log(action.data);
@@ -45,13 +39,27 @@ function* checkUserId(action) {
   }
 }
 
-function* logIn(action){
-  try{
+const logInAPI = (data) => {
+  return axios.get(`user/signIn?userId=${data.userId}&userPw=${data.userPw}`, data);
+};
+function* logIn(action) {
+  try {
     const result = yield call(logInAPI, action.data);
+    console.log(result.data.token);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${result.data.token}`;
+    yield put({
+      type: LOGIN_SUCCESS,
+      data: result.data,
+    });
+    console.log(result.data);
+    if (result.data == -1) {
+      alert("아이디 비밀번호를 확인해주세요");
+    } else {
       yield put({
-        type: LOGIN_SUCCESS,
-        data: action.data,
-      })
+        type: LOAD_USER_REQUEST,
+        data: result.data,
+      });
+    }
   } catch (err) {
     console.error(err);
     yield put({
@@ -61,13 +69,18 @@ function* logIn(action){
   }
 }
 
-function* signUp(action){
-  try{
+const signUpAPI = (data) => {
+  return axios.post(
+    `/user/join?userId=${data.userId}&userPw=${data.userPw}&userName=${data.userName}&userEmail=${data.userEmail}&userSex=${data.userSex}&userAge=${data.userAge}`
+  );
+};
+function* signUp(action) {
+  try {
     const result = yield call(signUpAPI, action.data);
     yield put({
       type: SIGNUP_SUCCESS,
-      data: action.data,
-    })
+      data: result.data,
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -77,17 +90,41 @@ function* signUp(action){
   }
 }
 
-function* logOut(action){
-  try{
+function* logOut() {
+  try {
+    localStorage.removeItem("USER_INFO");
+    delete axios.defaults.headers.common["Authorization"];
     yield put({
       type: LOGOUT_SUCCESS,
-      data: null,
-    })
+    });
   } catch (err) {
     console.error(err);
     yield put({
       type: LOGOUT_FAILURE,
       error: err.response.data,
+    });
+  }
+}
+const loadUserAPI = (data) => {
+  return axios.get(
+    `/user/info?userNo=${data.user}`
+    // headers: { Authorization: `Bearer ${token}` },
+  );
+};
+
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    localStorage.setItem("USER_INFO", JSON.stringify(result.data));
+    // console.log(result.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_USER_FAILURE,
+      data: e.response.data,
     });
   }
 }
@@ -108,11 +145,16 @@ function* watchLogOut() {
   yield takeLatest(LOGOUT_REQUEST, logOut);
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchCheckUserId),
     fork(watchLogIn),
     fork(watchSignUp),
     fork(watchLogOut),
+    fork(watchLoadUser),
   ]);
 }

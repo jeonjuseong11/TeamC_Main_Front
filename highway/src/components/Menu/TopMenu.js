@@ -4,12 +4,8 @@ import Header from "../Header";
 import { Menu } from "antd";
 import { Wrapper } from "../../styles/PageStyle";
 import { MenuLists } from "./MenuList";
-import styled from "styled-components";
+import { MenuWrapper } from "./MenuList";
 
-const MenuHeader = styled.header`
-  border-top: 1px solid #c2c2c2;
-  border-bottom: 1px solid #c2c2c2;
-`;
 const TopMenu = () => {
   const location = useLocation();
   useEffect(() => {
@@ -20,20 +16,11 @@ const TopMenu = () => {
       <Wrapper>
         <Header />
       </Wrapper>
-      <MenuHeader
-        style={{
-          borderTop: "1px solid #c2c2c2",
-          borderBottom: "1px solid #c2c2c2",
-        }}
-      >
+      <MenuWrapper>
         <Wrapper>
-          <Menu
-            mode="horizontal"
-            items={MenuLists}
-            selectedKeys={location.pathname}
-          />
+          <Menu mode="horizontal" items={MenuLists} selectedKeys={location.pathname} />
         </Wrapper>
-      </MenuHeader>
+      </MenuWrapper>
       <main>
         <Outlet />
       </main>
