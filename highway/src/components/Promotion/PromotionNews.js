@@ -1,6 +1,6 @@
 import React from 'react';
-import PromotionNewsItem from './PromotionNewsItem';
 import AppLayout from '../AppLayout';
+import PromotionNewsItem from './PromotionNewsItem';
 
 const PromotionNews = () => {
   return (
