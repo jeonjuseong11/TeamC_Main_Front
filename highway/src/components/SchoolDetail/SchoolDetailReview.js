@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Col, Rate, Row } from "antd";
-import { ReviewDetailWrapper, SubPageWrapper, StarRateWrapper } from "./SchoolDetailStyle";
-import { useSelector } from "react-redux";
+import { SubPageWrapper, StarRateWrapper } from "./SchoolDetailStyle";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import OneLineReview from "./OneLineReview";
+import ReviewDetail from "../ReviewDetail";
 
 const SchoolDetailReview = () => {
+  const targetRef = useRef(null);
+  const adjustRef = useRef(null);
+
+  useEffect(() => {
+    const targetHeight = targetRef.current.clientHeight;
+    adjustRef.current.style.height = targetHeight + "px";
+  }, []);
+
   const { school } = useSelector((state) => state.school);
+  const dispatch = useDispatch();
   const schoolId = useParams();
-  const StarRate = school[schoolId.schoolId - 1].rate;
-  const totalRate =
+  const StarRate = school[schoolId.schoolId - 1].totalRate;
+  const totalStarRate =
     (StarRate.trafficRate +
       StarRate.facilityRate +
       StarRate.cafeteriaRate +
@@ -18,19 +28,17 @@ const SchoolDetailReview = () => {
     5;
   return (
     <SubPageWrapper>
-      <Row
-        gutter={[16, 16]}
-        style={{ justifyContent: "center" }}
-        // grid={{ gutter: 8, xs: 1, sm: 1, md: 2, lg: 2, xl: 2, xxl: 2 }}
-      >
-        <Col xs={22} md={8} style={{ minWidth: "30rem" }}>
+      <Row gutter={[16, 16]} style={{ justifyContent: "center" }}>
+        <Col xs={22} md={8} style={{ minWidth: "30rem" }} ref={targetRef}>
           <StarRateWrapper>
             <div style={{ width: "60%" }}>
               <p>전체 리뷰 통계</p>
-              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>{totalRate}</h1>
+              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
+                {totalStarRate}
+              </h1>
               <Rate
                 disabled
-                defaultValue={totalRate}
+                defaultValue={totalStarRate}
                 allowHalf
                 style={{
                   fontSize: "2rem",
@@ -97,9 +105,9 @@ const SchoolDetailReview = () => {
               />
             </div>
           </StarRateWrapper>
-          <ReviewDetailWrapper>상세 리뷰</ReviewDetailWrapper>
+          <ReviewDetail />
         </Col>
-        <Col xs={22} md={6} style={{ minWidth: "25rem" }}>
+        <Col xs={22} md={6} style={{ minWidth: "25rem" }} ref={adjustRef}>
           <OneLineReview />
         </Col>
       </Row>

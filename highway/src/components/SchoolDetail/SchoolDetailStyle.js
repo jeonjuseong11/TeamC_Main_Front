@@ -17,9 +17,12 @@ export const StarRateWrapper = styled.div`
 export const OneLineReviewWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 48rem;
+  height: 94.7%;
+  padding: 1rem;
 `;
 export const ReviewDetailWrapper = styled.div`
+  display: flex;
+  padding: 3rem;
   background-color: white;
   border-radius: 10px;
   height: 30rem;

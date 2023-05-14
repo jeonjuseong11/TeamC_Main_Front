@@ -9,7 +9,7 @@ import { OneLineReviewWrapper } from "./SchoolDetailStyle";
 const OneLineReviewTitle = styled.div`
   width: 90%;
   margin: 0 auto;
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-bottom: 1rem;
   text-align: left;
   border-bottom: 1px solid #c2c2c2;
@@ -53,7 +53,9 @@ const OneLineReview = () => {
       <OneLineReviewTitle>
         <span style={{ marginLeft: "1rem" }}>학교에 대한 한줄평</span>
         <NoDecoLink>
-          <span style={{ fontSize: "0.7rem", marginRight: "0.5rem" }}>한줄평 작성</span>
+          <span style={{ fontSize: "0.7rem", marginRight: "0.5rem" }}>
+            한줄평 작성
+          </span>
         </NoDecoLink>
       </OneLineReviewTitle>
       <OneLineReviewContent>
