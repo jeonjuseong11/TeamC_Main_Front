@@ -12,6 +12,7 @@ export const ListWrapper = styled.div`
 export const CardItem = styled.div`
   margin-top: 3px;
   margin-bottom: 3px;
+  display: inline-block;
 `;
 //좋아요 갯수, 댓글 갯수, 찜하기 갯수를 나타내는 리스트
 export const IconList = styled(Space)`

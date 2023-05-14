@@ -26,7 +26,7 @@ const Login = () => {
       type: LOGIN_REQUEST,
       data: values,
     });
-    console.log("로그인 값: ", values);
+    // console.log("로그인 값: ", values);
   };
   useEffect(() => {
     if (logInError) {
@@ -95,11 +95,7 @@ const Login = () => {
           <Checkbox>로그인 상태 유지</Checkbox>
         </Form.Item>
         <Form.Item>
-          <LoginBtn
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <LoginBtn type="primary" htmlType="submit" className="login-form-button">
             Log in
           </LoginBtn>
         </Form.Item>
