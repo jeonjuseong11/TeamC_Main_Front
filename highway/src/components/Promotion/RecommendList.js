@@ -1,3 +1,4 @@
+
 import React from 'react';
 import RecommendHeadLine from './RecommendHeadLine';
 import { RecommendImage, RecommendWrapper } from '../../styles/PromotionStyle';
@@ -10,6 +11,8 @@ const contentStyle = {
   textAlign: 'center',
   background: '#364d79',
 };
+
+
 
 const RecommendList = () => {
   return (
@@ -25,6 +28,7 @@ const RecommendList = () => {
         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
       />
       </Link>
+
     </RecommendWrapper>
   );
 };

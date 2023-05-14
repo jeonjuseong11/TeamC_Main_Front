@@ -44,7 +44,7 @@ const Login = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       navigate("/");
     }
-  }, [me, token]);
+  }, [me, token, navigate]);
 
   return (
     <LoginWrapper>
