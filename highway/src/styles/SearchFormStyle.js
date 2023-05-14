@@ -9,8 +9,8 @@ export const SearchInput = styled(Input)`
   width: 60%;
 `;
 export const FilterButton = styled(Button)`
-    height: 4em;
-    width: 4em;
-    margin-top: 1rem;
-    margin-right: 1rem;
+  height: 4em;
+  width: 4em;
+  margin-top: 1rem;
+  margin-right: 1rem;
 `;

@@ -39,16 +39,39 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
             <Route exact path="/promotion" element={<Promotion />}>
-              <Route exact path="/promotion/news" element={<PromotionNews />}>
-              </Route>
-              <Route exact path="/promotion/videos" element={<PromotionVideos />} />
+              <Route
+                exact
+                path="/promotion/news"
+                element={<PromotionNews />}
+              ></Route>
+              <Route
+                exact
+                path="/promotion/videos"
+                element={<PromotionVideos />}
+              />
             </Route>
-            <Route exact path="/promotion/news/:newsId" element={<PromotionNewsDetail />} />
+            <Route
+              exact
+              path="/promotion/news/:newsId"
+              element={<PromotionNewsDetail />}
+            />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
-            <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
+            <Route
+              exact
+              path="/schooldetail/:schoolId"
+              element={<SchoolDetail />}
+            >
               <Route>
-                <Route exact path="/schooldetail/:schoolId/info" element={<SchoolDetailInfo />} />
-                <Route exact path="/schooldetail/:schoolId/job" element={<SchoolDetailJob />} />
+                <Route
+                  exact
+                  path="/schooldetail/:schoolId/info"
+                  element={<SchoolDetailInfo />}
+                />
+                <Route
+                  exact
+                  path="/schooldetail/:schoolId/job"
+                  element={<SchoolDetailJob />}
+                />
                 <Route
                   exact
                   path="/schooldetail/:schoolId/review"

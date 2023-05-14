@@ -10,13 +10,20 @@ import {
   ToolOutlined,
 } from "@ant-design/icons";
 import React from "react";
-import { FilterButton, SearchInput, SearchWrapper } from "../styles/SearchFormStyle";
+import {
+  FilterButton,
+  SearchInput,
+  SearchWrapper,
+} from "../styles/SearchFormStyle";
 
 const SearchForm = ({ setFilterValue }) => {
   return (
     <SearchWrapper>
       <h3>나에게 맞는 분야는 무엇일까요?</h3>
-      <SearchInput placeholder="검색" prefix={<SearchOutlined style={{ color: "black" }} />} />
+      <SearchInput
+        placeholder="검색"
+        prefix={<SearchOutlined style={{ color: "black" }} />}
+      />
       <br />
       <FilterButton
         shape="circle"

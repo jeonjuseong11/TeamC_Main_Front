@@ -1,7 +1,12 @@
 import React from "react";
 import { items } from "../utils/Agree";
 import { Anchor } from "antd";
-import { BackToSign, TermGroup, TermWrapper, TermItem } from "../styles/TermsStyle";
+import {
+  BackToSign,
+  TermGroup,
+  TermWrapper,
+  TermItem,
+} from "../styles/TermsStyle";
 import Service from "../components/Terms/Service";
 import Private from "../components/Terms/Private";
 import YoungPrivate from "../components/Terms/YoungPrivate";

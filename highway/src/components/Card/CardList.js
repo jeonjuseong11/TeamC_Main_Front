@@ -8,16 +8,16 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DepartsTags from "../DepartsTags";
 
-const CardList = ({filterValue}) => {
+const CardList = ({ filterValue }) => {
   const { school } = useSelector((state) => state.school);
-  const filtedSchool = school.map((it)=>{
+  const filtedSchool = school.map((it) => {
     const tags = it.tags;
-    const FiltedTag = tags.map((item)=>item.includes(filterValue));
-    if(FiltedTag.includes(true)){
+    const FiltedTag = tags.map((item) => item.includes(filterValue));
+    if (FiltedTag.includes(true)) {
       return it;
     }
   });
-  const removeUndefinedList = filtedSchool.filter(it => it !== undefined);
+  const removeUndefinedList = filtedSchool.filter((it) => it !== undefined);
   return (
     <ListWrapper>
       <List
@@ -49,7 +49,11 @@ const CardList = ({filterValue}) => {
                           text={item.followList.length}
                           key="list-vertical-star-o"
                         />
-                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
+                        <IconText
+                          icon={LikeOutlined}
+                          text={item.good}
+                          key="list-vertical-like-o"
+                        />
                         <IconText
                           icon={MessageOutlined}
                           text={item.comments.length}
