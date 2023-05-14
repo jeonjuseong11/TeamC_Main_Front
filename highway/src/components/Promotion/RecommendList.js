@@ -1,6 +1,8 @@
 import React from 'react';
-import { Carousel, Image } from "antd";
-import { RecommendCarousel, RecommendWrapper } from '../../styles/PromotionStyle';
+import RecommendHeadLine from './RecommendHeadLine';
+import { RecommendImage, RecommendWrapper } from '../../styles/PromotionStyle';
+import { Link } from "react-router-dom";
+
 
 const contentStyle = {
   color: '#fff',
@@ -12,32 +14,17 @@ const contentStyle = {
 const RecommendList = () => {
   return (
     <RecommendWrapper>
-      <RecommendCarousel>
-    <div>
-      <Image
-        width={200}
+      <h1>HIGHWAY TIMES</h1>
+      <Link to={"/"}>
+      <RecommendImage
+        width={753}
+        height={424}
+        preview={{
+          mask:<RecommendHeadLine />
+        }}
         src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
       />
-    </div>
-    <div>
-      <Image
-        width={200}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-    </div>
-    <div>
-      <Image
-        width={200}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-    </div>
-    <div>
-      <Image
-        width={200}
-        src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-      />
-    </div>
-  </RecommendCarousel>
+      </Link>
     </RecommendWrapper>
   );
 };
