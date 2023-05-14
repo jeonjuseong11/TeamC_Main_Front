@@ -1,10 +1,12 @@
 import React from 'react';
+import AppLayout from '../AppLayout';
+import PromotionNewsItem from './PromotionNewsItem';
 
 const PromotionNews = () => {
   return (
-    <div>
-      프로모션 뉴스
-    </div>
+    <AppLayout>
+      <PromotionNewsItem />
+    </AppLayout>
   );
 };
 

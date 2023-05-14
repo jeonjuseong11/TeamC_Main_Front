@@ -26,6 +26,7 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const identity = "other";
 
   const { idValid } = useSelector((state) => state.user);
   useEffect(() => {
@@ -168,7 +169,10 @@ const SignUp = () => {
 
         <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: agreeValidate }]}>
           <Checkbox>
-            <Link to="/terms">이용약관</Link>에 동의합니다
+            <Link to={`/signup/other/terms`} state={{ data: identity }}>
+              이용약관
+            </Link>
+            에 동의합니다
           </Checkbox>
         </Form.Item>
         <Form.Item>
@@ -178,7 +182,7 @@ const SignUp = () => {
             </StudentSignUpBtn>
             <CancelBtn
               onClick={() => {
-                navigate(-1);
+                navigate(`/signup`);
               }}
             >
               취소하기

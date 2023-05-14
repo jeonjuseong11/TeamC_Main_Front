@@ -20,7 +20,8 @@ import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
 import Terms from "./pages/Terms";
 import PromotionNews from "./components/Promotion/PromotionNews";
-import PromotionVideo from "./components/Promotion/PromotionVideos";
+import PromotionVideos from "./components/Promotion/PromotionVideos";
+import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
 
 function App() {
   return (
@@ -38,9 +39,11 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
             <Route exact path="/promotion" element={<Promotion />}>
-              <Route exact path="/promotion/news" element={<PromotionNews />} />
-              <Route exact path="/promotion/videos" element={<PromotionVideo />} />
+              <Route exact path="/promotion/news" element={<PromotionNews />}>
+              </Route>
+              <Route exact path="/promotion/videos" element={<PromotionVideos />} />
             </Route>
+            <Route exact path="/promotion/news/:newsId" element={<PromotionNewsDetail />} />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
             <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
               <Route>
