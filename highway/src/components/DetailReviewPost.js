@@ -27,11 +27,11 @@ const DetailReviewForm = ({ setWrite }) => {
   // console.log(detailReviews);
   const dispatch = useDispatch();
   //별점 메시지를 위한 state
-  const [trafficMessage, setTrafficMessage] = useState("");
-  const [facilityMessage, setFacilityMessage] = useState("");
-  const [cafeteriaMessage, setCafeteriaMessage] = useState("");
-  const [educationMessage, setEducationMessage] = useState("");
-  const [employmentMessage, setEmploymentMessage] = useState("");
+  const [trafficMessage, setTrafficMessage] = useState("평가해주세요.");
+  const [facilityMessage, setFacilityMessage] = useState("평가해주세요.");
+  const [cafeteriaMessage, setCafeteriaMessage] = useState("평가해주세요.");
+  const [educationMessage, setEducationMessage] = useState("평가해주세요.");
+  const [employmentMessage, setEmploymentMessage] = useState("평가해주세요.");
 
   const handleRateChange = (name, value) => {
     const message = getMessage(value);
@@ -119,44 +119,78 @@ const DetailReviewForm = ({ setWrite }) => {
       <h2 style={{ textAlign: "left", marginTop: "0" }}>리뷰작성</h2>
       <FormItemP>학교의 리뷰</FormItemP>
       <Form.Item rules={[{ required: true }]} name="content">
-        <TextArea style={{ resize: "none", width: "100%" }} />
+        <TextArea
+          style={{ resize: "none", width: "100%" }}
+          placeholder="100자 이내로 입력해주세요."
+          maxLength={100}
+        />
       </Form.Item>
       <FormItemP>못다한 이야기</FormItemP>
       <Form.Item rules={[{ required: true }]} name="secretContent">
-        <TextArea style={{ resize: "none", width: "100%" }} />
+        <TextArea
+          style={{ resize: "none", width: "100%" }}
+          placeholder="100자 이내로 입력해주세요."
+          maxLength={100}
+        />
       </Form.Item>
       <FormItemWrapper>
         <FormItemP>교통</FormItemP>
-        <Form.Item name="trafficRate" rules={[{ required: true }]} style={{ margin: "0" }}>
+        <Form.Item
+          name="trafficRate"
+          rules={[{ required: true }]}
+          style={{ margin: "0" }}
+        >
           <Rate onChange={(value) => handleRateChange("trafficRate", value)} />
         </Form.Item>
         <MessageWrapper>{trafficMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>시설만족도</FormItemP>
-        <Form.Item name="facilityRate" rules={[{ required: true }]} style={{ margin: "0" }}>
+        <Form.Item
+          name="facilityRate"
+          rules={[{ required: true }]}
+          style={{ margin: "0" }}
+        >
           <Rate onChange={(value) => handleRateChange("facilityRate", value)} />
         </Form.Item>
         <MessageWrapper>{facilityMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>급식</FormItemP>
-        <Form.Item name="cafeteriaRate" rules={[{ required: true }]} style={{ margin: "0" }}>
-          <Rate onChange={(value) => handleRateChange("cafeteriaRate", value)} />
+        <Form.Item
+          name="cafeteriaRate"
+          rules={[{ required: true }]}
+          style={{ margin: "0" }}
+        >
+          <Rate
+            onChange={(value) => handleRateChange("cafeteriaRate", value)}
+          />
         </Form.Item>
         <MessageWrapper>{cafeteriaMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>수업만족도</FormItemP>
-        <Form.Item name="educationRate" rules={[{ required: true }]} style={{ margin: "0" }}>
-          <Rate onChange={(value) => handleRateChange("educationRate", value)} />
+        <Form.Item
+          name="educationRate"
+          rules={[{ required: true }]}
+          style={{ margin: "0" }}
+        >
+          <Rate
+            onChange={(value) => handleRateChange("educationRate", value)}
+          />
         </Form.Item>
         <MessageWrapper>{educationMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>취업</FormItemP>
-        <Form.Item name="employmentRate" rules={[{ required: true }]} style={{ margin: "0" }}>
-          <Rate onChange={(value) => handleRateChange("employmentRate", value)} />
+        <Form.Item
+          name="employmentRate"
+          rules={[{ required: true }]}
+          style={{ margin: "0" }}
+        >
+          <Rate
+            onChange={(value) => handleRateChange("employmentRate", value)}
+          />
         </Form.Item>
         <MessageWrapper>{employmentMessage}</MessageWrapper>
       </FormItemWrapper>
