@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Col, Rate, Row } from "antd";
 import { SubPageWrapper, StarRateWrapper } from "./SchoolDetailStyle";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import OneLineReview from "./OneLineReview";
 import ReviewDetail from "../ReviewDetail";
@@ -16,7 +16,6 @@ const SchoolDetailReview = () => {
   }, []);
 
   const { schools } = useSelector((state) => state.school);
-  const dispatch = useDispatch();
   const schoolId = useParams();
   const StarRate = schools[schoolId.schoolId - 1].totalRate;
   const totalStarRate =
@@ -33,7 +32,9 @@ const SchoolDetailReview = () => {
           <StarRateWrapper>
             <div style={{ width: "60%" }}>
               <p>전체 리뷰 통계</p>
-              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>{totalStarRate}</h1>
+              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
+                {totalStarRate}
+              </h1>
               <Rate
                 disabled
                 defaultValue={totalStarRate}
@@ -45,10 +46,10 @@ const SchoolDetailReview = () => {
             </div>
             <div
               style={{
-                width: "40%",
                 display: "inline-block",
                 paddingTop: "1rem",
-                paddingLeft: "1rem",
+                paddingLeft: "3rem",
+                lineHeight: "1.1rem",
               }}
             >
               <p style={{ margin: "0" }}>교통</p>

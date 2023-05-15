@@ -77,13 +77,17 @@ const SchoolDetail = () => {
             <StarFilled style={{ color: "#FFDC82" }} />
             <span style={{ marginRight: "10px" }}>{totalStarRate}</span>
             <DepartsTags schoolInfo={schoolInfo} />
-            <span style={{}}> {schoolInfo.schoolWebsite}</span>
+            <span> {schoolInfo.schoolWebsite}</span>
           </div>
         </SchoolInfo>
         <SubWrapper>
           <MenuWrapper>
             <Wrapper>
-              <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+              <Menu
+                mode="horizontal"
+                items={subMenuLists}
+                selectedKeys={path}
+              />
             </Wrapper>
           </MenuWrapper>
           <main>
