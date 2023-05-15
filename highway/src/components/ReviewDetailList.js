@@ -1,5 +1,5 @@
-import { Avatar, Button, List, Rate } from "antd";
-import React, { useEffect } from "react";
+import { Avatar, List, Rate } from "antd";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -16,14 +16,32 @@ const DetailReviewP = styled.p`
   width: 100%;
   box-sizing: border-box;
 `;
+const DetailReviewAvatarWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 2rem;
+`;
+const DetailReviewUserTagsWrapper = styled.div`
+  display: flex;
+  margin-left: 3.5rem;
+`;
+const DetailReviewContentWrapper = styled.div`
+  color: black;
+  word-break: break-all;
+  position: relative;
+  left: -10vw;
+  top: -1rem;
+`;
 const ReviewDetailList = () => {
   const { schoolId } = useParams();
-  const { reviews } = useSelector((state) => state.school.schools[schoolId - 1]);
+  const { reviews } = useSelector(
+    (state) => state.school.schools[schoolId - 1]
+  );
   console.log(reviews);
   return (
     <>
       <List
-        style={{ width: "100%" }}
         itemLayout="horizontal"
         dataSource={reviews}
         pagination={{
@@ -37,9 +55,17 @@ const ReviewDetailList = () => {
           <List.Item>
             <List.Item.Meta
               title={
-                <Avatar size={40} style={{ display: "flex" }}>
-                  {item.author[0]}
-                </Avatar>
+                <>
+                  <DetailReviewAvatarWrapper>
+                    <Avatar size={40}>{item.author[0]}</Avatar>
+                    <h3>{item.author}</h3>
+                  </DetailReviewAvatarWrapper>
+                  <DetailReviewUserTagsWrapper>
+                    {item.tags.map((v, idx) => {
+                      return <TagsItem key={idx}>{v}</TagsItem>;
+                    })}
+                  </DetailReviewUserTagsWrapper>
+                </>
               }
               description={
                 <DetailReviewsWrapper>
@@ -100,18 +126,10 @@ const ReviewDetailList = () => {
               style={{
                 textAlign: "left",
               }}
-              title={
-                <>
-                  <div style={{ fontWeight: "500" }}>{item.author}</div>
-                  <div>
-                    {item.tags.map((v, idx) => {
-                      return <TagsItem key={idx}>{v}</TagsItem>;
-                    })}
-                  </div>
-                </>
-              }
               description={
-                <div style={{ color: "black", wordBreak: "break-all" }}>{item.content}</div>
+                <DetailReviewContentWrapper>
+                  {item.content}
+                </DetailReviewContentWrapper>
               }
             />
           </List.Item>

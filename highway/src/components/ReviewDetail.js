@@ -19,7 +19,11 @@ const ReviewPost = () => {
         {write ? "취소" : "리뷰작성"}
       </NoDecoLink>
       <ReviewDetailWrapper>
-        {write ? <DetailReviewForm setWrite={setWrite} /> : <ReviewDetailList />}
+        {write ? (
+          <DetailReviewForm setWrite={setWrite} />
+        ) : (
+          <ReviewDetailList />
+        )}
       </ReviewDetailWrapper>
     </>
   );
