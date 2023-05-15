@@ -15,10 +15,10 @@ const SchoolDetailReview = () => {
     adjustRef.current.style.height = targetHeight + "px";
   }, []);
 
-  const { school } = useSelector((state) => state.school);
+  const { schools } = useSelector((state) => state.school);
   const dispatch = useDispatch();
   const schoolId = useParams();
-  const StarRate = school[schoolId.schoolId - 1].totalRate;
+  const StarRate = schools[schoolId.schoolId - 1].totalRate;
   const totalStarRate =
     (StarRate.trafficRate +
       StarRate.facilityRate +
@@ -29,13 +29,11 @@ const SchoolDetailReview = () => {
   return (
     <SubPageWrapper>
       <Row gutter={[16, 16]} style={{ justifyContent: "center" }}>
-        <Col xs={22} md={8} style={{ minWidth: "30rem" }} ref={targetRef}>
+        <Col xs={22} md={10} style={{ minWidth: "30rem" }} ref={targetRef}>
           <StarRateWrapper>
             <div style={{ width: "60%" }}>
               <p>전체 리뷰 통계</p>
-              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
-                {totalStarRate}
-              </h1>
+              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>{totalStarRate}</h1>
               <Rate
                 disabled
                 defaultValue={totalStarRate}
@@ -107,7 +105,7 @@ const SchoolDetailReview = () => {
           </StarRateWrapper>
           <ReviewDetail />
         </Col>
-        <Col xs={22} md={6} style={{ minWidth: "25rem" }} ref={adjustRef}>
+        <Col xs={22} md={4} style={{ minWidth: "15rem" }} ref={adjustRef}>
           <OneLineReview />
         </Col>
       </Row>

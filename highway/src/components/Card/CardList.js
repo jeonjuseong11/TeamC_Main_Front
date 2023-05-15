@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 import DepartsTags from "../DepartsTags";
 
 const CardList = ({ filterValue }) => {
-  const { school } = useSelector((state) => state.school);
-  const filtedSchool = school.map((it) => {
+  const { schools } = useSelector((state) => state.school);
+  const filtedSchool = schools.map((it) => {
     const tags = it.tags;
     const FiltedTag = tags.map((item) => item.includes(filterValue));
     if (FiltedTag.includes(true)) {
@@ -49,11 +49,7 @@ const CardList = ({ filterValue }) => {
                           text={item.followList.length}
                           key="list-vertical-star-o"
                         />
-                        <IconText
-                          icon={LikeOutlined}
-                          text={item.good}
-                          key="list-vertical-like-o"
-                        />
+                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
                         <IconText
                           icon={MessageOutlined}
                           text={item.comments.length}

@@ -17,9 +17,9 @@ const SchoolDetail = () => {
   const location = useLocation();
   const { schoolId } = useParams();
   const [path, setPath] = useState("/review"); //선택 메뉴를 표시하기 위함
-  const { school } = useSelector((state) => state.school);
+  const { schools } = useSelector((state) => state.school);
   // console.log(school[schoolId - 1]);
-  const schoolInfo = school[schoolId - 1];
+  const schoolInfo = schools[schoolId - 1];
   const totalStarRate =
     (schoolInfo.totalRate.trafficRate +
       schoolInfo.totalRate.facilityRate +
@@ -83,11 +83,7 @@ const SchoolDetail = () => {
         <SubWrapper>
           <MenuWrapper>
             <Wrapper>
-              <Menu
-                mode="horizontal"
-                items={subMenuLists}
-                selectedKeys={path}
-              />
+              <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
             </Wrapper>
           </MenuWrapper>
           <main>

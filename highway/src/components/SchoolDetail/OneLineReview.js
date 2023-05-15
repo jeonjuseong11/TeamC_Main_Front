@@ -4,7 +4,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { NoDecoLink } from "../../styles/PageStyle";
 import { OneLineReviewWrapper } from "./SchoolDetailStyle";
 const OneLineReviewTitle = styled.div`
   width: 90%;
@@ -20,9 +19,9 @@ const OneLineReviewContent = styled.div`
 `;
 const OneLineReview = () => {
   const { me } = useSelector((state) => state.user);
-  const { school } = useSelector((state) => state.school);
+  const { schools } = useSelector((state) => state.school);
   const schoolId = useParams();
-  const schoolComment = school[schoolId.schoolId - 1].comments;
+  const schoolComment = schools[schoolId.schoolId - 1].comments;
   const items = me
     ? [
         {
@@ -51,12 +50,7 @@ const OneLineReview = () => {
   return (
     <OneLineReviewWrapper>
       <OneLineReviewTitle>
-        <span style={{ marginLeft: "1rem" }}>학교에 대한 한줄평</span>
-        <NoDecoLink>
-          <span style={{ fontSize: "0.7rem", marginRight: "0.5rem" }}>
-            한줄평 작성
-          </span>
-        </NoDecoLink>
+        <span>학교를 지나간 사람들</span>
       </OneLineReviewTitle>
       <OneLineReviewContent>
         <List
