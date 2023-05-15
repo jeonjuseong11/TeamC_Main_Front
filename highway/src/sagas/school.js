@@ -4,6 +4,9 @@ import {
   CHECK_DUPLICATE_ID_REQUEST,
   CHECK_DUPLICATE_ID_SUCCESS,
   CHECK_DUPLICATE_ID_FAILURE,
+  ADD_REVIEW_REQUEST,
+  ADD_REVIEW_FAILURE,
+  ADD_REVIEW_SUCCESS,
 } from "../constants/actionTypes";
 
 const loadSchoolAPI = (data) => {
@@ -26,11 +29,35 @@ function* loadSchool(action) {
     });
   }
 }
+function addReviewAPI(data) {
+  return axios.post(`/school/${data.schoolId.schoolId}/review`, data);
+}
+
+function* addReview(action) {
+  // console.log(action.data.values);
+  try {
+    // const result = yield call(addReviewAPI, action.data);
+    yield put({
+      type: ADD_REVIEW_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_REVIEW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function* watchLoadSchool() {
   yield takeLatest(CHECK_DUPLICATE_ID_REQUEST, loadSchool);
 }
 
+function* watchAddReview() {
+  yield takeLatest(ADD_REVIEW_REQUEST, addReview);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLoadSchool)]);
+  yield all([fork(watchLoadSchool), fork(watchAddReview)]);
 }

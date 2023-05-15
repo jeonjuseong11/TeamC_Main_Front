@@ -1,11 +1,19 @@
 import { produce } from "immer";
+import {
+  ADD_REVIEW_FAILURE,
+  ADD_REVIEW_REQUEST,
+  ADD_REVIEW_SUCCESS,
+} from "../constants/actionTypes";
 export const initialState = {
   token: localStorage.getItem("token"), //jwt 토큰
-  school: [
+  addReviewLoading: false,
+  addReviewDone: false,
+  addReviewError: null,
+  schools: [
     {
       id: 1,
       name: "학교 이름1",
-      descript: "학교 랭킹1",
+      descript: "학교설명",
       tags: ["IT", "미디어"],
       comments: [
         {
@@ -38,7 +46,21 @@ export const initialState = {
       reviews: [
         {
           id: 1,
-          userName: "test1",
+          author: "test1",
+          tags: ["디자인", "IT"],
+          rate: {
+            trafficRate: 5.0,
+            facilityRate: 5.0,
+            cafeteriaRate: 5.0,
+            educationRate: 5.0,
+            employmentRate: 5.0,
+          },
+          content: "test용fjdkafdsafsjdafkldsjfklasjfkldsjklfdkslafklskldfjkafkldsklafjkljlfjds",
+          createdTime: "2022-02-01",
+        },
+        {
+          id: 2,
+          author: "test2",
           tags: ["디자인", "IT"],
           rate: {
             trafficRate: 5.0,
@@ -48,6 +70,7 @@ export const initialState = {
             employmentRate: 5.0,
           },
           content: "test용",
+          createdTime: "2022-11-01",
         },
       ],
     },
@@ -70,7 +93,7 @@ export const initialState = {
       reviews: [
         {
           id: 1,
-          userName: "test1",
+          author: "test1",
           tags: ["디자인", "IT"],
           rate: {
             trafficRate: 5.0,
@@ -80,6 +103,7 @@ export const initialState = {
             employmentRate: 5.0,
           },
           content: "test용",
+          createdTime: "2022-01-30",
         },
       ],
     },
@@ -102,7 +126,7 @@ export const initialState = {
       reviews: [
         {
           id: 1,
-          userName: "test1",
+          author: "test1",
           tags: ["디자인", "IT"],
           rate: {
             trafficRate: 5.0,
@@ -112,6 +136,7 @@ export const initialState = {
             employmentRate: 5.0,
           },
           content: "test용",
+          createdTime: "2022-01-31",
         },
       ],
     },
@@ -151,7 +176,7 @@ export const initialState = {
       reviews: [
         {
           id: 1,
-          userName: "test1",
+          author: "test1",
           tags: ["디자인", "IT"],
           rate: {
             trafficRate: 5.0,
@@ -161,6 +186,7 @@ export const initialState = {
             employmentRate: 5.0,
           },
           content: "test용",
+          createdTime: "2022-01-02",
         },
       ],
     },
@@ -192,7 +218,7 @@ export const initialState = {
       reviews: [
         {
           id: 1,
-          userName: "test1",
+          author: "test1",
           tags: ["디자인", "IT"],
           rate: {
             trafficRate: 5.0,
@@ -201,7 +227,9 @@ export const initialState = {
             educationRate: 5.0,
             employmentRate: 5.0,
           },
-          content: "test용",
+          content:
+            "test용fjdkalfjdskalfdjsakl;fdjkal;fjdklsa;jfkdl;ajkfle;ajklew;wanklf;dnaklw;enkal;fjkl;asjkfl;jdksal;fjekl;ajkdl;fjakel;jaklfjkdls;ajfkld;ajfkls;ajl",
+          createdTime: "2022-01-01",
         },
       ],
     },
@@ -211,6 +239,22 @@ export const initialState = {
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case ADD_REVIEW_REQUEST:
+        draft.addReviewLoading = true;
+        draft.addReviewDone = false;
+        draft.addReviewError = null;
+        break;
+      case ADD_REVIEW_SUCCESS:
+        const school = draft.schools.find((v) => v.id === parseInt(action.data.schoolId));
+        school.reviews.unshift(action.data.values);
+        console.log(action.data);
+        draft.addReviewLoading = false;
+        draft.addReviewDone = true;
+        break;
+      case ADD_REVIEW_FAILURE:
+        draft.addReviewLoading = false;
+        draft.addReviewError = action.error;
+        break;
       default:
         return state;
     }
