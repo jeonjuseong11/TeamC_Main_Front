@@ -2,10 +2,7 @@ import { AutoComplete, Button, Checkbox, Form, Input, Radio } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  CHECK_DUPLICATE_ID_REQUEST,
-  SIGNUP_REQUEST,
-} from "../constants/actionTypes";
+import { CHECK_DUPLICATE_ID_REQUEST, SIGNUP_REQUEST } from "../constants/actionTypes";
 import {
   ButtonWrapper,
   CancelBtn,
@@ -67,9 +64,7 @@ const SignUp = () => {
       setAutoCompleteResult([]);
     } else {
       setAutoCompleteResult(
-        ["@gmail.com", "@naver.com", "@hanmail.net"].map(
-          (domain) => `${value}${domain}`
-        )
+        ["@gmail.com", "@naver.com", "@hanmail.net"].map((domain) => `${value}${domain}`)
       );
     }
   };
@@ -115,10 +110,7 @@ const SignUp = () => {
           ]}
           hasFeedback
         >
-          <SignUpInputPassword
-            allowClear
-            placeholder="비밀번호를 입력해주세요(8~50)"
-          />
+          <SignUpInputPassword allowClear placeholder="비밀번호를 입력해주세요(8~50)" />
         </Form.Item>
         <label>비밀번호 확인</label>
         <Form.Item
@@ -135,17 +127,12 @@ const SignUp = () => {
                 if (!value || getFieldValue("password") === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(
-                  new Error("비밀번호가 일치하지 않습니다.")
-                );
+                return Promise.reject(new Error("비밀번호가 일치하지 않습니다."));
               },
             }),
           ]}
         >
-          <SignUpInputPassword
-            allowClear
-            placeholder="비밀번호를 입력해주세요"
-          />
+          <SignUpInputPassword allowClear placeholder="비밀번호를 입력해주세요" />
         </Form.Item>
         <label>닉네임</label>
         <Form.Item name="userName" rules={[{ validator: validateNickname }]}>
@@ -180,11 +167,7 @@ const SignUp = () => {
           </SmallFormItem>
         </Form.Item>
 
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[{ validator: agreeValidate }]}
-        >
+        <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: agreeValidate }]}>
           <Checkbox>
             <Link to={`/signup/other/terms`} state={{ data: identity }}>
               이용약관

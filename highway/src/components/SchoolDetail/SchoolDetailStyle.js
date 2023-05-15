@@ -21,11 +21,10 @@ export const OneLineReviewWrapper = styled.div`
   padding: 1rem;
 `;
 export const ReviewDetailWrapper = styled.div`
-  display: flex;
-  padding: 3rem;
+  padding: 2rem;
   background-color: white;
   border-radius: 10px;
-  height: 30rem;
+  height: auto;
 `;
 export const SchoolDetailWrapper = styled.div`
   width: 100%;
