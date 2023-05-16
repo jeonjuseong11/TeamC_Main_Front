@@ -26,7 +26,7 @@ const ProfileWrapper = styled.div`
 `;
 
 const Header = () => {
-  const { me } = useSelector((state) => state.user);
+  const { token, me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onLogOut = () => {
@@ -34,15 +34,14 @@ const Header = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
-    localStorage.removeItem("USER_DATA");
   };
 
   useEffect(() => {
-    // console.log(me);
-    if (me) {
-      // console.log(me.userName);
+    if (token) {
+      console.log(me);
+      const userInfo = localStorage.setItem("USERINFO", JSON.stringify(me));
     }
-  }, [me]);
+  }, [token]);
   return (
     <HeaderWrapper>
       <Title to="/">HIGHWAY</Title>
@@ -51,7 +50,7 @@ const Header = () => {
           <>
             <NoDecoLink to="/profile">
               <Avatar size={28} style={{ marginRight: "5px" }}>
-                {me.userName[0]}
+                {me.username[0]}
               </Avatar>
             </NoDecoLink>
             <NoDecoLink to="/" onClick={onLogOut}>

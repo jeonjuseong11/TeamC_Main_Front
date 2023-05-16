@@ -67,7 +67,7 @@ const reducer = (state = initialState, action) =>
         draft.token = action.data.token;
         draft.logInLoading = false;
         draft.logInDone = true;
-        draft.myNo = action.data;
+        draft.me = action.data;
         break;
       case LOGIN_FAILURE:
         draft.logInLoading = false;
@@ -97,7 +97,7 @@ const reducer = (state = initialState, action) =>
         draft.logOutLoading = false;
         draft.logOutDone = true;
         draft.me = null;
-        draft.token = action.data;
+        draft.token = null;
         break;
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;

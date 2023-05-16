@@ -22,8 +22,25 @@ import Terms from "./pages/Terms";
 import PromotionNews from "./components/Promotion/PromotionNews";
 import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { LOAD_USER_REQUEST } from "./constants/actionTypes";
 
 function App() {
+  const userInfo = JSON.parse(localStorage.getItem("USERINFO"));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // console.log(userInfo.userNo);
+    if (userInfo) {
+      dispatch({
+        type: LOAD_USER_REQUEST,
+        data: userInfo.userNo,
+      });
+    } else {
+      return;
+    }
+  }, []);
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "#8282ff" } }}>
       <div className="App">
@@ -39,39 +56,15 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
             <Route exact path="/promotion" element={<Promotion />}>
-              <Route
-                exact
-                path="/promotion/news"
-                element={<PromotionNews />}
-              ></Route>
-              <Route
-                exact
-                path="/promotion/videos"
-                element={<PromotionVideos />}
-              />
+              <Route exact path="/promotion/news" element={<PromotionNews />}></Route>
+              <Route exact path="/promotion/videos" element={<PromotionVideos />} />
             </Route>
-            <Route
-              exact
-              path="/promotion/news/:newsId"
-              element={<PromotionNewsDetail />}
-            />
+            <Route exact path="/promotion/news/:newsId" element={<PromotionNewsDetail />} />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
-            <Route
-              exact
-              path="/schooldetail/:schoolId"
-              element={<SchoolDetail />}
-            >
+            <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
               <Route>
-                <Route
-                  exact
-                  path="/schooldetail/:schoolId/info"
-                  element={<SchoolDetailInfo />}
-                />
-                <Route
-                  exact
-                  path="/schooldetail/:schoolId/job"
-                  element={<SchoolDetailJob />}
-                />
+                <Route exact path="/schooldetail/:schoolId/info" element={<SchoolDetailInfo />} />
+                <Route exact path="/schooldetail/:schoolId/job" element={<SchoolDetailJob />} />
                 <Route
                   exact
                   path="/schooldetail/:schoolId/review"
