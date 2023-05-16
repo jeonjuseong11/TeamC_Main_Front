@@ -40,11 +40,15 @@ const Login = () => {
 
   useEffect(() => {
     // console.log(me);
+    const token = localStorage.getItem("ACCESSTOKEN");
     if (me) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       navigate("/");
+      alert("로그인 성공");
+    } else if (token) {
+      navigate("/");
+      alert("로그인 상태에서 접근할 수 없는 페이지 입니다.");
     }
-  }, [me, token, navigate]);
+  }, [me, token]);
 
   return (
     <LoginWrapper>
@@ -95,11 +99,7 @@ const Login = () => {
           <Checkbox>로그인 상태 유지</Checkbox>
         </Form.Item>
         <Form.Item>
-          <LoginBtn
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <LoginBtn type="primary" htmlType="submit" className="login-form-button">
             Log in
           </LoginBtn>
         </Form.Item>
