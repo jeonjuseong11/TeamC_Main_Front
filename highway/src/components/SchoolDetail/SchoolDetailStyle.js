@@ -60,3 +60,14 @@ export const SchoolLogo = styled.div`
   top: 6.5rem;
   right: 29vw;
 `;
+
+export const QuestionWrapper = styled.div`
+  background-color: white;
+  border-radius: 10px;
+`;
+export const FrequentAsked = styled.div`
+  background: white;
+  border-radius: 10px;
+  height: 20rem;
+  width: 100%;
+`;

@@ -1,19 +1,7 @@
 import { Col, Row } from "antd";
 import React from "react";
-import styled from "styled-components";
-import { SubPageWrapper } from "./SchoolDetailStyle";
+import { FrequentAsked, QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
 
-const QuestionWrapper = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  height: 20rem;
-`;
-const FrequentAsked = styled.div`
-  background: white;
-  border-radius: 10px;
-  height: 20rem;
-  width: 100%;
-`;
 const SchoolDetailQuestion = () => {
   return (
     <SubPageWrapper>
