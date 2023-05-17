@@ -36,9 +36,6 @@ const SchoolDetail = () => {
       case `/schooldetail/${schoolId}/review`:
         setPath("/review");
         break;
-      case `/schooldetail/${schoolId}/job`:
-        setPath("/job");
-        break;
       case `/schooldetail/${schoolId}/question`:
         setPath("/question");
         break;
@@ -55,10 +52,6 @@ const SchoolDetail = () => {
     {
       key: `/review`,
       label: <NavLink to={`/schooldetail/${schoolId}/review`}>리뷰</NavLink>,
-    },
-    {
-      key: `/job`,
-      label: <NavLink to={`/schooldetail/${schoolId}/job`}>진학/취업</NavLink>,
     },
     {
       key: `/question`,
@@ -83,11 +76,7 @@ const SchoolDetail = () => {
         <SubWrapper>
           <MenuWrapper>
             <Wrapper>
-              <Menu
-                mode="horizontal"
-                items={subMenuLists}
-                selectedKeys={path}
-              />
+              <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
             </Wrapper>
           </MenuWrapper>
           <main>
