@@ -45,7 +45,7 @@ const DetailReviewContentWrapper = styled.div`
 const ReviewDetailList = () => {
   const { schoolId } = useParams();
   const { reviews } = useSelector((state) => state.school.schools[schoolId - 1]);
-  console.log(reviews);
+  // console.log(reviews);
   return (
     <>
       <List
