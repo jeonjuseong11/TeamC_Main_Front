@@ -38,8 +38,7 @@ const Header = () => {
 
   useEffect(() => {
     if (token) {
-      console.log(me);
-      const userInfo = localStorage.setItem("USERINFO", JSON.stringify(me));
+      // console.log(me);
     }
   }, [token]);
   return (
@@ -50,7 +49,7 @@ const Header = () => {
           <>
             <NoDecoLink to="/profile">
               <Avatar size={28} style={{ marginRight: "5px" }}>
-                {me.username[0]}
+                {me.userName[0]}
               </Avatar>
             </NoDecoLink>
             <NoDecoLink to="/" onClick={onLogOut}>
