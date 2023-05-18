@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { LeftOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Checkbox, Form } from "antd";
 import {
@@ -17,7 +16,7 @@ import { LOGIN_REQUEST } from "../constants/actionTypes";
 import { useSelector, useDispatch } from "react-redux";
 
 const Login = () => {
-  const { me, logInError, token } = useSelector((state) => state.user);
+  const { me, logInError } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -40,15 +39,11 @@ const Login = () => {
 
   useEffect(() => {
     // console.log(me);
-    const token = localStorage.getItem("ACCESSTOKEN");
     if (me) {
       navigate("/");
-      alert("로그인 성공");
-    } else if (token) {
-      navigate("/");
-      alert("로그인 상태에서 접근할 수 없는 페이지 입니다.");
     }
-  }, [me, token]);
+  }, [me]);
+  useEffect(() => {}, []);
 
   return (
     <LoginWrapper>
