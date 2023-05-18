@@ -25,17 +25,19 @@ import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LOAD_USER_REQUEST } from "./constants/actionTypes";
+import cookie from "react-cookies";
+import axios from "axios";
 
 function App() {
-  const userInfo = JSON.parse(localStorage.getItem("USERINFO"));
   const dispatch = useDispatch();
 
   useEffect(() => {
     // console.log(userInfo.userNo);
-    if (userInfo) {
+    const access = cookie.load("accessToken");
+    axios.defaults.headers.common["ACCESS_TOKEN"] = `${access}`;
+    if (access) {
       dispatch({
         type: LOAD_USER_REQUEST,
-        data: userInfo.userNo,
       });
     } else {
       return;

@@ -17,6 +17,7 @@ import {
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
 } from "../constants/actionTypes";
+import cookie from "react-cookies";
 
 const checkUserIdAPI = (data) => {
   // console.log(data);
@@ -40,22 +41,31 @@ function* checkUserId(action) {
 }
 
 const logInAPI = (data) => {
-  return axios.post(`user/signIn?userId=${data.userId}&userPw=${data.userPw}`, data);
+  return axios.post(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data);
 };
+function setAccessTokenCookie(data) {
+  // 현재 도메인의 쿠키에 accessToken을 설정
+  // document.cookie = `accessToken=${accessToken}; path=/; Secure; HttpOnly`;
+  console.log(data.access_TOKEN_EXPIRATION);
+  const expires = new Date(data.access_TOKEN_EXPIRATION);
+  cookie.save("accessToken", data.access_TOKEN, {
+    path: "/",
+    expires,
+  });
+}
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
     // console.log(result.data.token);//토큰 확인용
-    axios.defaults.headers.common["Authorization"] = `Bearer ${result.data.token}`;
+    axios.defaults.headers.common["ACCESS_TOKEN"] = `${result.data.access_TOKEN}`;
+    setAccessTokenCookie(result.data);
+
     yield put({
       type: LOGIN_SUCCESS,
       data: result.data,
     });
-    console.log(result.data.userNo);
-    localStorage.setItem("ACCESSTOKEN", result.data.token);
     yield put({
       type: LOAD_USER_REQUEST,
-      data: result.data.userNo,
     });
   } catch (err) {
     console.error(err);
@@ -89,9 +99,8 @@ function* signUp(action) {
 
 function* logOut() {
   try {
-    localStorage.removeItem("ACCESSTOKEN");
-    localStorage.removeItem("USERINFO");
-    delete axios.defaults.headers.common["Authorization"];
+    delete axios.defaults.headers.common["ACCESS_TOKEN"];
+    cookie.remove("accessToken");
     yield put({
       type: LOGOUT_SUCCESS,
     });
@@ -103,17 +112,19 @@ function* logOut() {
     });
   }
 }
-const loadUserAPI = (data) => {
+const loadUserAPI = () => {
+  // console.log(access);
+
   return axios.get(
-    `/user/info?userNo=${data}`
+    `/user/info`
     // headers: { Authorization: `Bearer ${token}` },
   );
 };
 
-function* loadUser(action) {
+function* loadUser() {
   try {
-    const result = yield call(loadUserAPI, action.data);
-    console.log(action.data);
+    const result = yield call(loadUserAPI);
+    // console.log(action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data,
