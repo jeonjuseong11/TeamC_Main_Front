@@ -15,6 +15,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILURE,
 } from "../constants/actionTypes";
 
 export const initialState = {
@@ -36,7 +39,8 @@ export const initialState = {
   myNo: null, //로그인한 유저 번호(백엔드쪽)
   me: null, //로그인한 유저 정보
   idValid: false,
-  token: localStorage.getItem("token"), //jwt 토큰
+  refreshToken: null, //jwt 토큰
+  accessToken: null,
 };
 
 const reducer = (state = initialState, action) =>
@@ -64,7 +68,8 @@ const reducer = (state = initialState, action) =>
         draft.logInDone = false;
         break;
       case LOGIN_SUCCESS:
-        draft.token = action.data.refresh_TOKEN;
+        draft.refreshToken = action.data.refresh_TOKEN;
+        draft.accessToken = action.data.access_TOKEN;
         draft.logInLoading = false;
         draft.logInDone = true;
         break;
@@ -96,7 +101,8 @@ const reducer = (state = initialState, action) =>
         draft.logOutLoading = false;
         draft.logOutDone = true;
         draft.me = null;
-        draft.token = null;
+        draft.refreshToken = null;
+        draft.accessToken = null;
         break;
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;
@@ -115,6 +121,21 @@ const reducer = (state = initialState, action) =>
       case LOAD_USER_FAILURE:
         draft.loadUserLoading = false;
         draft.loadUserError = action.error;
+        break;
+      case REFRESH_TOKEN_REQUEST:
+        draft.refreshTokenLoading = true;
+        draft.refreshTokenError = null;
+        draft.refreshTokenDone = false;
+        break;
+      case REFRESH_TOKEN_SUCCESS:
+        draft.accesssToken = action.data.access_TOKEN;
+        draft.refreshToken = action.data.refresh_TOKEN;
+        draft.refreshTokenLoading = false;
+        draft.refreshTokenDone = true;
+        break;
+      case REFRESH_TOKEN_FAILURE:
+        draft.refreshTokenLoading = false;
+        draft.refreshTokenError = action.error;
         break;
 
       default:

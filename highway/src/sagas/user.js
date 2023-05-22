@@ -16,8 +16,10 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILURE,
 } from "../constants/actionTypes";
-import cookie from "react-cookies";
 
 const checkUserIdAPI = (data) => {
   // console.log(data);
@@ -43,22 +45,32 @@ function* checkUserId(action) {
 const logInAPI = (data) => {
   return axios.post(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data);
 };
-function setAccessTokenCookie(data) {
+function setAccessToken(accessToken, refreshToken, expiration) {
+  localStorage.removeItem("ACCESSTOKEN");
+  localStorage.removeItem("EXPIRES");
+  localStorage.removeItem("REFRESHTOKEN");
+  localStorage.setItem("ACCESSTOKEN", accessToken);
+  localStorage.setItem("EXPIRES", expiration);
+  localStorage.setItem("REFRESHTOKEN", refreshToken);
   // 현재 도메인의 쿠키에 accessToken을 설정
   // document.cookie = `accessToken=${accessToken}; path=/; Secure; HttpOnly`;
-  console.log(data.access_TOKEN_EXPIRATION);
-  const expires = new Date(data.access_TOKEN_EXPIRATION);
-  cookie.save("accessToken", data.access_TOKEN, {
-    path: "/",
-    expires,
-  });
+  // console.log(data.access_TOKEN_EXPIRATION);
+  // const expires = new Date(expiration);
+  // cookie.save("accessToken", token, {
+  //   path: "/",
+  //   expires,
+  //   // httpOnly: true,
+  //   // secure: true,
+  //   // sameSite: "strict",
+  // });
 }
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
+    const { access_TOKEN, access_TOKEN_EXPIRATION, refresh_TOKEN } = result.data;
     // console.log(result.data.token);//토큰 확인용
-    axios.defaults.headers.common["ACCESS_TOKEN"] = `${result.data.access_TOKEN}`;
-    setAccessTokenCookie(result.data);
+    axios.defaults.headers.common["ACCESS_TOKEN"] = `${access_TOKEN}`;
+    setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
 
     yield put({
       type: LOGIN_SUCCESS,
@@ -100,7 +112,10 @@ function* signUp(action) {
 function* logOut() {
   try {
     delete axios.defaults.headers.common["ACCESS_TOKEN"];
-    cookie.remove("accessToken");
+    localStorage.removeItem("ACCESSTOKEN");
+    localStorage.removeItem("EXPIRES");
+    localStorage.removeItem("REFRESHTOKEN");
+
     yield put({
       type: LOGOUT_SUCCESS,
     });
@@ -136,6 +151,33 @@ function* loadUser() {
     });
   }
 }
+const refreshTokenAPI = () => {
+  // console.log(access);
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  const localRefreshToken = localStorage.getItem("REFRESHTOKEN");
+  axios.defaults.headers.common["REFRESH_TOKEN"] = localRefreshToken;
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
+  return axios.post(`/user/issue`);
+};
+
+function* refreshToken() {
+  try {
+    const result = yield call(refreshTokenAPI);
+    const { access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION } = result.data;
+    axios.defaults.headers.common["ACCESS_TOKEN"] = access_TOKEN;
+    setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
+    // console.log(action.data);
+    yield put({
+      type: REFRESH_TOKEN_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: REFRESH_TOKEN_FAILURE,
+      data: e.response.data,
+    });
+  }
+}
 
 function* watchCheckUserId() {
   yield takeLatest(CHECK_DUPLICATE_ID_REQUEST, checkUserId);
@@ -156,6 +198,9 @@ function* watchLogOut() {
 function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
+function* watchRefreshToken() {
+  yield takeLatest(REFRESH_TOKEN_REQUEST, refreshToken);
+}
 
 export default function* userSaga() {
   yield all([
@@ -164,5 +209,6 @@ export default function* userSaga() {
     fork(watchSignUp),
     fork(watchLogOut),
     fork(watchLoadUser),
+    fork(watchRefreshToken),
   ]);
 }

@@ -24,8 +24,7 @@ import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { LOAD_USER_REQUEST } from "./constants/actionTypes";
-import cookie from "react-cookies";
+import { LOAD_USER_REQUEST, REFRESH_TOKEN_REQUEST } from "./constants/actionTypes";
 import axios from "axios";
 
 function App() {
@@ -33,16 +32,26 @@ function App() {
 
   useEffect(() => {
     // console.log(userInfo.userNo);
-    const access = cookie.load("accessToken");
-    axios.defaults.headers.common["ACCESS_TOKEN"] = `${access}`;
+    const access = localStorage.getItem("ACCESSTOKEN");
+    const expire = localStorage.getItem("EXPIRE");
     if (access) {
+      axios.defaults.headers.common["ACCESS_TOKEN"] = `${access}`;
       dispatch({
         type: LOAD_USER_REQUEST,
       });
-    } else {
-      return;
+    }
+    if (expire) {
+      console.log(expire);
+      function reissueToken() {
+        //Token 재발행
+        dispatch({
+          type: REFRESH_TOKEN_REQUEST,
+        });
+      }
+      setInterval(reissueToken, new Date(expire).setSeconds(new Date(expire).getSeconds() - 10));
     }
   }, []);
+
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "#8282ff" } }}>
       <div className="App">
