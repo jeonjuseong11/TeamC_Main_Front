@@ -14,7 +14,7 @@ const ReviewPost = () => {
 
   useEffect(() => {
     if (me) {
-      console.log(me);
+      // console.log(me);
     }
   }, []);
   return (
