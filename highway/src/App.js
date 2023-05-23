@@ -26,6 +26,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { LOAD_USER_REQUEST, REFRESH_TOKEN_REQUEST } from "./constants/actionTypes";
 import axios from "axios";
+import SchoolBoard from "./pages/SchoolBoard";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
           <Route exact path="/signup/other" element={<OtherSignUp />} />
           <Route exact path="/signup/student/terms" element={<Terms />} />
           <Route exact path="/signup/other/terms" element={<Terms />} />
+          <Route exact path="/schoolboard/:schoolId" element={<SchoolBoard />} />
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />

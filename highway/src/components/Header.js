@@ -47,14 +47,16 @@ const Header = () => {
       <ProfileWrapper>
         {me ? (
           <>
+            <NoDecoLink to="/" onClick={onLogOut}>
+              로그아웃
+            </NoDecoLink>
             <NoDecoLink to="/profile">
               <Avatar size={28} style={{ marginRight: "5px" }}>
                 {me.userName[0]}
               </Avatar>
             </NoDecoLink>
-            <NoDecoLink to="/" onClick={onLogOut}>
-              로그아웃
-            </NoDecoLink>
+
+            <NoDecoLink>학교 게시판으로</NoDecoLink>
           </>
         ) : (
           <NoDecoLink to="/login">로그인</NoDecoLink>
