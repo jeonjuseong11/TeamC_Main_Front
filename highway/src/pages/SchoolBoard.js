@@ -58,7 +58,7 @@ const SchoolBoard = () => {
               justifyContent: "center",
             }}
           >
-            content
+            Hot topic(조회수 기준 순위)
           </div>
         </Col>
       </Row>

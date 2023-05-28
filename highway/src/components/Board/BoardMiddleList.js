@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 const BoardMiddleList = ({ data }) => {
   return (
     <List
-      style={{ textAlign: "left", marginLeft: "1rem" }}
+      style={{ textAlign: "left" }}
       header={
         <>
-          <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>유머</span>
+          <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>인기글</span>
           <Link to="/" style={{ float: "right" }}>
             <span>더보기</span>
           </Link>
