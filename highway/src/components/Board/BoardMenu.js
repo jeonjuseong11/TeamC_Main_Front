@@ -14,7 +14,9 @@ const BoardMenu = () => {
   return (
     <>
       <Menu onClick={onClick} mode="horizontal" style={{ gap: "1rem" }}>
-        <h1 style={{ margin: "0", padding: "1rem", paddingLeft: "0" }}>학교게시판</h1>
+        <h1 style={{ margin: "0", padding: "1rem", paddingLeft: "0" }}>
+          학교게시판
+        </h1>
         <Menu.Item style={{ padding: "1rem" }}>
           <Link to="/">홈</Link>
         </Menu.Item>
@@ -25,9 +27,14 @@ const BoardMenu = () => {
           <Link to="/">인기글</Link>
         </Menu.Item>
       </Menu>
-      {me == null ? (
+      {me ? (
         <Avatar
-          style={{ float: "right", position: "relative", top: "-3.5rem", marginLeft: "1rem" }}
+          style={{
+            float: "right",
+            position: "relative",
+            top: "-3.5rem",
+            marginLeft: "1rem",
+          }}
         >
           ddd
         </Avatar>
@@ -39,7 +46,9 @@ const BoardMenu = () => {
           로그인
         </Button>
       )}
-      <Button style={{ float: "right", position: "relative", top: "-3.5rem" }}>글쓰기</Button>
+      <Button style={{ float: "right", position: "relative", top: "-3.5rem" }}>
+        글쓰기
+      </Button>
     </>
   );
 };

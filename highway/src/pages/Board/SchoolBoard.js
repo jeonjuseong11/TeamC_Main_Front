@@ -1,8 +1,8 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Col, Input, Row } from "antd";
-import BoardMenu from "../components/Board/BoardMenu";
-import BoardMiddleList from "../components/Board/BoardMiddleList";
-import BoardSmallList from "../components/Board/BoardSmallList";
+import BoardMenu from "../../components/Board/BoardMenu";
+import BoardMiddleList from "../../components/Board/BoardMiddleList";
+import BoardSmallList from "../../components/Board/BoardSmallList";
 const data = [
   "Racing car sprays burning fuel into crowd.",
   "Japanese princess to wed commoner.",
@@ -13,7 +13,7 @@ const data = [
 const SchoolBoard = () => {
   return (
     <>
-      <Row justify="center">
+      <Row gutter={[16, 16]} justify="center">
         <Col xs={24} md={14}>
           <BoardMenu />
         </Col>
