@@ -67,7 +67,7 @@ const SchoolBoardList = () => {
                 }}
                 onMouseEnter={() => handleMouseEnter(item)}
                 onMouseLeave={handleMouseLeave}
-                key={item.title}
+                key={item.key}
                 actions={[
                   <div style={{ position: "relative" }}>
                     <IconText

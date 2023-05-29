@@ -1,16 +1,17 @@
 import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
 import { List, Typography } from "antd";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const BoardMiddleList = ({ data }) => {
+  const { schoolId } = useParams();
   return (
     <List
-      style={{ textAlign: "left" }}
+      style={{ textAlign: "left", marginLeft: "1rem" }}
       header={
         <>
           <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>인기글</span>
-          <Link to="/" style={{ float: "right" }}>
+          <Link to={`/schoolboard/${schoolId}/list`} style={{ float: "right" }}>
             <span>더보기</span>
           </Link>
         </>

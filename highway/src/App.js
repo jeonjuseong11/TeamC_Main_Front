@@ -31,6 +31,7 @@ import {
 import axios from "axios";
 import SchoolBoard from "./pages/Board/SchoolBoard";
 import SchoolBoardList from "./pages/Board/SchoolBoardList";
+import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ function App() {
           <Route
             exact
             path="/schoolboard/:schoolId/list/:itemid"
-            element={<SchoolBoardList />}
+            element={<SchoolBoardDetail />}
           />
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
