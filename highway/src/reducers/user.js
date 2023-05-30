@@ -76,6 +76,7 @@ const reducer = (state = initialState, action) =>
       case LOGIN_FAILURE:
         draft.logInLoading = false;
         draft.logInError = action.error;
+        alert("아이디, 비밀번호를 확인해주세요");
         break;
       // 회원가입
       case SIGNUP_REQUEST:
@@ -107,6 +108,7 @@ const reducer = (state = initialState, action) =>
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
+        alert("로그아웃 실패");
         break;
       case LOAD_USER_REQUEST:
         draft.loadUserLoading = true;
@@ -121,6 +123,7 @@ const reducer = (state = initialState, action) =>
       case LOAD_USER_FAILURE:
         draft.loadUserLoading = false;
         draft.loadUserError = action.error;
+        alert("유저 정보를 불러오지 못했습니다");
         break;
       case REFRESH_TOKEN_REQUEST:
         draft.refreshTokenLoading = true;
