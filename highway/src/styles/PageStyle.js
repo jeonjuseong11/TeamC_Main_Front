@@ -15,5 +15,6 @@ export const NoDecoLink = styled(Link)`
   float: right;
   text-decoration: none;
   color: black;
-  margin-right: 5px;
+  margin-right: 10px;
+  margin-left: 10px;
 `;

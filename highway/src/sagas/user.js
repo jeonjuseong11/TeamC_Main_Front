@@ -52,17 +52,6 @@ function setAccessToken(accessToken, refreshToken, expiration) {
   localStorage.setItem("ACCESSTOKEN", accessToken);
   localStorage.setItem("EXPIRES", expiration);
   localStorage.setItem("REFRESHTOKEN", refreshToken);
-  // 현재 도메인의 쿠키에 accessToken을 설정
-  // document.cookie = `accessToken=${accessToken}; path=/; Secure; HttpOnly`;
-  // console.log(data.access_TOKEN_EXPIRATION);
-  // const expires = new Date(expiration);
-  // cookie.save("accessToken", token, {
-  //   path: "/",
-  //   expires,
-  //   // httpOnly: true,
-  //   // secure: true,
-  //   // sameSite: "strict",
-  // });
 }
 function* logIn(action) {
   try {
@@ -78,6 +67,7 @@ function* logIn(action) {
     });
     yield put({
       type: LOAD_USER_REQUEST,
+      data: result.data,
     });
   } catch (err) {
     console.error(err);
@@ -128,21 +118,16 @@ function* logOut() {
   }
 }
 const loadUserAPI = () => {
-  // console.log(access);
-
-  return axios.get(
-    `/user/info`
-    // headers: { Authorization: `Bearer ${token}` },
-  );
+  return axios.get(`/user/info`);
 };
 
 function* loadUser() {
   try {
     const result = yield call(loadUserAPI);
-    // console.log(action.data);
+    // console.log(result.data);
     yield put({
       type: LOAD_USER_SUCCESS,
-      data: result.data,
+      data: result.data.body,
     });
   } catch (e) {
     yield put({
