@@ -1,5 +1,5 @@
 import { Avatar, Button, Menu } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { NoDecoLink } from "../../styles/PageStyle";
@@ -8,10 +8,16 @@ const BoardMenu = () => {
   const onClick = (e) => {
     console.log("click ", e);
   };
-  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
   const { me } = useSelector((state) => state.user);
-
   const navigate = useNavigate();
+  const localRefreshToken = localStorage.getItem("REFRESHTOKEN");
+  useEffect(() => {
+    if (!localRefreshToken) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+      return;
+    }
+  }, [me, navigate]);
   return (
     <>
       <Menu onClick={onClick} mode="horizontal" style={{ gap: "1rem" }}>

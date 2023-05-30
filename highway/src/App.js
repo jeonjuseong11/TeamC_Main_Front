@@ -1,5 +1,5 @@
 import { ConfigProvider } from "antd";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 
 import TopMenu from "./components/Menu/TopMenu";
@@ -23,7 +23,7 @@ import PromotionNews from "./components/Promotion/PromotionNews";
 import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOAD_USER_REQUEST, REFRESH_TOKEN_REQUEST } from "./constants/actionTypes";
 import axios from "axios";
 import SchoolBoard from "./pages/Board/SchoolBoard";
@@ -32,27 +32,44 @@ import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 
 function App() {
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
+  const access = localStorage.getItem("ACCESSTOKEN");
+  const expire = localStorage.getItem("EXPIRES");
+  const navigate = useNavigate();
+
+  const reissueToken = () => {
+    // Token 재발행
+    dispatch({
+      type: REFRESH_TOKEN_REQUEST,
+    });
+  };
+
+  const loadUser = () => {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
+  };
+
+  const setupTokenRefresh = (expire) => {
+    const expireDate = new Date(expire);
+    if (expireDate < new Date()) {
+      localStorage.removeItem("ACCESSTOKEN");
+      localStorage.removeItem("REFRESHTOKEN");
+      localStorage.removeItem("EXPIRES");
+      navigate("/login");
+      return;
+    }
+
+    const refreshInterval = expireDate.setSeconds(expireDate.getSeconds() - 10);
+    setInterval(reissueToken, refreshInterval);
+  };
 
   useEffect(() => {
-    // console.log(userInfo.userNo);
-    const access = localStorage.getItem("ACCESSTOKEN");
-    const expire = localStorage.getItem("EXPIRE");
     if (access) {
-      axios.defaults.headers.common["ACCESS_TOKEN"] = `${access}`;
-      dispatch({
-        type: LOAD_USER_REQUEST,
-      });
+      axios.defaults.headers.common["ACCESS_TOKEN"] = access;
+      loadUser();
     }
-    if (expire) {
-      // console.log(expire);
-      function reissueToken() {
-        //Token 재발행
-        dispatch({
-          type: REFRESH_TOKEN_REQUEST,
-        });
-      }
-      setInterval(reissueToken, new Date(expire).setSeconds(new Date(expire).getSeconds() - 10));
-    }
+    setupTokenRefresh(expire);
   }, []);
 
   return (

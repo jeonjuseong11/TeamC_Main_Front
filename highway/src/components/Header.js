@@ -36,6 +36,7 @@ const Header = () => {
     });
   };
   function navigateToSchoolBoard() {
+    //학교 게시판으로 이동
     navigate("/schoolboard/1");
   }
 
@@ -48,9 +49,9 @@ const Header = () => {
             <Button onClick={navigateToSchoolBoard}>학교 게시판으로</Button>
             <NoDecoLink to="/profile">
               <Avatar size={28} style={{ marginRight: "5px" }}>
-                {me.userName[0]}
+                {me?.userName[0]}
               </Avatar>
-              {me.userName}
+              {me?.userName}
             </NoDecoLink>
             <Button onClick={onLogOut}>로그아웃</Button>
           </>
