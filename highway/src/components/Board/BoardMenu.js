@@ -2,6 +2,7 @@ import { Avatar, Button, Menu } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { NoDecoLink } from "../../styles/PageStyle";
 
 const BoardMenu = () => {
   const onClick = (e) => {
@@ -14,9 +15,7 @@ const BoardMenu = () => {
   return (
     <>
       <Menu onClick={onClick} mode="horizontal" style={{ gap: "1rem" }}>
-        <h1 style={{ margin: "0", padding: "1rem", paddingLeft: "0" }}>
-          학교게시판
-        </h1>
+        <h1 style={{ margin: "0", padding: "1rem", paddingLeft: "0" }}>학교게시판</h1>
         <Menu.Item style={{ padding: "1rem" }}>
           <Link to="/">홈</Link>
         </Menu.Item>
@@ -28,16 +27,19 @@ const BoardMenu = () => {
         </Menu.Item>
       </Menu>
       {me ? (
-        <Avatar
-          style={{
-            float: "right",
-            position: "relative",
-            top: "-3.5rem",
-            marginLeft: "1rem",
-          }}
-        >
-          ddd
-        </Avatar>
+        <NoDecoLink to="/profile">
+          <div
+            style={{
+              float: "right",
+              position: "relative",
+              top: "-3.5rem",
+              marginLeft: "1rem",
+            }}
+          >
+            <Avatar>{me.userName[0]}</Avatar>
+            <span style={{ marginLeft: "0.5rem" }}>{me.userName}</span>
+          </div>
+        </NoDecoLink>
       ) : (
         <Button
           style={{ float: "right", position: "relative", top: "-3.5rem" }}
@@ -46,9 +48,7 @@ const BoardMenu = () => {
           로그인
         </Button>
       )}
-      <Button style={{ float: "right", position: "relative", top: "-3.5rem" }}>
-        글쓰기
-      </Button>
+      <Button style={{ float: "right", position: "relative", top: "-3.5rem" }}>글쓰기</Button>
     </>
   );
 };
