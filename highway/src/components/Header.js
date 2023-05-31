@@ -40,20 +40,25 @@ const Header = () => {
     navigate("/schoolboard/1");
   }
 
+  useEffect(() => {
+    // console.log(me);
+  }, [me]);
   return (
     <HeaderWrapper>
       <Title to="/">HIGHWAY</Title>
       <ProfileWrapper>
-        {me ? (
+        {me != null ? (
           <>
             <Button onClick={navigateToSchoolBoard}>학교 게시판으로</Button>
             <NoDecoLink to="/profile">
               <Avatar size={28} style={{ marginRight: "5px" }}>
-                {me?.userName[0]}
+                {me.userName[0]}
               </Avatar>
               {me?.userName}
             </NoDecoLink>
-            <Button onClick={onLogOut}>로그아웃</Button>
+            <Button onClick={onLogOut} danger style={{ marginLeft: "0.5rem" }}>
+              로그아웃
+            </Button>
           </>
         ) : (
           <NoDecoLink to="/login">로그인</NoDecoLink>

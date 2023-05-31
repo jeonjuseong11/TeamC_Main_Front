@@ -29,10 +29,10 @@ import axios from "axios";
 import SchoolBoard from "./pages/Board/SchoolBoard";
 import SchoolBoardList from "./pages/Board/SchoolBoardList";
 import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
+import SchoolBoardPost from "./pages/Board/SchoolBoardPost";
 
 function App() {
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
   const access = localStorage.getItem("ACCESSTOKEN");
   const expire = localStorage.getItem("EXPIRES");
   const navigate = useNavigate();
@@ -69,7 +69,11 @@ function App() {
       axios.defaults.headers.common["ACCESS_TOKEN"] = access;
       loadUser();
     }
-    setupTokenRefresh(expire);
+  }, [access]);
+  useEffect(() => {
+    if (expire) {
+      setupTokenRefresh(expire);
+    }
   }, []);
 
   return (
@@ -86,6 +90,7 @@ function App() {
           <Route exact path="/schoolboard/:schoolId" element={<SchoolBoard />} />
           <Route exact path="/schoolboard/:schoolId/list" element={<SchoolBoardList />} />
           <Route exact path="/schoolboard/:schoolId/list/:postId" element={<SchoolBoardDetail />} />
+          <Route exact path="/schoolboard/:schoolId/post" element={<SchoolBoardPost />} />
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
