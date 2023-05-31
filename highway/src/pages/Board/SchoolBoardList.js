@@ -1,8 +1,4 @@
-import {
-  HeartOutlined,
-  LikeOutlined,
-  MessageOutlined,
-} from "@ant-design/icons";
+import { HeartOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Col, List, Menu, Row } from "antd";
 import BoardMenu from "../../components/Board/BoardMenu";
 import { IconText } from "../../components/Card/CardStyle";
@@ -38,11 +34,12 @@ const SchoolBoardList = () => {
   };
   return (
     <>
+      <BoardMenu />
       <Row justify="center">
         <Col xs={24} md={14}>
-          <BoardMenu />
+          <h4 style={{ textAlign: "left" }}>게시판 리스트</h4>
         </Col>
-        <Col xs={24} md={14} style={{ marginTop: "-2rem" }}>
+        <Col xs={24} md={14}>
           <Menu mode="horizontal" items={items} />
         </Col>
       </Row>
@@ -70,29 +67,14 @@ const SchoolBoardList = () => {
                 key={item.key}
                 actions={[
                   <div style={{ position: "relative" }}>
-                    <IconText
-                      icon={HeartOutlined}
-                      text="156"
-                      key="list-vertical-star-o"
-                    />
+                    <IconText icon={HeartOutlined} text="156" key="list-vertical-star-o" />
                   </div>,
-                  <IconText
-                    icon={LikeOutlined}
-                    text="156"
-                    key="list-vertical-like-o"
-                  />,
-                  <IconText
-                    icon={MessageOutlined}
-                    text="2"
-                    key="list-vertical-message"
-                  />,
+                  <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                  <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
                 ]}
               >
                 <Link to={`/schoolboard/${schoolId.schoolId}/list/${idx + 1}`}>
-                  <List.Item.Meta
-                    title={"글제목" + item.title}
-                    description={item}
-                  />
+                  <List.Item.Meta title={"글제목" + item.title} description={item} />
                 </Link>
               </List.Item>
             )}
