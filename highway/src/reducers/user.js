@@ -131,7 +131,7 @@ const reducer = (state = initialState, action) =>
         draft.refreshTokenDone = false;
         break;
       case REFRESH_TOKEN_SUCCESS:
-        draft.accesssToken = action.data.access_TOKEN;
+        draft.accessToken = action.data.access_TOKEN;
         draft.refreshToken = action.data.refresh_TOKEN;
         draft.refreshTokenLoading = false;
         draft.refreshTokenDone = true;
