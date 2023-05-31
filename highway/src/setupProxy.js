@@ -8,6 +8,13 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    "/school",
+    createProxyMiddleware({
+      target: "http://localhost:8080/school",
+      changeOrigin: true,
+    })
+  );
   // app.use(
   //   "/",
   //   createProxyMiddleware({

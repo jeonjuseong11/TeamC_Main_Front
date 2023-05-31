@@ -4,8 +4,52 @@ import {
   ADD_REVIEW_REQUEST,
   ADD_REVIEW_FAILURE,
   ADD_REVIEW_SUCCESS,
+  LOAD_SCHOOL_INFO_SUCCESS,
+  LOAD_SCHOOL_INFO_FAILURE,
+  LOAD_SCHOOL_INFO_REQUEST,
+  LOAD_SCHOOL_LIST_SUCCESS,
+  LOAD_SCHOOL_LIST_FAILURE,
+  LOAD_SCHOOL_LIST_REQUEST,
 } from "../constants/actionTypes";
 
+const loadSchoolListAPI = () => {
+  return axios.get("/school/list");
+};
+function* loadSchoolList() {
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
+  const result = yield call(loadSchoolListAPI);
+  try {
+    yield put({
+      type: LOAD_SCHOOL_LIST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_SCHOOL_LIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+const loadSchoolInfoAPI = (data) => {
+  return axios.get(`/school/info?schId=${data.schoolId}`);
+};
+function* loadSchoolInfo(action) {
+  const result = yield call(loadSchoolInfoAPI, action.data);
+  try {
+    yield put({
+      type: LOAD_SCHOOL_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_SCHOOL_INFO_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 // const loadSchoolAPI = (data) => {
 //   // console.log(data);
 //   return axios.get(`/school/loadSchoolApi?schoolid=${data}`);
@@ -51,10 +95,17 @@ function* addReview(action) {
 //   yield takeLatest(CHECK_DUPLICATE_ID_REQUEST, loadSchool);
 // }
 
+function* watchLoadSchoolList() {
+  yield takeLatest(LOAD_SCHOOL_LIST_REQUEST, loadSchoolList);
+}
+function* watchLoadSchoolInfo() {
+  yield takeLatest(LOAD_SCHOOL_INFO_REQUEST, loadSchoolInfo);
+}
+
 function* watchAddReview() {
   yield takeLatest(ADD_REVIEW_REQUEST, addReview);
 }
 
 export default function* userSaga() {
-  yield all([fork(watchAddReview)]);
+  yield all([fork(watchAddReview), fork(watchLoadSchoolInfo), fork(watchLoadSchoolList)]);
 }
