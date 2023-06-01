@@ -1,5 +1,5 @@
 import axios from "axios";
-import { call, put, all, fork, takeLatest } from "redux-saga/effects";
+import { call, put, all, fork, takeLatest, throttle } from "redux-saga/effects";
 import {
   ADD_REVIEW_REQUEST,
   ADD_REVIEW_FAILURE,
@@ -16,13 +16,11 @@ const loadSchoolListAPI = () => {
   return axios.get("/school/list");
 };
 function* loadSchoolList() {
-  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
-  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
   const result = yield call(loadSchoolListAPI);
   try {
     yield put({
       type: LOAD_SCHOOL_LIST_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -71,7 +69,7 @@ function* loadSchoolInfo(action) {
 //   }
 // }
 function addReviewAPI(data) {
-  return axios.post(`/school/${data.schoolId.schoolId}/review`, data);
+  return axios.post(`/school/${data.schoolId}/review`, data);
 }
 
 function* addReview(action) {
@@ -96,7 +94,7 @@ function* addReview(action) {
 // }
 
 function* watchLoadSchoolList() {
-  yield takeLatest(LOAD_SCHOOL_LIST_REQUEST, loadSchoolList);
+  yield throttle(5000, LOAD_SCHOOL_LIST_REQUEST, loadSchoolList);
 }
 function* watchLoadSchoolInfo() {
   yield takeLatest(LOAD_SCHOOL_INFO_REQUEST, loadSchoolInfo);
