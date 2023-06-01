@@ -101,14 +101,13 @@ function* signUp(action) {
 
 function* logOut() {
   try {
+    yield put({
+      type: LOGOUT_SUCCESS,
+    });
     delete axios.defaults.headers.common["ACCESS_TOKEN"];
     localStorage.removeItem("ACCESSTOKEN");
     localStorage.removeItem("EXPIRES");
     localStorage.removeItem("REFRESHTOKEN");
-
-    yield put({
-      type: LOGOUT_SUCCESS,
-    });
   } catch (err) {
     console.error(err);
     yield put({
