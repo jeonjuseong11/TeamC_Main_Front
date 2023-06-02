@@ -25,7 +25,9 @@ export const SignUpForm = styled(Form)`
   width: 30%;
   min-width: 30rem;
   border: 1px solid #efefef;
-  padding: 3rem;
+  padding: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   border-radius: 1.25rem;
   text-align: left;
 `;
@@ -48,7 +50,7 @@ export const StudentSignUpBtn = styled(Button)`
   display: inline-block;
 `;
 export const CancelBtn = styled(Button)`
-  border: 1px solid #8282ff;d
+  border: 1px solid #8282ff;
   color: #8282ff;
   width: 45%;
   height: 3rem;
@@ -59,7 +61,6 @@ export const BackToLogin = styled(Button)`
   margin-top: 7%;
   color: #ffffff;
   height: 3rem;
-  color: #ffffff;
   background-color: #8282ff;
   font-weight: 700;
 `;

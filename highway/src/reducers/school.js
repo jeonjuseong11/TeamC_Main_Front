@@ -17,7 +17,42 @@ export const initialState = {
   loadSchoolListLoading: false,
   loadSchoolListDone: false,
   loadSchoolListError: null,
-  schools: [],
+  schools: [
+    {
+      id: 1,
+      name: "학교 이름1",
+      descript: "학교 랭킹1",
+      tags: ["IT", "미디어"],
+      comments: [
+        {
+          id: 1,
+          content: "hello",
+        },
+        {
+          id: 2,
+          content: "hello",
+        },
+        {
+          id: 1,
+          content: "hello",
+        },
+        {
+          id: 2,
+          content: "hello",
+        },
+      ],
+      good: 10,
+      followList: ["1", "2"],
+      totalRate: {
+        trafficRate: 5.0,
+        facilityRate: 5.0,
+        cafeteriaRate: 5.0,
+        educationRate: 5.0,
+        employmentRate: 5.0,
+      },
+      schoolWebsite: "https://000.000.com",
+    },
+  ],
 };
 
 const reducer = (state = initialState, action) =>
@@ -29,7 +64,7 @@ const reducer = (state = initialState, action) =>
         draft.loadSchoolListError = null;
         break;
       case LOAD_SCHOOL_LIST_SUCCESS:
-        draft.schools.push(action.data);
+        draft.schools = action.data;
         draft.loadSchoolListLoading = false;
         draft.loadSchoolListDone = true;
         break;
@@ -43,7 +78,9 @@ const reducer = (state = initialState, action) =>
         draft.addReviewError = null;
         break;
       case ADD_REVIEW_SUCCESS:
-        const school = draft.schools.find((v) => v.id === parseInt(action.data.schoolId));
+        const school = draft.schools.find(
+          (v) => v.id === parseInt(action.data.schoolId)
+        );
         school.reviews.unshift(action.data.values);
         console.log(action.data);
         draft.addReviewLoading = false;
