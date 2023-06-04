@@ -20,8 +20,11 @@ export const initialState = {
   schools: [
     {
       id: 1,
-      name: "학교 이름1",
+      schul_NM: "대진디자인고등학교", //학교이름
       descript: "학교 랭킹1",
+      schul_RDNMA: "서울특별시 강남구 광평로 39길", //주소
+      user_TELNO: "02-2226-8418", //전화번호
+      hmpg_ADRES: "http://daejindesign.sen.hs.kr", //학교 홈페이지
       tags: ["IT", "미디어"],
       comments: [
         {

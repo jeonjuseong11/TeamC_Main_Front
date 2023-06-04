@@ -40,7 +40,7 @@ const CardList = ({ filterValue }) => {
                     />
                   }
                 >
-                  <Meta title={item.name} description={item.descript} />
+                  <Meta title={item.schul_NM} description={item.descript} />
                   <Meta
                     description={
                       <CardItem>
@@ -49,7 +49,11 @@ const CardList = ({ filterValue }) => {
                           text={item.followList.length}
                           key="list-vertical-star-o"
                         />
-                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
+                        <IconText
+                          icon={LikeOutlined}
+                          text={item.good}
+                          key="list-vertical-like-o"
+                        />
                         <IconText
                           icon={MessageOutlined}
                           text={item.comments.length}

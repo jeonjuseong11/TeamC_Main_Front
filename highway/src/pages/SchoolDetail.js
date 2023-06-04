@@ -65,18 +65,22 @@ const SchoolDetail = () => {
           이미지 칸<SchoolLogo>학교 로고</SchoolLogo>
         </SchoolImg>
         <SchoolInfo>
-          <h2 style={{ margin: "0" }}>{schoolInfo.name}</h2>
+          <h2 style={{ margin: "0" }}>{schoolInfo.schul_NM}</h2>
           <div>
             <StarFilled style={{ color: "#FFDC82" }} />
             <span style={{ marginRight: "10px" }}>{totalStarRate}</span>
             <DepartsTags schoolInfo={schoolInfo} />
-            <span> {schoolInfo.schoolWebsite}</span>
+            <a href={schoolInfo.hmpg_ADRES}> {schoolInfo.hmpg_ADRES}</a>
           </div>
         </SchoolInfo>
         <SubWrapper>
           <MenuWrapper>
             <Wrapper>
-              <Menu mode="horizontal" items={subMenuLists} selectedKeys={path} />
+              <Menu
+                mode="horizontal"
+                items={subMenuLists}
+                selectedKeys={path}
+              />
             </Wrapper>
           </MenuWrapper>
           <main>
