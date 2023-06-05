@@ -11,8 +11,9 @@ import DepartsTags from "../DepartsTags";
 const CardList = ({ filterValue }) => {
   const { schools } = useSelector((state) => state.school);
   const filtedSchool = schools.map((it) => {
-    const tags = it.tags;
-    const FiltedTag = tags.map((item) => item.includes(filterValue));
+    const schoolDeparts = it.tags;
+    // console.log(schoolDeparts);
+    const FiltedTag = schoolDeparts.map((item) => item.includes(filterValue));
     if (FiltedTag.includes(true)) {
       return it;
     }
@@ -49,11 +50,7 @@ const CardList = ({ filterValue }) => {
                           text={item.followList.length}
                           key="list-vertical-star-o"
                         />
-                        <IconText
-                          icon={LikeOutlined}
-                          text={item.good}
-                          key="list-vertical-like-o"
-                        />
+                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
                         <IconText
                           icon={MessageOutlined}
                           text={item.comments.length}

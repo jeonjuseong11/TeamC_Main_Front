@@ -16,101 +16,105 @@ const SchoolDetailReview = () => {
   }, []);
 
   const { schools } = useSelector((state) => state.school);
-  const schoolId = useParams();
-  const StarRate = schools[schoolId.schoolId - 1].totalRate;
+  const { schoolId } = useParams();
+  console.log(schoolId);
+  const school = schools[schoolId - 1];
+  console.log(school);
   const totalStarRate =
-    (StarRate.trafficRate +
-      StarRate.facilityRate +
-      StarRate.cafeteriaRate +
-      StarRate.educationRate +
-      StarRate.employmentRate) /
+    (school.trafficRate +
+      school.facilityRate +
+      school.cafeteriaRate +
+      school.educationRate +
+      school.employmentRate) /
     5;
   return (
-    <SubPageWrapper>
-      <Row gutter={[16, 16]} style={{ justifyContent: "center" }}>
-        <Col xs={22} md={10} style={{ minWidth: "30rem" }} ref={targetRef}>
-          <StarRateWrapper>
-            <div style={{ width: "60%" }}>
-              <p>전체 리뷰 통계</p>
-              <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
-                {totalStarRate}
-              </h1>
-              <Rate
-                disabled
-                defaultValue={totalStarRate}
-                allowHalf
-                style={{
-                  fontSize: "2rem",
-                }}
-              />
-            </div>
-            <div
+    <Row gutter={[16, 16]} justify="center">
+      <Col xs={22} md={10} style={{ minWidth: "30rem" }} ref={targetRef}>
+        <StarRateWrapper>
+          <div style={{ width: "60%" }}>
+            <p>전체 리뷰 통계</p>
+            {totalStarRate ? (
+              <>
+                <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>{totalStarRate}</h1>
+                <Rate
+                  disabled
+                  defaultValue={totalStarRate}
+                  allowHalf
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                />
+              </>
+            ) : (
+              <p style={{ fontSize: "1rem" }}>리뷰가 없습니다.</p>
+            )}
+          </div>
+          <div
+            style={{
+              display: "inline-block",
+              paddingTop: "1rem",
+              paddingLeft: "3rem",
+              lineHeight: "1.1rem",
+            }}
+          >
+            <p style={{ margin: "0" }}>교통</p>
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={school.trafficRate}
               style={{
-                display: "inline-block",
-                paddingTop: "1rem",
-                paddingLeft: "3rem",
-                lineHeight: "1.1rem",
+                alignItems: "center",
+                fontSize: "1rem",
               }}
-            >
-              <p style={{ margin: "0" }}>교통</p>
-              <Rate
-                disabled
-                allowHalf
-                defaultValue={StarRate.trafficRate}
-                style={{
-                  alignItems: "center",
-                  fontSize: "1rem",
-                }}
-              />
-              <p style={{ margin: "0" }}>시설만족도</p>
-              <Rate
-                disabled
-                allowHalf
-                defaultValue={StarRate.facilityRate}
-                style={{
-                  alignItems: "center",
-                  fontSize: "1rem",
-                }}
-              />
-              <p style={{ margin: "0" }}>급식</p>
-              <Rate
-                disabled
-                allowHalf
-                defaultValue={StarRate.cafeteriaRate}
-                style={{
-                  alignItems: "center",
-                  fontSize: "1rem",
-                }}
-              />
-              <p style={{ margin: "0" }}>수업만족도</p>
-              <Rate
-                disabled
-                allowHalf
-                defaultValue={StarRate.educationRate}
-                style={{
-                  alignItems: "center",
-                  fontSize: "1rem",
-                }}
-              />
-              <p style={{ margin: "0" }}>취업</p>
-              <Rate
-                disabled
-                allowHalf
-                defaultValue={StarRate.employmentRate}
-                style={{
-                  alignItems: "center",
-                  fontSize: "1rem",
-                }}
-              />
-            </div>
-          </StarRateWrapper>
-          <ReviewDetail />
-        </Col>
-        <Col xs={22} md={4} style={{ minWidth: "15rem" }} ref={adjustRef}>
-          <OneLineReview />
-        </Col>
-      </Row>
-    </SubPageWrapper>
+            />
+            <p style={{ margin: "0" }}>시설만족도</p>
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={school.facilityRate}
+              style={{
+                alignItems: "center",
+                fontSize: "1rem",
+              }}
+            />
+            <p style={{ margin: "0" }}>급식</p>
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={school.cafeteriaRate}
+              style={{
+                alignItems: "center",
+                fontSize: "1rem",
+              }}
+            />
+            <p style={{ margin: "0" }}>수업만족도</p>
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={school.educationRate}
+              style={{
+                alignItems: "center",
+                fontSize: "1rem",
+              }}
+            />
+            <p style={{ margin: "0" }}>취업</p>
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={school.employmentRate}
+              style={{
+                alignItems: "center",
+                fontSize: "1rem",
+              }}
+            />
+          </div>
+        </StarRateWrapper>
+        <ReviewDetail />
+      </Col>
+      <Col xs={22} md={4} style={{ minWidth: "15rem" }} ref={adjustRef}>
+        <OneLineReview />
+      </Col>
+    </Row>
   );
 };
 

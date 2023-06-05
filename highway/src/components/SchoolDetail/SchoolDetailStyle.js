@@ -36,7 +36,7 @@ export const SchoolDetailWrapper = styled.div`
 `;
 export const SchoolImg = styled.div`
   width: 100%;
-  background-color: gray;
+  background-color: #f2f2f2;
   align-items: center;
   height: 10rem;
   text-align: center;
@@ -52,18 +52,20 @@ export const SchoolInfo = styled.div`
 export const SchoolLogo = styled.div`
   background-color: white;
   display: inline-block;
+  align-items: middle;
   border: 1px solid #c2c2c2;
   height: 5rem;
   width: 4rem;
   border-radius: 5px;
   position: relative;
-  top: 6.5rem;
-  right: 29vw;
+  top: -2.5rem;
+  right: 26vw;
 `;
 
 export const QuestionWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
+  height: 15rem;
 `;
 export const FrequentAsked = styled.div`
   background: white;
