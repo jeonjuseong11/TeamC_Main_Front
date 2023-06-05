@@ -30,9 +30,11 @@ import SchoolBoard from "./pages/Board/SchoolBoard";
 import SchoolBoardList from "./pages/Board/SchoolBoardList";
 import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 import SchoolBoardPost from "./pages/Board/SchoolBoardPost";
+import moment from "moment";
 
 function App() {
   const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
   const access = localStorage.getItem("ACCESSTOKEN");
   const expire = localStorage.getItem("EXPIRES");
   const navigate = useNavigate();
@@ -51,16 +53,18 @@ function App() {
   };
 
   const setupTokenRefresh = (expire) => {
-    const expireDate = new Date(expire);
-    if (expireDate < new Date()) {
+    const expireTime = moment(expire);
+    const nowTime = moment();
+    //    console.log(moment(expireTime).diff(nowTime.format()) > 0);
+    if (moment(expireTime).diff(nowTime.format()) < 0) {
       localStorage.removeItem("ACCESSTOKEN");
       localStorage.removeItem("REFRESHTOKEN");
       localStorage.removeItem("EXPIRES");
-      navigate("/login");
+      navigate("/");
       return;
     }
-
-    const refreshInterval = expireDate.setSeconds(expireDate.getSeconds() - 10);
+    const refreshInterval = expireTime.diff(nowTime);
+    //    console.log(refreshInterval);
     setInterval(reissueToken, refreshInterval);
   };
 
@@ -69,12 +73,10 @@ function App() {
       axios.defaults.headers.common["ACCESS_TOKEN"] = access;
       loadUser();
     }
-  }, [access]);
-  useEffect(() => {
     if (expire) {
       setupTokenRefresh(expire);
     }
-  }, []);
+  }, [access, expire]);
 
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "#8282ff" } }}>
