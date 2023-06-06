@@ -105,5 +105,9 @@ function* watchAddReview() {
 }
 
 export default function* userSaga() {
-  yield all([fork(watchAddReview), fork(watchLoadSchoolInfo), fork(watchLoadSchoolList)]);
+  yield all([
+    fork(watchAddReview),
+    fork(watchLoadSchoolInfo),
+    fork(watchLoadSchoolList),
+  ]);
 }

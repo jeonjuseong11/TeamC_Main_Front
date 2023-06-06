@@ -131,7 +131,9 @@ const reducer = (state = initialState, action) =>
         draft.addReviewError = null;
         break;
       case ADD_REVIEW_SUCCESS:
-        const school = draft.schools.find((v) => v.id === parseInt(action.data.schoolId));
+        const school = draft.schools.find(
+          (v) => v.id === parseInt(action.data.schoolId)
+        );
         school.reviews.unshift(action.data.values);
         console.log(action.data);
         draft.addReviewLoading = false;
