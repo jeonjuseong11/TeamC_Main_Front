@@ -35,7 +35,9 @@ const SchoolDetailReview = () => {
             <p>전체 리뷰 통계</p>
             {totalStarRate ? (
               <>
-                <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>{totalStarRate}</h1>
+                <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
+                  {totalStarRate}
+                </h1>
                 <Rate
                   disabled
                   defaultValue={totalStarRate}
@@ -111,7 +113,7 @@ const SchoolDetailReview = () => {
         </StarRateWrapper>
         <ReviewDetail />
       </Col>
-      <Col xs={22} md={4} style={{ minWidth: "15rem" }} ref={adjustRef}>
+      <Col xs={22} md={5} style={{ minWidth: "15rem" }} ref={adjustRef}>
         <OneLineReview />
       </Col>
     </Row>

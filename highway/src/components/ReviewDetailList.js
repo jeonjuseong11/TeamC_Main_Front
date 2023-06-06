@@ -36,7 +36,6 @@ const DetailReviewContentWrapper = styled.div`
   word-break: break-all;
   height: 11vh;
   float: left;
-  width: 60%;
   display: inline-block;
   text-align: left;
   margin-left: 1.5rem;
@@ -44,7 +43,9 @@ const DetailReviewContentWrapper = styled.div`
 `;
 const ReviewDetailList = () => {
   const { schoolId } = useParams();
-  const { reviews } = useSelector((state) => state.school.schools[schoolId - 1]);
+  const { reviews } = useSelector(
+    (state) => state.school.schools[schoolId - 1]
+  );
   console.log(reviews);
   return (
     <>
@@ -69,7 +70,9 @@ const ReviewDetailList = () => {
                     </Avatar>
                     <h3>{item.author}</h3>
                     <span>
-                      <StarFilled style={{ color: "#FFDC82", marginLeft: "-5rem" }} />
+                      <StarFilled
+                        style={{ color: "#FFDC82", marginLeft: "-5rem" }}
+                      />
                       {(item.trafficRate +
                         item.facilityRate +
                         item.cafeteriaRate +
@@ -137,7 +140,9 @@ const ReviewDetailList = () => {
                       }}
                     />
                   </DetailReviewsWrapper>
-                  <DetailReviewContentWrapper>{item.content}</DetailReviewContentWrapper>
+                  <DetailReviewContentWrapper>
+                    {item.content}
+                  </DetailReviewContentWrapper>
                 </>
               }
             />

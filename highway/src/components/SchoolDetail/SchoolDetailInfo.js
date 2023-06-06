@@ -1,23 +1,24 @@
 import { Col, Row, Tabs } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import SchoolDetailJob from "./SchoolDetailJob";
 import SchoolDetailReview from "./SchoolDetailReview";
-import { FrequentAsked, QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
+import { QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
 
 const SchoolDetailInfo = () => {
-  const { schoolId, tags } = useParams();
+  const { schoolId } = useParams();
   const schools = useSelector((state) => state.school.schools);
   const school = schools[schoolId - 1];
   // console.log(school);
   const [departsList, setDepartsList] = useState([]);
-  const departsItems = school.departs.map((v, idx) => {
+  school.departs.map((v, idx) => {
     departsList.push({
       key: `${idx}`,
       label: `${v.depart}`,
       children: `${v.description}`,
     });
+    return departsList;
   });
   const onChange = (key) => {
     console.log(key);
@@ -33,15 +34,22 @@ const SchoolDetailInfo = () => {
             <h4>연락처</h4>
             <p>{school.user_TELNO}</p>
             <h4>홈페이지</h4>
-            <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
+            <a
+              style={{ color: "black", textDecoration: "none" }}
+              href={school.hmpg_ADRES}
+            >
               {school.hmpg_ADRES}
             </a>
           </QuestionWrapper>
         </Col>
-        <Col xs={22} md={8} style={{ minWidth: "30rem" }}>
+        <Col xs={22} md={9} style={{ minWidth: "30rem" }}>
           <QuestionWrapper style={{ padding: "2rem", textAlign: "left" }}>
             <h3 style={{ margin: "0" }}>학과소개</h3>
-            <Tabs defaultActiveKey="0" items={departsList} onChange={onChange} />
+            <Tabs
+              defaultActiveKey="0"
+              items={departsList}
+              onChange={onChange}
+            />
           </QuestionWrapper>
         </Col>
       </Row>

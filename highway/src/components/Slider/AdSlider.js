@@ -11,9 +11,10 @@ const SliderWrapper = styled.div`
 function AdSlider() {
   const settings = {
     centerMode: true,
-    centerPadding: "0px",
+    centerPadding: 0,
     arrows: false,
     infinite: true,
+    lazyLoad: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
