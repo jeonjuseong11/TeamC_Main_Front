@@ -2,3 +2,6 @@
   text-align: center;
   min-height: 100%;
 }
+.selected-row {
+  background-color: #f2f2f2;
+}
