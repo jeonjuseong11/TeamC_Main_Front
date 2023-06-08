@@ -12,13 +12,9 @@ const TopMenu = () => {
   }, [location]);
   return (
     <div>
-      <Row justify="center" gutter={[16, 16]}>
-        <Col xs={24} md={15}>
-          <Header />
-        </Col>
-      </Row>
+      <Header />
       <MenuWrapper>
-        <Row justify="center" gutter={[16, 16]}>
+        <Row justify="center" gutter={[24, 24]}>
           <Col xs={24} md={15}>
             <Menu
               mode="horizontal"

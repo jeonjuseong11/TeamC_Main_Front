@@ -21,7 +21,7 @@ const options = {
 const CircleChart = ({ male, female }) => {
   return (
     <div style={{ marginLeft: "5rem" }}>
-      <h4 style={{ margin: "0", marginTop: "1rem" }}>학교 성비</h4>
+      <h4 style={{ margin: "0", marginTop: "1rem" }}>학생성비</h4>
       <div style={{ width: "10rem", height: "10rem" }}>
         <Doughnut
           data={{

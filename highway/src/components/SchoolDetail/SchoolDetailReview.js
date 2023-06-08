@@ -11,7 +11,7 @@ const SchoolDetailReview = () => {
   const { schoolId } = useParams();
   // console.log(schoolId);
   const school = schools[schoolId - 1];
-  console.log(school);
+  // console.log(school);
 
   const totalStarRate =
     (school.trafficRate +

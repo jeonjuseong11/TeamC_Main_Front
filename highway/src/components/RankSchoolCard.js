@@ -13,7 +13,7 @@ import CircleChart from "./CircleChart";
 const RankSchoolCard = ({ selectedSchool }) => {
   return (
     <Card
-      style={{ backgroundColor: "#f2f2f2" }}
+      style={{ backgroundColor: "#f2f2f2", minWidth: "18rem" }}
       actions={[
         <Link to={`/schooldetail/${selectedSchool.id}/review/`}>
           <SearchOutlined /> 상세 정보 보기
