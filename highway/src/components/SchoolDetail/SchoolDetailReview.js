@@ -7,19 +7,12 @@ import OneLineReview from "./OneLineReview";
 import ReviewDetail from "../ReviewDetail";
 
 const SchoolDetailReview = () => {
-  const targetRef = useRef(null);
-  const adjustRef = useRef(null);
-
-  useEffect(() => {
-    const targetHeight = targetRef.current.clientHeight;
-    adjustRef.current.style.height = targetHeight + "px";
-  }, []);
-
   const { schools } = useSelector((state) => state.school);
   const { schoolId } = useParams();
-  console.log(schoolId);
+  // console.log(schoolId);
   const school = schools[schoolId - 1];
   console.log(school);
+
   const totalStarRate =
     (school.trafficRate +
       school.facilityRate +
@@ -27,13 +20,16 @@ const SchoolDetailReview = () => {
       school.educationRate +
       school.employmentRate) /
     5;
+  console.log(totalStarRate);
   return (
     <Row gutter={[16, 16]} justify="center">
-      <Col xs={22} md={10} style={{ minWidth: "30rem" }} ref={targetRef}>
+      <Col xs={22} md={10} style={{ minWidth: "30rem" }}>
         <StarRateWrapper>
           <div style={{ width: "60%" }}>
             <p>전체 리뷰 통계</p>
-            {totalStarRate ? (
+            {totalStarRate === 0 ? (
+              <p style={{ fontSize: "1rem" }}>리뷰가 없습니다.</p>
+            ) : (
               <>
                 <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
                   {totalStarRate}
@@ -47,8 +43,6 @@ const SchoolDetailReview = () => {
                   }}
                 />
               </>
-            ) : (
-              <p style={{ fontSize: "1rem" }}>리뷰가 없습니다.</p>
             )}
           </div>
           <div
@@ -113,7 +107,7 @@ const SchoolDetailReview = () => {
         </StarRateWrapper>
         <ReviewDetail />
       </Col>
-      <Col xs={22} md={5} style={{ minWidth: "15rem" }} ref={adjustRef}>
+      <Col xs={22} md={5} style={{ minWidth: "15rem" }}>
         <OneLineReview />
       </Col>
     </Row>

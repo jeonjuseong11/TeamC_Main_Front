@@ -24,6 +24,8 @@ export const initialState = {
       descript: "학교 랭킹1",
       schul_RDNMA: "서울특별시 강남구 광평로 39길", //주소
       user_TELNO: "02-2226-8418", //전화번호
+      USER_TELNO_SW: "02-4321-4321", //교무실 전화번호
+      USER_TELNO_GA: "02-6789-1234", //행정실 전화번호
       hmpg_ADRES: "http://daejindesign.sen.hs.kr", //학교 홈페이지
       departs: [
         {
@@ -100,11 +102,11 @@ export const initialState = {
       ],
       good: 10,
       followList: ["1", "2"],
-      trafficRate: 5.0,
-      facilityRate: 5.0,
-      cafeteriaRate: 5.0,
-      educationRate: 5.0,
-      employmentRate: 5.0,
+      trafficRate: 5,
+      facilityRate: 5,
+      cafeteriaRate: 5,
+      educationRate: 5,
+      employmentRate: 5,
       schoolWebsite: "https://000.000.com",
     },
     {
@@ -113,6 +115,8 @@ export const initialState = {
       descript: "학교 랭킹2",
       schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소
       user_TELNO: "02-2226-8418", //전화번호
+      USER_TELNO_SW: "02-1234-1234", //교무실 전화번호
+      USER_TELNO_GA: "02-9876-4531", //행정실 전화번호
       hmpg_ADRES: "http://daejindesign.sen.hs.kr2", //학교 홈페이지
       departs: [
         {
@@ -137,44 +141,15 @@ export const initialState = {
         },
       ],
       tags: ["경영", "디자인"],
-      members: [
-        { id: 1, userName: "student1" },
-        { id: 2, userName: "student2" },
-        { id: 3, userName: "student3" },
-        { id: 4, userName: "student4" },
-        { id: 5, userName: "student5" },
-      ],
-      reviews: [
-        {
-          id: 1,
-          author: "student1",
-          tags: "전기전자과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review1 contents",
-        },
-        {
-          id: 2,
-          author: "student2",
-          tags: "컴퓨터소프트웨어과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review2 contents",
-        },
-      ],
+      members: [],
+      reviews: [],
       good: 10,
       followList: ["1", "2"],
-      trafficRate: 5.0,
-      facilityRate: 5.0,
-      cafeteriaRate: 5.0,
-      educationRate: 5.0,
-      employmentRate: 5.0,
+      trafficRate: 0,
+      facilityRate: 0,
+      cafeteriaRate: 0,
+      educationRate: 0,
+      employmentRate: 0,
       schoolWebsite: "https://000.000.com",
     },
   ],

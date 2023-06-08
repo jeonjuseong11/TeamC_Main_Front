@@ -31,7 +31,9 @@ const SchoolDetailInfo = () => {
             <h4>주소</h4>
             <p>{school.schul_RDNMA}</p>
             <h4>연락처</h4>
-            <p>{school.user_TELNO}</p>
+            <p style={{ margin: "0" }}>{school.user_TELNO}</p>
+            <p style={{ margin: "0" }}>{school.USER_TELNO_SW}(교무실)</p>
+            <p style={{ margin: "0" }}>{school.USER_TELNO_GA}(행정실)</p>
             <h4>홈페이지</h4>
             <a
               style={{ color: "black", textDecoration: "none" }}

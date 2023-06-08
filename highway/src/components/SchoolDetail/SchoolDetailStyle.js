@@ -55,7 +55,7 @@ export const SchoolLogo = styled.div`
 export const QuestionWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 16rem;
+  height: 18rem;
 `;
 export const FrequentAsked = styled.div`
   background: white;
