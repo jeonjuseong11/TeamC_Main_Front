@@ -47,13 +47,8 @@ const CardList = ({ filterValue }) => {
                       <CardItem>
                         <IconText
                           icon={StarOutlined}
-                          text={item.followList.length}
+                          text={item.reviews.length}
                           key="list-vertical-star-o"
-                        />
-                        <IconText
-                          icon={LikeOutlined}
-                          text={item.good}
-                          key="list-vertical-like-o"
                         />
                         <IconText
                           icon={UserOutlined}

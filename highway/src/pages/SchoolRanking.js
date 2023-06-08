@@ -17,14 +17,15 @@ const SchoolRanking = () => {
     const dummyData = [
       {
         id: 1,
-        name: "OO1고등학교",
-        reviews: 10,
-        members: 10,
-        male: 100,
-        female: 120,
-        views: 10,
+        schul_NM: "OO1고등학교", //학교 이름
+        rank: 1, //랭크
+        reviews: 10, //리뷰 수
+        members: 10, //재학생 회원 수
+        male: 100, //남자 학생수
+        female: 120, //여자 학생 수
+        views: 10, //학교 조회수
         hmpg_ADRES: "http://daejindesign.sen.hs.kr7", //학교 홈페이지
-        tags: ["전자", "IT", "디자인"],
+        tags: ["전자", "IT", "디자인"], //학교 태그
       },
     ];
     const copiedData = schools.slice();
@@ -52,7 +53,13 @@ const SchoolRanking = () => {
     // 예를 들어, "ooo"에 해당하는 데이터만 필터링하려면 item.tags === "Value 1"과 같이 설정합니다.
     return item.tags.includes(filterValue);
   });
-
+  useEffect(() => {
+    if (filterValue === "") {
+      setSelectedSchool(rankData[0]);
+    } else {
+      setSelectedSchool();
+    }
+  }, [filterValue, rankData]);
   const columns = [
     {
       title: "랭킹",

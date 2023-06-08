@@ -31,37 +31,33 @@ const RankSchoolCard = ({ selectedSchool }) => {
         title={selectedSchool.schul_NM}
         description={
           <>
-            {selectedSchool.tags.map((item) => {
-              return <Tag color="#8282ff">{item}</Tag>;
+            {selectedSchool.tags.map((item, idx) => {
+              return (
+                <Tag color="#8282ff" key={idx}>
+                  {item}
+                </Tag>
+              );
             })}
             <p>
               <a href={selectedSchool.hmpg_ADRES}>
                 {selectedSchool.hmpg_ADRES}
               </a>
             </p>
-            <table style={{ marginTop: "1rem" }}>
-              <tr style={{ margin: "0" }}>
-                <td>
-                  <ProfileOutlined />
-                </td>
-                <td>리뷰 수</td>
-                <td>{selectedSchool.reviews.length}</td>
-              </tr>
-              <tr>
-                <td>
-                  <UserOutlined />
-                </td>
-                <td> 사용자 수</td>
-                <td> {selectedSchool.members.length}</td>
-              </tr>
-              <tr>
-                <td>
-                  <EyeOutlined />
-                </td>
-                <td>조회 수 </td>
-                <td>{selectedSchool.views}</td>
-              </tr>
-            </table>
+            <p>
+              <ProfileOutlined />
+              <span style={{ marginRight: "1rem" }}>리뷰 수</span>
+              {selectedSchool.reviews.length}
+            </p>
+            <p>
+              <UserOutlined />
+              <span style={{ marginRight: "1rem" }}>사용자 수</span>
+              {selectedSchool.members.length}
+            </p>
+            <p>
+              <EyeOutlined />
+              <span style={{ marginRight: "1rem" }}>조회 수</span>
+              {selectedSchool.views}
+            </p>
           </>
         }
       />

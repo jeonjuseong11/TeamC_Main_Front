@@ -9,7 +9,7 @@ import {
 } from "../components/SchoolDetail/SchoolDetailStyle";
 import { SubWrapper } from "../styles/PageStyle";
 import { useSelector } from "react-redux";
-import { StarFilled } from "@ant-design/icons";
+import { StarFilled, StarOutlined } from "@ant-design/icons";
 import DepartsTags from "../components/DepartsTags";
 import SchoolDetailInfo from "../components/SchoolDetail/SchoolDetailInfo";
 
@@ -49,7 +49,11 @@ const SchoolDetail = () => {
             <SchoolInfo>
               <h2 style={{ margin: "0" }}>{school.schul_NM}</h2>
               <div>
-                <StarFilled style={{ color: "#FFDC82" }} />
+                {totalStarRate === 0 ? (
+                  <StarOutlined />
+                ) : (
+                  <StarFilled style={{ color: "#FFDC82" }} />
+                )}
                 <span style={{ marginRight: "10px" }}>{totalStarRate}</span>
                 <DepartsTags schoolInfo={school} />
                 <a

@@ -20,7 +20,6 @@ const SchoolDetailReview = () => {
       school.educationRate +
       school.employmentRate) /
     5;
-  console.log(totalStarRate);
   return (
     <Row gutter={[16, 16]} justify="center">
       <Col xs={22} md={10} style={{ minWidth: "30rem" }}>
