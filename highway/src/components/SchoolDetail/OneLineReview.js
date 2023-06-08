@@ -21,7 +21,7 @@ const OneLineReview = () => {
   const { me } = useSelector((state) => state.user);
   const { schools } = useSelector((state) => state.school);
   const schoolId = useParams();
-  const schoolComment = schools[schoolId.schoolId - 1].comments;
+  const schoolMembers = schools[schoolId.schoolId - 1].members;
   const items = me
     ? [
         {
@@ -46,12 +46,12 @@ const OneLineReview = () => {
   return (
     <OneLineReviewWrapper>
       <OneLineReviewTitle>
-        <span>접속자</span>
+        <span>재학생</span>
       </OneLineReviewTitle>
       <OneLineReviewContent>
         <List
           itemLayout="horizontal"
-          dataSource={schoolComment}
+          dataSource={schoolMembers}
           renderItem={(item) => (
             <List.Item
               actions={[
@@ -72,7 +72,7 @@ const OneLineReview = () => {
                       marginLeft: "1rem",
                     }}
                   >
-                    {item.content}
+                    {item.userName}
                   </p>
                 }
               />

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import { LikeOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
 import { Card, Col, List } from "antd";
 import Meta from "antd/es/card/Meta";
 import { CardItem, IconText, ListWrapper } from "./CardStyle";
@@ -50,10 +50,14 @@ const CardList = ({ filterValue }) => {
                           text={item.followList.length}
                           key="list-vertical-star-o"
                         />
-                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
                         <IconText
-                          icon={MessageOutlined}
-                          text={item.comments.length}
+                          icon={LikeOutlined}
+                          text={item.good}
+                          key="list-vertical-like-o"
+                        />
+                        <IconText
+                          icon={UserOutlined}
+                          text={item.members.length}
                           key="list-vertical-message"
                         />
                       </CardItem>

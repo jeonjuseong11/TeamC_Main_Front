@@ -44,9 +44,8 @@ const SchoolDetail = () => {
             <h4>이미지</h4>
           </SchoolLogo>
         </SchoolImg>
-        <Row gutter={[24, 24]}>
-          <Col md={5}></Col>
-          <Col xs={22} md={10}>
+        <Row gutter={[24, 24]} justify="center">
+          <Col xs={22} md={15}>
             <SchoolInfo>
               <h2 style={{ margin: "0" }}>{school.schul_NM}</h2>
               <div>

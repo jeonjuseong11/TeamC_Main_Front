@@ -60,7 +60,11 @@ const Header = () => {
                 </Avatar>
                 {me?.userName}
               </NoDecoLink>
-              <Button onClick={onLogOut} danger style={{ marginLeft: "0.5rem" }}>
+              <Button
+                onClick={onLogOut}
+                danger
+                style={{ marginLeft: "0.5rem" }}
+              >
                 로그아웃
               </Button>
             </>
@@ -71,7 +75,6 @@ const Header = () => {
       </HeaderWrapper>
       <FloatButton
         href="https://www.work.go.kr/consltJobCarpa/jobPsyExamNew/jobPsyExamYouthList.do"
-        description="적성검사"
         type="primary"
         icon={<FileTextOutlined />}
         tooltip={<div>적성검사 하러가기</div>}

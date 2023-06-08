@@ -1,52 +1,57 @@
 import React, { useEffect, useState } from "react";
-import AppLayout from "../components/AppLayout";
-import { Avatar, Card, Col, List, Row, Table } from "antd";
-import {
-  EyeOutlined,
-  ProfileOutlined,
-  QuestionCircleOutlined,
-  SearchOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import RankSelector, { RankTopic } from "../components/RankSelector";
+import { useSelector } from "react-redux";
+import { Col, Row, Table } from "antd";
+
+import RankSchoolCard from "../components/RankSchoolCard";
+import RankSelector from "../components/RankSelector";
 
 const SchoolRanking = () => {
+  const { schools } = useSelector((state) => state.school);
   const [rankData, setRankData] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState(null);
+  const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
     // 데이터 가져오는 로직을 여기에 구현
-    // 예시로 더미 데이터 사용
+    // 예시로 더미 데이터
     const dummyData = [
-      { name: "OO1고등학교", review: 10, user: 10, view: 10 },
-      { name: "OO2고등학교", review: 8, user: 8, view: 8 },
-      { name: "OO3고등학교", review: 15, user: 15, view: 12 },
-      { name: "OO4고등학교", review: 11, user: 11, view: 11 },
-      { name: "OO5고등학교", review: 1, user: 1, view: 1 },
-      { name: "OO6고등학교", review: 2, user: 2, view: 2 },
-      { name: "OO7고등학교", review: 3, user: 3, view: 3 },
-      { name: "OO8고등학교", review: 4, user: 4, view: 4 },
-      { name: "OO9고등학교", review: 5, user: 5, view: 5 },
-      { name: "O10고등학교", review: 6, user: 6, view: 6 },
-      { name: "O11고등학교", review: 9, user: 9, view: 9 },
-      { name: "O12고등학교", review: 14, user: 14, view: 14 },
-      { name: "O13고등학교", review: 13, user: 13, view: 13 },
-      { name: "O14고등학교", review: 12, user: 12, view: 12 },
-      { name: "O15고등학교", review: 19, user: 19, view: 19 },
-      // ...
+      {
+        id: 1,
+        name: "OO1고등학교",
+        reviews: 10,
+        members: 10,
+        male: 100,
+        female: 120,
+        views: 10,
+        hmpg_ADRES: "http://daejindesign.sen.hs.kr7", //학교 홈페이지
+        tags: ["전자", "IT", "디자인"],
+      },
     ];
-    const sortedData = dummyData.sort((a, b) => b.review - a.review);
+    const copiedData = schools.slice();
+    const sortedData = copiedData.sort(
+      (a, b) => b.reviews.length - a.reviews.length
+    );
     const rankedData = sortedData.map((item, index) => ({
       ...item,
       rank: index + 1,
+      views: Math.floor(Math.random() * 101), //더미데이터 생성
+      male: Math.floor(Math.random() * 101), //더미데이터 생성
+      female: Math.floor(Math.random() * 101), //더미데이터 생성
     }));
     setRankData(rankedData);
     setSelectedSchool(rankedData[0]);
   }, []);
-
   const handleSchoolSelect = (school) => {
     setSelectedSchool(school);
   };
+  const filteredData = rankData.filter((item) => {
+    if (filterValue === "") {
+      return true;
+    }
+    // 여기서 필터링 조건을 설정합니다.
+    // 예를 들어, "ooo"에 해당하는 데이터만 필터링하려면 item.tags === "Value 1"과 같이 설정합니다.
+    return item.tags.includes(filterValue);
+  });
 
   const columns = [
     {
@@ -56,8 +61,8 @@ const SchoolRanking = () => {
     },
     {
       title: "학교 명",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "schul_NM",
+      key: "schul_NM",
       render: (text, record) => (
         <a
           style={{
@@ -72,23 +77,25 @@ const SchoolRanking = () => {
     },
     {
       title: "리뷰 수",
-      dataIndex: "review",
-      key: "review",
+      dataIndex: "reviews",
+      key: "reviews",
+      render: (reviews) => reviews.length,
     },
     {
       title: "유저 수",
-      dataIndex: "user",
-      key: "user",
+      dataIndex: "members",
+      key: "members",
+      render: (members) => members.length,
     },
   ];
   const rowClassName = (record) => {
-    if (selectedSchool && selectedSchool.name === record.name) {
+    if (selectedSchool && selectedSchool.schul_NM === record.schul_NM) {
       return "selected-row";
     }
     return "";
   };
   return (
-    <AppLayout>
+    <>
       <Row gutter={[24, 24]} justify="center">
         <Col xs={24} md={15}>
           <div
@@ -103,64 +110,29 @@ const SchoolRanking = () => {
             <p>새로운 특성화고 랭킹 서비스</p>
           </div>
         </Col>
-        {/* <Col xs={24} md={15}>
-            <h2 style={{ margin: "0", textAlign: "left" }}>Highway 랭킹</h2>
-          </Col> */}
-        <RankSelector />
-      </Row>
-      <Row gutter={[24, 24]}>
-        <Col xs={24} md={15} offset={9}>
-          <div style={{ lineHeight: "0.5rem", paddingTop: "0.7rem" }}>
-            <span style={{ marginLeft: "8.5rem" }}>리뷰 평정순 |</span> <span>조회수 순 |</span>{" "}
-            <span>리뷰 많은 거</span>
-          </div>
+        <Col xs={24} md={15}>
+          <RankSelector setFilterValue={setFilterValue} />
         </Col>
       </Row>
-      <Row gutter={[24, 24]} justify="center" style={{ textAlign: "left", marginTop: "1rem" }}>
-        <Col xs={24} md={10} flex="auto" style={{ minWidth: "14rem" }}>
+      <Row
+        gutter={[24, 24]}
+        justify="center"
+        style={{ textAlign: "left", marginTop: "1rem" }}
+      >
+        <Col xs={24} md={10} flex="auto">
           <Table
+            style={{ minWidth: "14rem" }}
             columns={columns}
-            dataSource={rankData}
+            dataSource={filteredData}
             pagination={false}
             rowClassName={rowClassName}
           />
         </Col>
         <Col xs={24} md={5} flex="auto">
-          {selectedSchool && (
-            <Card
-              style={{ backgroundColor: "#f2f2f2" }}
-              actions={[
-                <div>
-                  <SearchOutlined /> 상세 정보 보기
-                </div>,
-              ]}
-            >
-              <Card.Meta
-                avatar={<Avatar size={64}>학교로고</Avatar>}
-                title={selectedSchool.name}
-                description={
-                  <div>
-                    <p style={{ margin: "0" }}>
-                      {" "}
-                      <ProfileOutlined style={{ marginRight: "0.5rem" }} />
-                      리뷰 수 {selectedSchool.review}
-                    </p>
-                    <p style={{ margin: "0" }}>
-                      <UserOutlined style={{ marginRight: "0.5rem" }} />
-                      사용자 수 {selectedSchool.user}
-                    </p>
-                    <p style={{ margin: "0" }}>
-                      <EyeOutlined style={{ marginRight: "0.5rem" }} />
-                      조회 수 {selectedSchool.view}
-                    </p>
-                  </div>
-                }
-              />
-            </Card>
-          )}
+          {selectedSchool && <RankSchoolCard selectedSchool={selectedSchool} />}
         </Col>
       </Row>
-    </AppLayout>
+    </>
   );
 };
 
