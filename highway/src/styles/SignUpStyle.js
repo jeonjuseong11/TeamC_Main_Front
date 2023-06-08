@@ -22,7 +22,7 @@ export const SignUpBtn = styled(Button)`
 //회원가입 폼 style
 export const SignUpForm = styled(Form)`
   background-color: white;
-  width: 30%;
+  width: 20%;
   min-width: 30rem;
   border: 1px solid #efefef;
   padding: 1rem;

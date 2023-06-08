@@ -11,13 +11,6 @@
   height: 20rem;
 }
 
-/* .slick-center div {
-  width: 60rem;
-  background-color: gray;
-  transform: scale(1.1);
-} */
-/* .slick-active {
-} */
 .slick-active div {
   border-radius: 5px;
 }

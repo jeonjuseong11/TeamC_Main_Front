@@ -11,8 +11,6 @@ export const SubWrapper = styled.div`
   margin: 0 auto;
 `;
 export const NoDecoLink = styled(Link)`
-  float: right;
   text-decoration: none;
   color: black;
-  margin-right: 5px;
 `;

@@ -12,8 +12,8 @@ export const LoginWrapper = styled.div`
 `;
 export const LoginForm = styled(Form)`
   text-align: left;
-  width: 30%;
-  min-width: 25rem;
+  width: 20%;
+  min-width: 15rem;
 `;
 export const LoginFormTitle = styled.h1`
   text-align: center;
