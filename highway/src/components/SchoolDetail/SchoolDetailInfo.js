@@ -2,7 +2,6 @@ import { Col, Row, Tabs } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import SchoolDetailJob from "./SchoolDetailJob";
 import SchoolDetailReview from "./SchoolDetailReview";
 import { QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
 

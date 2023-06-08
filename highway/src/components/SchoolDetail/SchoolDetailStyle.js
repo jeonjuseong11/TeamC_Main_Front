@@ -17,29 +17,22 @@ export const StarRateWrapper = styled.div`
 export const OneLineReviewWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 94.7%;
   padding: 1rem;
 `;
 export const ReviewDetailWrapper = styled.div`
   padding: 2rem;
   background-color: white;
   border-radius: 10px;
-  height: auto;
 `;
 export const SchoolDetailWrapper = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: auto;
 `;
 export const SchoolImg = styled.div`
-  width: 100%;
   background-color: #f2f2f2;
   align-items: center;
   height: 10rem;
   text-align: center;
-  justify-content: center;
 `;
 export const SchoolInfo = styled.div`
   text-align: left;
@@ -68,5 +61,4 @@ export const FrequentAsked = styled.div`
   background: white;
   border-radius: 10px;
   height: 20rem;
-  width: 100%;
 `;
