@@ -31,7 +31,7 @@ export const RankTopic = [
   {
     icon: <DesktopOutlined />,
     content: "정보통신 및 SW",
-    value: ["정보통신", "소프트웨어", "네트워크", "시스템"],
+    value: ["정보통신", "소프트웨어", "네트워크", "시스템", "IT"],
   },
   {
     icon: <HighlightOutlined />,
@@ -51,7 +51,7 @@ export const RankTopic = [
   {
     icon: <LineChartOutlined />,
     content: "경제 및 경학",
-    value: ["경제 ", "경학"],
+    value: ["경제 ", "경학", "경영"],
   },
   {
     icon: <MedicineBoxOutlined />,

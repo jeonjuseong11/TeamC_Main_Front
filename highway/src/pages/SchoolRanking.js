@@ -45,21 +45,24 @@ const SchoolRanking = () => {
   const handleSchoolSelect = (school) => {
     setSelectedSchool(school);
   };
+  const handleFilterValueChange = (value) => {
+    setFilterValue(value);
+  };
+
   const filteredData = rankData.filter((item) => {
     if (filterValue === "") {
       return true;
     }
-    // 여기서 필터링 조건을 설정합니다.
-    // 예를 들어, "ooo"에 해당하는 데이터만 필터링하려면 item.tags === "Value 1"과 같이 설정합니다.
-    return item.tags.includes(filterValue);
+    return item.tags.some((tag) => filterValue.includes(tag));
   });
+
   useEffect(() => {
     if (filterValue === "") {
       setSelectedSchool(rankData[0]);
     } else {
-      setSelectedSchool();
+      setSelectedSchool(filteredData[0]);
     }
-  }, [filterValue, rankData]);
+  }, [filterValue, rankData, filteredData]);
   const columns = [
     {
       title: "랭킹",
@@ -118,7 +121,7 @@ const SchoolRanking = () => {
           </div>
         </Col>
         <Col xs={24} md={15}>
-          <RankSelector setFilterValue={setFilterValue} />
+          <RankSelector setFilterValue={handleFilterValueChange} />
         </Col>
       </Row>
       <Row
