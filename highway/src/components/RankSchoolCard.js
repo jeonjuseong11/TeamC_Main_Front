@@ -5,10 +5,11 @@ import {
   SearchOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Tag } from "antd";
+import { Avatar, Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import CircleChart from "./CircleChart";
+import DepartsTags from "./DepartsTags";
 
 const RankSchoolCard = ({ selectedSchool }) => {
   return (
@@ -31,13 +32,7 @@ const RankSchoolCard = ({ selectedSchool }) => {
         title={selectedSchool.schul_NM}
         description={
           <>
-            {selectedSchool.tags.map((item, idx) => {
-              return (
-                <Tag color="#8282ff" key={idx}>
-                  {item}
-                </Tag>
-              );
-            })}
+            <DepartsTags schoolInfo={selectedSchool} />
             <p>
               <a href={selectedSchool.hmpg_ADRES}>
                 {selectedSchool.hmpg_ADRES}

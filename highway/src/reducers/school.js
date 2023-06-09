@@ -20,6 +20,7 @@ export const initialState = {
   schools: [
     {
       id: 1,
+      logoURL: "/assets/schoolLogo1.png",
       schul_NM: "대진디자인고등학교", //학교이름
       descript: "학교 랭킹1",
       schul_RDNMA: "서울특별시 강남구 광평로 39길", //주소
@@ -111,6 +112,7 @@ export const initialState = {
     },
     {
       id: 2,
+      logoURL: null,
       schul_NM: "OOO고등학교", //학교이름
       descript: "학교 랭킹2",
       schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소

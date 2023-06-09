@@ -14,7 +14,6 @@ import DepartsTags from "../components/DepartsTags";
 import SchoolDetailInfo from "../components/SchoolDetail/SchoolDetailInfo";
 
 const SchoolDetail = () => {
-  const location = useLocation();
   const { schoolId } = useParams();
   const { schools } = useSelector((state) => state.school);
   // console.log(school[schoolId - 1]);
@@ -26,13 +25,11 @@ const SchoolDetail = () => {
       school.educationRate +
       school.employmentRate) /
     5;
-
   return (
     <div>
       <SchoolDetailWrapper>
         <SchoolImg>
           <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
             imageStyle={{
               height: 60,
             }}
@@ -40,9 +37,24 @@ const SchoolDetail = () => {
           >
             <Button type="primary">배경 이미지 추가하기</Button>
           </Empty>
-          <SchoolLogo>
-            <h4>이미지</h4>
-          </SchoolLogo>
+          {school.logoURL !== null ? (
+            <SchoolLogo>
+              <img
+                src={school.logoURL}
+                alt="학교로고"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                }}
+              />
+            </SchoolLogo>
+          ) : (
+            <SchoolLogo>
+              <p>Logo</p>
+            </SchoolLogo>
+          )}
         </SchoolImg>
         <Row gutter={[24, 24]} justify="center">
           <Col xs={22} md={15}>
