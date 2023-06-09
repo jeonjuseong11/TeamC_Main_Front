@@ -83,7 +83,7 @@ const Header = () => {
         style={{
           height: 60,
           width: 60,
-          right: 164,
+          right: 40,
         }}
       />
     </>

@@ -59,7 +59,7 @@ const CardList = ({ filterValue }) => {
                         </CardItem>
                       }
                     />
-                    <Meta description={<DepartsTags schoolInfo={item} />} />
+                    <Meta title={<DepartsTags schoolInfo={item} />} />
                   </Card>
                 </Link>
               </Col>
