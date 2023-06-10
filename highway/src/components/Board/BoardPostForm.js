@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Upload, message, Modal, Row, Col, Select } from "antd";
+import { Form, Input, Button, Upload, message, Modal, Col, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import BoardProfile from "./BoardProfile";
 
 const { TextArea } = Input;
 const getBase64 = (file) =>

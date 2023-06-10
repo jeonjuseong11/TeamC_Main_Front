@@ -5,13 +5,13 @@ import { data } from "./BoardMain";
 const BoardMainList = () => {
   return (
     <>
-      <Col xs={24} md={5} style={{ textAlign: "left" }}>
-        <BoardSmallList data={data} />
-      </Col>
-      <Col xs={24} md={5} style={{ textAlign: "left" }}>
-        <BoardSmallList data={data} />
-      </Col>
       <Col md={4}></Col>
+      <Col xs={24} md={5} style={{ textAlign: "left" }}>
+        <BoardSmallList data={data} />
+      </Col>
+      <Col xs={24} md={5} style={{ textAlign: "left" }}>
+        <BoardSmallList data={data} />
+      </Col>
     </>
   );
 };

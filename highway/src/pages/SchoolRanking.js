@@ -29,9 +29,7 @@ const SchoolRanking = () => {
       },
     ];
     const copiedData = schools.slice();
-    const sortedData = copiedData.sort(
-      (a, b) => b.reviews.length - a.reviews.length
-    );
+    const sortedData = copiedData.sort((a, b) => b.reviews.length - a.reviews.length);
     const rankedData = sortedData.map((item, index) => ({
       ...item,
       rank: index + 1,
@@ -40,7 +38,7 @@ const SchoolRanking = () => {
       female: Math.floor(Math.random() * 101), //더미데이터 생성
     }));
     setRankData(rankedData);
-    setSelectedSchool(rankedData[0]);
+    setSelectedSchool(filteredData[0]);
   }, []);
   const handleSchoolSelect = (school) => {
     setSelectedSchool(school);
@@ -62,7 +60,7 @@ const SchoolRanking = () => {
     } else {
       setSelectedSchool(filteredData[0]);
     }
-  }, [filterValue, rankData, filteredData]);
+  }, [filterValue, rankData]);
   const columns = [
     {
       title: "랭킹",
@@ -124,11 +122,7 @@ const SchoolRanking = () => {
           <RankSelector setFilterValue={handleFilterValueChange} />
         </Col>
       </Row>
-      <Row
-        gutter={[24, 24]}
-        justify="center"
-        style={{ textAlign: "left", marginTop: "1rem" }}
-      >
+      <Row gutter={[24, 24]} justify="center" style={{ textAlign: "left", marginTop: "1rem" }}>
         <Col xs={24} md={10} flex="auto">
           <Table
             style={{ minWidth: "14rem" }}

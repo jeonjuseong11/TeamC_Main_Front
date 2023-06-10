@@ -13,16 +13,6 @@ const Title = styled(Link)`
   color: black;
   font-size: 2rem;
 `;
-const HeaderWrapper = styled.div`
-  text-align: left;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-`;
-const ProfileWrapper = styled.div`
-  padding-top: 5px;
-  text-decoration: none;
-  color: black;
-`;
 
 const Header = () => {
   const { me } = useSelector((state) => state.user);
@@ -45,28 +35,24 @@ const Header = () => {
   return (
     <>
       <Row justify="center" gutter={[24, 24]} style={{ marginTop: "0.5rem" }}>
-        <Col xs={16} md={10} style={{ textAlign: "left" }}>
+        <Col xs={14} md={6} style={{ textAlign: "left" }}>
           <Title to="/">
             <img src={imgUrl} alt="Logo" style={{ width: "10rem" }} />
           </Title>
         </Col>
-        <Col xs={8} md={5} style={{ textAlign: "right" }}>
+        <Col xs={10} md={9} style={{ textAlign: "right", marginTop: "0.3rem" }}>
           {me != null ? (
             <>
-              <Button onClick={navigateToSchoolBoard}>학교 게시판으로</Button>
               <NoDecoLink to="/profile">
                 <Avatar size={28} style={{ marginRight: "5px" }}>
                   {me.userName[0]}
                 </Avatar>
                 {me?.userName}
               </NoDecoLink>
-              <Button
-                onClick={onLogOut}
-                danger
-                style={{ marginLeft: "0.5rem" }}
-              >
+              <Button onClick={onLogOut} danger style={{ marginLeft: "0.5rem" }}>
                 로그아웃
-              </Button>
+              </Button>{" "}
+              <Button onClick={navigateToSchoolBoard}>학교 게시판</Button>
             </>
           ) : (
             <div style={{ marginTop: "0.7rem" }}>

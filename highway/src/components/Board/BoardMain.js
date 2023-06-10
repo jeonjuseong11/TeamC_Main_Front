@@ -15,9 +15,6 @@ export const data = [
 const BoardMain = () => {
   return (
     <>
-      <Col xs={24} md={10}>
-        <BoardMiddleList data={data} />
-      </Col>
       <Col xs={24} md={4}>
         <div
           style={{
@@ -30,6 +27,9 @@ const BoardMain = () => {
         >
           Hot topic(조회수 기준 순위)
         </div>
+      </Col>
+      <Col xs={24} md={10}>
+        <BoardMiddleList data={data} />
       </Col>
     </>
   );

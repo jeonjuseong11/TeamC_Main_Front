@@ -1,5 +1,5 @@
 import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
-import { List, Typography } from "antd";
+import { List, Tag, Typography } from "antd";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
@@ -33,7 +33,7 @@ const BoardMiddleList = ({ data }) => {
             </div>,
           ]}
         >
-          <Typography.Text mark>[ITEM]</Typography.Text> {item}
+          <Tag color="#8282ff">ITEM</Tag> {item}
         </List.Item>
       )}
     />

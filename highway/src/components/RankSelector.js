@@ -77,11 +77,7 @@ const RankSelector = ({ setFilterValue }) => {
           options={RankTopic.map((item) => ({
             label: (
               <Col key={item.value} style={{ padding: 5 }}>
-                <Avatar
-                  style={{ backgroundColor: "#8282ff" }}
-                  icon={item.icon}
-                />
-
+                {item.icon}
                 <div>{item.content}</div>
               </Col>
             ),
