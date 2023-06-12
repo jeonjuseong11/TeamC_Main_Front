@@ -35,12 +35,12 @@ const Header = () => {
   return (
     <>
       <Row justify="center" gutter={[24, 24]} style={{ marginTop: "0.5rem" }}>
-        <Col xs={14} md={6} style={{ textAlign: "left" }}>
+        <Col xs={8} md={6} style={{ textAlign: "left" }}>
           <Title to="/">
             <img src={imgUrl} alt="Logo" style={{ width: "10rem" }} />
           </Title>
         </Col>
-        <Col xs={10} md={9} style={{ textAlign: "right", marginTop: "0.3rem" }}>
+        <Col xs={16} md={9} style={{ textAlign: "right", marginTop: "0.3rem" }}>
           {me != null ? (
             <>
               <NoDecoLink to="/profile">
