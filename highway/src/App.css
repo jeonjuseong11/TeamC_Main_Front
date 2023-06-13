@@ -1,15 +1,19 @@
 .App {
   text-align: center;
-  min-height: 100%;
-}
-.selected-row {
-  background-color: #f2f2f2;
 }
 .App .ant-row {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
+.selected-row {
+  background-color: #f2f2f2;
+}
 .ant-segmented .ant-segmented-item-selected {
   background-color: #8282ff;
   color: white;
+}
+.custom-segmented .ant-segmented-item-selected {
+  border: #8282ff solid;
+  background-color: white;
+  color: #8282ff;
 }

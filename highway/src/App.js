@@ -31,10 +31,13 @@ import SchoolBoardList from "./pages/Board/SchoolBoardList";
 import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 import SchoolBoardPost from "./pages/Board/SchoolBoardPost";
 import moment from "moment";
+import PromotionHome from "./components/Promotion/PromotionHome";
+import PromotionVideoDetail from "./components/Promotion/PromotionVideoDetail";
+import UserInfo from "./components/Profile/UserInfo";
+import ProfileRecentRecord from "./components/Profile/ProfileRecentRecord";
 
 function App() {
   const dispatch = useDispatch();
-  const { me } = useSelector((state) => state.user);
   const access = localStorage.getItem("ACCESSTOKEN");
   const expire = localStorage.getItem("EXPIRES");
   const navigate = useNavigate();
@@ -60,21 +63,22 @@ function App() {
       localStorage.removeItem("ACCESSTOKEN");
       localStorage.removeItem("REFRESHTOKEN");
       localStorage.removeItem("EXPIRES");
-      navigate("/");
+      alert("로그인 만료됨");
+      navigate("/login");
       return;
     }
     const refreshInterval = expireTime.diff(nowTime);
-    //    console.log(refreshInterval);
-    setInterval(reissueToken, refreshInterval);
+    // console.log(refreshInterval);
+    setInterval(reissueToken, refreshInterval - 10);
   };
 
   useEffect(() => {
     if (access) {
       axios.defaults.headers.common["ACCESS_TOKEN"] = access;
-      loadUser();
     }
     if (expire) {
       setupTokenRefresh(expire);
+      loadUser();
     }
   }, [access, expire]);
 
@@ -84,7 +88,6 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/profile" element={<UserProfile />} />
           <Route exact path="/signup/student" element={<StudentSignUp />} />
           <Route exact path="/signup/other" element={<OtherSignUp />} />
           <Route exact path="/signup/student/terms" element={<Terms />} />
@@ -97,11 +100,17 @@ function App() {
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
+            <Route element={<UserProfile />}>
+              <Route exact path="/profile/" element={<UserInfo />} />
+              <Route exact path="/profile/recentrecord" element={<ProfileRecentRecord />} />
+            </Route>
             <Route exact path="/promotion" element={<Promotion />}>
-              <Route exact path="/promotion/news" element={<PromotionNews />}></Route>
+              <Route exact path="/promotion" element={<PromotionHome />} />
+              <Route exact path="/promotion/news" element={<PromotionNews />} />
               <Route exact path="/promotion/videos" element={<PromotionVideos />} />
             </Route>
             <Route exact path="/promotion/news/:newsId" element={<PromotionNewsDetail />} />
+            <Route exact path="/promotion/videos/:videoId" element={<PromotionVideoDetail />} />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
             <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
               <Route>
