@@ -19,7 +19,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogOut = () => {
-    alert("로그아웃");
     dispatch({
       type: LOGOUT_REQUEST,
     });

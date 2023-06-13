@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LeftOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Checkbox, Form } from "antd";
+import { Checkbox, Form, Modal } from "antd";
 import {
   LoginBtn,
   LoginWrapper,
@@ -27,11 +27,6 @@ const Login = () => {
     });
     // console.log("로그인 값: ", values);
   };
-  useEffect(() => {
-    if (logInError) {
-      alert(logInError); //로그인 실패 이유
-    }
-  }, [logInError]);
 
   const goHome = () => {
     navigate("/");
@@ -94,11 +89,7 @@ const Login = () => {
           <Checkbox>로그인 상태 유지</Checkbox>
         </Form.Item>
         <Form.Item>
-          <LoginBtn
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
+          <LoginBtn type="primary" htmlType="submit" className="login-form-button">
             Log in
           </LoginBtn>
         </Form.Item>

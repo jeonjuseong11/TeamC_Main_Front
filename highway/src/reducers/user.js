@@ -1,3 +1,4 @@
+import { message, Modal } from "antd";
 import { produce } from "immer";
 import {
   CHECK_DUPLICATE_ID_REQUEST,
@@ -43,7 +44,22 @@ export const initialState = {
   accessToken: null,
   expire: null,
 };
-
+const error = (props) => {
+  Modal.error({
+    title: "로그인 실패",
+    content: props,
+    style: { top: "40vh" },
+  });
+};
+const success = (props) => {
+  Modal.success({
+    content: props,
+    style: { top: "40vh" },
+  });
+};
+const info = (props) => {
+  message.info(props);
+};
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -77,7 +93,7 @@ const reducer = (state = initialState, action) =>
       case LOGIN_FAILURE:
         draft.logInLoading = false;
         draft.logInError = action.error;
-        alert("아이디, 비밀번호를 확인해주세요");
+        error("아이디, 비밀번호를 확인해주세요");
         break;
       // 회원가입
       case SIGNUP_REQUEST:
@@ -86,6 +102,7 @@ const reducer = (state = initialState, action) =>
         draft.signUpDone = false;
         break;
       case SIGNUP_SUCCESS:
+        success("회원가입 성공");
         draft.signUpLoading = false;
         draft.signUpDone = true;
         break;
@@ -105,11 +122,12 @@ const reducer = (state = initialState, action) =>
         draft.me = null;
         draft.refreshToken = null;
         draft.accessToken = null;
+        info("로그아웃");
         break;
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;
         draft.logOutError = action.error;
-        alert("로그아웃 실패");
+        error("로그아웃 실패");
         break;
       case LOAD_USER_REQUEST:
         draft.loadUserLoading = true;
@@ -119,12 +137,13 @@ const reducer = (state = initialState, action) =>
       case LOAD_USER_SUCCESS:
         draft.loadUserLoading = false;
         draft.me = action.data;
+        info(`${draft.me.userName}님 환영합니다.`);
         draft.loadUserDone = true;
         break;
       case LOAD_USER_FAILURE:
         draft.loadUserLoading = false;
         draft.loadUserError = action.error;
-        alert("유저 정보를 불러오지 못했습니다");
+        error("유저 정보를 불러오지 못했습니다");
         break;
       case REFRESH_TOKEN_REQUEST:
         draft.refreshTokenLoading = true;
