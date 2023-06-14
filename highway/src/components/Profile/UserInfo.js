@@ -1,4 +1,4 @@
-import { Avatar, Col } from "antd";
+import { Avatar, Button, Col } from "antd";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ const UserInfo = () => {
 
   return (
     <>
-      <Col xs={24} md={11}>
+      <Col xs={24} md={11} style={{ marginBottom: "27vh" }}>
         <div
           style={{
             backgroundColor: "white",
@@ -45,7 +45,6 @@ const UserInfo = () => {
             textAlign: "left",
             marginTop: "1rem",
             padding: "2rem",
-            marginBottom: "30vh",
           }}
         >
           <h3 style={{ marginTop: "0" }}>소속학교</h3>
@@ -59,6 +58,7 @@ const UserInfo = () => {
             </div>
           </div>
         </div>
+        <Button danger>계정 탈퇴</Button>
       </Col>
     </>
   );

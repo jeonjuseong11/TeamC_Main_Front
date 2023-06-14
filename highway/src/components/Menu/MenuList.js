@@ -12,12 +12,13 @@ export const MenuLists = [
     key: "/schoolRanking",
     label: <NavLink to="/schoolRanking">학교 랭킹</NavLink>,
   },
-  {
-    key: "/search",
-    label: <NavLink to="/search">내 학교 찾기</NavLink>,
-  },
+
   {
     key: "/promotion",
     label: <NavLink to="/promotion">홍보자료</NavLink>,
+  },
+  {
+    key: "/schoolboard",
+    label: <NavLink to="schoolboard">커뮤니티</NavLink>,
   },
 ];

@@ -34,17 +34,14 @@ const SchoolBoardList = () => {
   };
   return (
     <>
-      <BoardMenu />
-      <Row justify="center">
-        <Col xs={24} md={14}>
+      <Row justify="center" gutter={[16, 16]}>
+        <Col xs={24} md={15}>
           <h4 style={{ textAlign: "left" }}>게시판 리스트</h4>
         </Col>
-        <Col xs={24} md={14}>
+        <Col xs={24} md={15}>
           <Menu mode="horizontal" items={items} />
         </Col>
-      </Row>
-      <Row justify="center" style={{ marginTop: "1rem", textAlign: "left" }}>
-        <Col xs={24} md={14}>
+        <Col xs={24} md={15}>
           <List
             itemLayout="vertical"
             size="large"

@@ -92,10 +92,6 @@ function App() {
           <Route exact path="/signup/other" element={<OtherSignUp />} />
           <Route exact path="/signup/student/terms" element={<Terms />} />
           <Route exact path="/signup/other/terms" element={<Terms />} />
-          <Route exact path="/schoolboard/:schoolId" element={<SchoolBoard />} />
-          <Route exact path="/schoolboard/:schoolId/list" element={<SchoolBoardList />} />
-          <Route exact path="/schoolboard/:schoolId/list/:postId" element={<SchoolBoardDetail />} />
-          <Route exact path="/schoolboard/:schoolId/post" element={<SchoolBoardPost />} />
 
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
@@ -104,6 +100,10 @@ function App() {
               <Route exact path="/profile/" element={<UserInfo />} />
               <Route exact path="/profile/recentrecord" element={<ProfileRecentRecord />} />
             </Route>
+            <Route exact path="/schoolboard" element={<SchoolBoard />} />
+            <Route exact path="/schoolboard/list" element={<SchoolBoardList />} />
+            <Route exact path="/schoolboard/list/:postId" element={<SchoolBoardDetail />} />
+            <Route exact path="/schoolboard/post" element={<SchoolBoardPost />} />
             <Route exact path="/promotion" element={<Promotion />}>
               <Route exact path="/promotion" element={<PromotionHome />} />
               <Route exact path="/promotion/news" element={<PromotionNews />} />

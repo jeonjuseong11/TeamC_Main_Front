@@ -50,8 +50,7 @@ const Header = () => {
               </NoDecoLink>
               <Button onClick={onLogOut} danger style={{ marginLeft: "0.5rem" }}>
                 로그아웃
-              </Button>{" "}
-              <Button onClick={navigateToSchoolBoard}>학교 게시판</Button>
+              </Button>
             </>
           ) : (
             <div style={{ marginTop: "0.7rem" }}>

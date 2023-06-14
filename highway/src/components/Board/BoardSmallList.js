@@ -1,34 +1,54 @@
 import { CommentOutlined, HeartOutlined } from "@ant-design/icons";
-import { List, Typography } from "antd";
-import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { List } from "antd";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { NoDecoLink } from "../../styles/PageStyle";
 
 const BoardSmallList = ({ data }) => {
   const { schoolId } = useParams();
+  const [hoveredItem, setHoveredItem] = useState(null);
+
+  const handleMouseEnter = (item) => {
+    setHoveredItem(item);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredItem(null);
+  };
 
   return (
     <List
-      style={{ textAlign: "left", marginLeft: "1rem" }}
+      bordered={false}
+      style={{
+        textAlign: "left",
+        borderRadius: "10px",
+        border: "1px solid #f2f2f2",
+        padding: "1rem",
+        backgroundColor: "white",
+        marginBottom: "10vh",
+      }}
       header={
         <>
-          <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>
-            자유게시판
-          </span>
-          <Link
-            to={`/schoolboard/${schoolId}/list`}
-            style={{ float: "right", lineHeight: "2rem" }}
-          >
+          <span style={{ fontSize: "1.2rem", marginLeft: "1rem" }}>자유게시판</span>
+          <NoDecoLink to={`/schoolboard/list`} style={{ float: "right", marginRight: "1rem" }}>
             <span>더보기</span>
-          </Link>
+          </NoDecoLink>
         </>
       }
       dataSource={data}
-      renderItem={(item) => (
+      renderItem={(item, idx) => (
         <List.Item
-          style={{ marginLeft: "1rem", height: "5rem", alignItems: "center" }}
+          key={idx}
+          style={{
+            paddingLeft: "1rem",
+            alignItems: "center",
+            background: hoveredItem === item ? "#f0f0f0" : "transparent",
+          }}
+          onMouseEnter={() => handleMouseEnter(item)}
+          onMouseLeave={handleMouseLeave}
           actions={[
-            <div style={{ display: "flex", gap: "1.5rem" }}>
-              <span>
+            <div style={{ display: "inline-block" }}>
+              <span style={{ marginRight: "1rem" }}>
                 <CommentOutlined />
                 {3}
               </span>
@@ -40,7 +60,6 @@ const BoardSmallList = ({ data }) => {
           ]}
         >
           {item}
-          {"          "}
         </List.Item>
       )}
     />
