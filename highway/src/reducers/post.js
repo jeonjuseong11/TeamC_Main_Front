@@ -43,13 +43,61 @@ import {
   REMOVE_POST_COMMENT_REQUEST,
   REMOVE_POST_COMMENT_SUCCESS,
   REMOVE_POST_COMMENT_FAILURE,
+  ADD_POST_COMMENT_REPLY_FAILURE,
+  ADD_POST_COMMENT_REPLY_REQUEST,
+  ADD_POST_COMMENT_REPLY_SUCCESS,
 } from "../constants/actionTypes";
 
 export const initialState = {
   imagePaths: [], //이미지 파일 관리
-  schoolBoardPosts: [], //게시글 리스트
+  schoolBoardPosts: [
+    {
+      id: 1,
+      userId: "admin",
+      title: "제목",
+      content: "내용",
+      board: "자유게시판",
+      category: "IT",
+      createDate: "2023-06-14T17:01:59.744865",
+      modifiedDate: "2023-06-14T17:01:59.744865",
+      good: 1,
+    },
+    {
+      id: 2,
+      userId: "admin2",
+      title: "제목2",
+      content: "내용2",
+      board: "프로젝트 모집",
+      category: "예체능",
+      createDate: "2023-05-14T17:01:59.744865",
+      modifiedDate: "2023-05-14T17:01:59.744865",
+      good: 2,
+    },
+    {
+      id: 3,
+      userId: "admin3",
+      title: "제목3",
+      content: "내용3",
+      board: "고민게시판",
+      category: "경영",
+      createDate: "2023-06-12T17:01:59.744865",
+      modifiedDate: "2023-06-12T17:01:59.744865",
+      good: 3,
+    },
+    {
+      id: 4,
+      userId: "admin4",
+      title: "제목4",
+      content: "내용4",
+      board: "자유게시판",
+      category: "기계",
+      createDate: "2023-06-15T08:01:59.744865",
+      modifiedDate: "2023-06-15T08:01:59.744865",
+      good: 4,
+    },
+  ], //게시글 리스트
   schoolBoardPost: null, //단일 게시글
-  schoolBoardPostComments: null, // 게시글 댓글
+  schoolBoardPostComments: { data: [] }, // 게시글 댓글
   loadPostsLoading: false, //게시글 리스트
   loadPostsDone: false,
   loadPostsError: null,
@@ -89,6 +137,9 @@ export const initialState = {
   removePostCommentLoading: false, // 게시판 댓글 삭제
   removePostCommentDone: false,
   removePostCommentError: false,
+  addPostCommentReplyLoading: false, //게시글 대댓글 추가
+  addPostCommentReplyDone: false,
+  addPostCommentReplyError: null,
 };
 
 const reducer = (state = initialState, action) =>
@@ -118,9 +169,7 @@ const reducer = (state = initialState, action) =>
         draft.likePostError = null;
         break;
       case LIKE_POST_SUCCESS: {
-        const post = draft.schoolBoardPosts.find(
-          (v) => v.id === action.data.PostId
-        );
+        const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
         post.Likers.push({ id: action.data.userId });
         draft.likePostLoading = false;
         draft.likePostDone = true;
@@ -136,9 +185,7 @@ const reducer = (state = initialState, action) =>
         draft.unlikePostError = null;
         break;
       case UNLIKE_POST_SUCCESS: {
-        const post = draft.schoolBoardPosts.find(
-          (v) => v.id === action.data.PostId
-        );
+        const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
         post.Likers = post.Likers.filter((v) => v.id !== action.data.userId);
         draft.unlikePostLoading = false;
         draft.unlikePostDone = true;
@@ -206,9 +253,8 @@ const reducer = (state = initialState, action) =>
       case UPDATE_POST_SUCCESS:
         draft.updatePostLoading = false;
         draft.updatePostDone = true;
-        draft.mainPschoolBoardPostsosts.find(
-          (v) => v.id === action.data.PostId
-        ).content = action.data.content;
+        draft.schoolBoardPostComments.find((v) => v.id === action.data.PostId).content =
+          action.data.content;
         break;
       case UPDATE_POST_FAILURE:
         draft.updatePostLoading = false;
@@ -222,9 +268,7 @@ const reducer = (state = initialState, action) =>
       case REMOVE_POST_SUCCESS:
         draft.removePostLoading = false;
         draft.removePostDone = true;
-        draft.mainPosts = draft.schoolBoardPosts.filter(
-          (v) => v.id !== action.data.PostId
-        );
+        draft.mainPosts = draft.schoolBoardPosts.filter((v) => v.id !== action.data.PostId);
         break;
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
@@ -236,11 +280,6 @@ const reducer = (state = initialState, action) =>
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS: {
-        const post = draft.schoolBoardPosts.find(
-          // (v) => v.id === action.data.PostId
-          (v) => v.id === action.data.boardId // POSTMAN에 나온 주소대로
-        );
-        post.Comments.unshift(action.data);
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
@@ -249,15 +288,13 @@ const reducer = (state = initialState, action) =>
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
         break;
-      default:
-        break;
       case LOAD_POST_COMMENTS_REQUEST:
         draft.loadPostCommentsLoading = true;
         draft.loadPostCommentsDone = false;
         draft.loadPostCommentsError = null;
         break;
       case LOAD_POST_COMMENTS_SUCCESS: {
-        draft.schoolBoardPostsComments = action.data;
+        draft.schoolBoardPostComments = action.data;
         draft.loadPostCommentsLoading = false;
         draft.loadPostCommentsDone = true;
         break;
@@ -274,9 +311,6 @@ const reducer = (state = initialState, action) =>
       case UPDATE_POST_COMMENT_SUCCESS:
         draft.updatePostCommentLoading = false;
         draft.updatePostCommentDone = true;
-        draft.mainPschoolBoardPostsosts.find(
-          (v) => v.id === action.data.PostId
-        ).content = action.data.content;
         break;
       case UPDATE_POST_COMMENT_FAILURE:
         draft.updatePostCommentLoading = false;
@@ -290,14 +324,28 @@ const reducer = (state = initialState, action) =>
       case REMOVE_POST_COMMENT_SUCCESS:
         draft.removePostCommentLoading = false;
         draft.removePostCommentDone = true;
-        draft.mainPosts = draft.schoolBoardPosts.filter(
-          (v) => v.id !== action.data.PostId
-        );
+        draft.mainPosts = draft.schoolBoardPosts.filter((v) => v.id !== action.data.PostId);
         break;
       case REMOVE_POST_COMMENT_FAILURE:
         draft.removePostCommentLoading = false;
         draft.removePostCommentError = action.error;
         break;
+      case ADD_POST_COMMENT_REPLY_REQUEST:
+        draft.addPostCommentReplyLoading = true;
+        draft.addPostCommentReplyDone = false;
+        draft.addPostCommentReplyError = null;
+        break;
+      case ADD_POST_COMMENT_REPLY_SUCCESS: {
+        draft.addPostCommentReplyLoading = false;
+        draft.addPostCommentReplyDone = true;
+        break;
+      }
+      case ADD_POST_COMMENT_REPLY_FAILURE:
+        draft.addPostCommentReplyLoading = false;
+        draft.addPostCommentReplyError = action.error;
+        break;
+      default:
+        return state;
     }
   });
 
