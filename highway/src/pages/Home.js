@@ -3,11 +3,12 @@ import Slider from "../components/Slider/AdSlider";
 import AppLayout from "../components/AppLayout";
 import SearchForm from "../components/SearchForm";
 import CardList from "../components/Card/CardList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOAD_SCHOOL_LIST_REQUEST } from "../constants/actionTypes";
+import HomeBoardList from "../components/HomeBoardList";
 
 const Home = () => {
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState([""]);
   const dispatch = useDispatch();
   const loadSchoolInfo = () => {
     dispatch({
@@ -17,11 +18,13 @@ const Home = () => {
   useEffect(() => {
     loadSchoolInfo();
   }, []);
+
   return (
     <AppLayout>
       <Slider />
       <SearchForm filterValue={filterValue} setFilterValue={setFilterValue} />
       <CardList filterValue={filterValue} />
+      <HomeBoardList />
     </AppLayout>
   );
 };

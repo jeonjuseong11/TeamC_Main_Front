@@ -7,7 +7,7 @@ import { IconText } from "../../components/Card/CardStyle";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const formatDate = (dateString) => {
+export const formatDate = (dateString) => {
   const currentTime = moment();
   const targetTime = moment(dateString);
   const duration = moment.duration(currentTime.diff(targetTime));
