@@ -20,22 +20,24 @@ const UserInfo = () => {
         >
           <h3 style={{ margin: "0" }}>기본 정보</h3>
           <table style={{ marginTop: "1rem", width: "100%", height: "10rem" }}>
-            <tr>
-              <th style={{ width: "5rem" }}>이름</th>
-              <td>{me?.userName}</td>
-            </tr>
-            <tr>
-              <th>아이디</th>
-              <td>{me?.userId}</td>
-            </tr>
-            <tr>
-              <th>이메일</th>
-              <td>{me?.userEmail}</td>
-            </tr>
-            <tr>
-              <th>성별</th>
-              <td>{me?.userGender}</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th style={{ width: "5rem" }}>이름</th>
+                <td>{me?.userName}</td>
+              </tr>
+              <tr>
+                <th>아이디</th>
+                <td>{me?.userId}</td>
+              </tr>
+              <tr>
+                <th>이메일</th>
+                <td>{me?.userEmail}</td>
+              </tr>
+              <tr>
+                <th>성별</th>
+                <td>{me?.userGender}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div
