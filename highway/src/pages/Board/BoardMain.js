@@ -1,9 +1,11 @@
 import { LikeOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Col, Input, List, Space } from "antd";
+import { Button, Col, Input, List, Tag } from "antd";
 import React, { useState } from "react";
 import { data } from "../SchoolBoard";
 import moment from "moment";
 import { IconText } from "../../components/Card/CardStyle";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const formatDate = (dateString) => {
   const currentTime = moment();
@@ -29,19 +31,33 @@ const formatDate = (dateString) => {
   }
 };
 const BoardMain = () => {
+  const { schoolBoardPosts } = useSelector((state) => state.post);
+
   const [hoveredItem, setHoveredItem] = useState(null);
   const [sortOrder, setSortOrder] = useState("latest");
-  const sortedData = [...data];
+  const sortedData = [...schoolBoardPosts];
+  const [searchText, setSearchText] = useState("");
 
   if (sortOrder === "latest") {
     sortedData.sort((a, b) => {
       return new Date(b.createDate) - new Date(a.createDate);
     });
   } else if (sortOrder === "most-liked") {
+    {
+      /* 해당 기능은 2023js에 새로 나온 기능인 toSorted 메서드 활용 가능 */
+    }
     sortedData.sort((a, b) => {
       return b.good - a.good;
     });
   }
+
+  let filteredData = sortedData;
+  if (searchText) {
+    filteredData = sortedData.filter((item) =>
+      item.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }
+
   const handleSortOrder = (order) => {
     setSortOrder((prevOrder) => (prevOrder === order ? "" : order));
   };
@@ -50,15 +66,15 @@ const BoardMain = () => {
       <Input
         placeholder="궁금한 내용을 찾아보세요"
         style={{ borderRadius: "50px", padding: "1rem", marginBottom: "1rem" }}
+        onChange={(e) => setSearchText(e.target.value)}
+        value={searchText}
         onKeyPress={(e) => {
           if (e.key === "Enter") {
-            setSearchText([e.target.value]);
-            setFilterValue(searchText);
+            setSearchText(e.target.value);
           }
         }}
-        prefix={<SearchOutlined style={{ color: "black" }} />}
       />
-      <div style={{ textAlign: "left" }}>
+      <div style={{ textAlign: "left", marginBottom: "1rem" }}>
         <Button
           type="text"
           style={{
@@ -85,7 +101,7 @@ const BoardMain = () => {
       <List
         itemLayout="vertical"
         size="large"
-        dataSource={sortedData}
+        dataSource={filteredData}
         grid={{
           gutter: 0,
           column: 2,
@@ -93,41 +109,45 @@ const BoardMain = () => {
         renderItem={(item, index) => (
           <div
             style={{
-              marginTop: "1rem",
               borderTop: "1px solid #f2f2f2",
               padding: "1rem",
             }}
           >
-            <List.Item
-              key={item.title}
-              onMouseEnter={() => setHoveredItem(index)}
-              onMouseLeave={() => setHoveredItem(null)}
-              style={{
-                textAlign: "left",
-                borderRadius: "10px",
-                padding: "1rem",
-                alignItems: "center",
-                background: hoveredItem === index ? "#f5f5f5" : "transparent",
-                transition: "background 0.3s",
-              }}
-              actions={[
-                <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />,
-                <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-              ]}
-            >
-              <List.Item.Meta title={item.title} description={item.content} />
-              <div
+            {/* <Link to={`/schoolboard/${item.category}/${item.id}`}> */}
+            {/* 카테고리를 주소에 첨부할지 말지는 아직 고민중 */}
+            <Link to={`/schoolboard/${item.id}`}>
+              <List.Item
+                key={item.title}
+                onMouseEnter={() => setHoveredItem(index)}
+                onMouseLeave={() => setHoveredItem(null)}
                 style={{
-                  position: "absolute",
-                  bottom: 16,
-                  right: 16,
-                  textAlign: "right",
-                  color: "#a2a2a2",
+                  textAlign: "left",
+                  borderRadius: "10px",
+                  padding: "1rem",
+                  alignItems: "center",
+                  background: hoveredItem === index ? "#f5f5f5" : "transparent",
+                  transition: "background 0.3s",
                 }}
+                actions={[
+                  <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />,
+                  <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                ]}
               >
-                {formatDate(item.createDate)}
-              </div>
-            </List.Item>
+                <span style={{ color: "gray" }}>{item.category}</span>
+                <List.Item.Meta title={item.title} description={item.content} />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 16,
+                    right: 16,
+                    textAlign: "right",
+                    color: "#a2a2a2",
+                  }}
+                >
+                  {formatDate(item.createDate)}
+                </div>
+              </List.Item>
+            </Link>
           </div>
         )}
       />
