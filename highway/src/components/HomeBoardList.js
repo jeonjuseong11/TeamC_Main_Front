@@ -12,7 +12,7 @@ const HomeBoardList = () => {
   return (
     <Row justify="center" gutter={[16, 16]} style={{ marginTop: "1rem", textAlign: "left" }}>
       <Col xs={24} md={15} style={{ marginBottom: "2rem" }}>
-        <h2>Highway 커뮤니티에 물어보세요</h2>
+        <h3>Highway 커뮤니티에 물어보세요</h3>
         <List
           size="large"
           dataSource={schoolBoardPosts}
