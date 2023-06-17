@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import CommentDummyDatas from "../../utils/CommentDummyDatas";
-import { CommentOutlined, DownloadOutlined } from "@ant-design/icons";
+import { HeartOutlined, HeartTwoTone, MessageOutlined, MessageTwoTone } from "@ant-design/icons";
 
 const ToggleComment = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,10 @@ const ToggleComment = () => {
   const [inputContent, setInputContent] = useState("");
   const [checkReply, setCheckReply] = useState(false);
   const [toggle, setToggle] = useState(false);
-
+  const [good, setGood] = useState(false);
+  const onToggleGoods = () => {
+    setGood(!good);
+  };
   const userCheck = (item) => {
     if (me === null) {
       return false;
@@ -99,28 +102,55 @@ const ToggleComment = () => {
 
   return (
     <>
+      <Col xs={23} md={11} offset={4}>
+        <div style={{ display: "inline-block", float: "left" }}>
+          {good ? (
+            <HeartTwoTone
+              twoToneColor="#eb2f96"
+              key="heart"
+              onClick={onToggleGoods}
+              style={{ marginRight: "0.5rem" }}
+            />
+          ) : (
+            <HeartOutlined key="heart" onClick={onToggleGoods} style={{ marginRight: "0.5rem" }} />
+          )}
+          좋아요 {good ? CommentDummyDatas.data.length + 1 : CommentDummyDatas.data.length}
+          {!toggle ? (
+            <Button
+              style={{ marginLeft: "1rem" }}
+              type="text"
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+              icon={<MessageOutlined />}
+            >
+              댓글 {CommentDummyDatas.data.length}
+            </Button>
+          ) : (
+            <Button
+              style={{ marginLeft: "1rem" }}
+              type="text"
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+              icon={<MessageTwoTone twoToneColor="#8282ff" />}
+            >
+              <span
+                style={{
+                  color: !toggle ? "black" : "#8282ff",
+                  fontWeight: !toggle ? "" : "700",
+                }}
+              >
+                댓글 {CommentDummyDatas.data.length}
+              </span>
+            </Button>
+          )}
+        </div>
+      </Col>
       {!toggle ? (
-        <Col xs={23} md={11} offset={4}>
-          <Button
-            type="primary"
-            shape="circle"
-            onClick={() => {
-              setToggle(true);
-            }}
-            icon={<CommentOutlined />}
-          />
-        </Col>
+        <></>
       ) : (
         <Col xs={23} md={11} offset={4}>
-          <Button
-            type="primary"
-            shape="circle"
-            style={{ marginBottom: "1rem" }}
-            onClick={() => {
-              setToggle(false);
-            }}
-            icon={<CommentOutlined />}
-          />
           <Input
             placeholder="댓글을 적어주세요."
             style={{

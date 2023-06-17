@@ -9,11 +9,8 @@ import {
   UPDATE_POST_COMMENT_REQUEST,
 } from "../../constants/actionTypes";
 import { useParams } from "react-router-dom";
-import BoardProfile from "../../components/Board/BoardProfile";
-import moment from "moment";
-import CommentDummyData, { CommentDummyDatas } from "../../utils/CommentDummyDatas";
-import SchoolBoardMenu from "../../components/schoolBoardDetail/SchoolBoardMenu";
 import ToggleComment from "../../components/schoolBoardDetail/ToggleComment";
+import { formatDate } from "./BoardMain";
 
 const SchoolBoardDetail = () => {
   const dispatch = useDispatch();
@@ -43,21 +40,14 @@ const SchoolBoardDetail = () => {
             },
           ]}
         />
-        <h2>{schoolBoardPosts[postId - 1].title}</h2>
-        <ul
-          style={{
-            listStyle: "none",
-            margin: "0",
-            padding: "0",
-          }}
-        >
-          <li style={{ marginBottom: "0.5rem" }}>작성자 : {schoolBoardPosts[postId - 1].userId}</li>
-          <li style={{ float: "left" }}>{schoolBoardPosts[postId - 1].createData}</li>
-          <li style={{ float: "left" }}>{CommentDummyData.length}</li>
-          <li style={{}}>{schoolBoardPosts[postId - 1].good}</li>
-          <hr />
-          {schoolBoardPosts[postId - 1].content}
-        </ul>
+        <div>
+          <h2>{schoolBoardPosts[postId - 1].title}</h2>
+          <p>작성자 : {schoolBoardPosts[postId - 1].userId}</p>
+          <p>{formatDate(schoolBoardPosts[postId - 1].createDate)}</p>
+          <p style={{ borderTop: "1px solid #c2c2c2", paddingTop: "1rem" }}>
+            {schoolBoardPosts[postId - 1].content}
+          </p>
+        </div>
       </Col>
       <ToggleComment />
     </>

@@ -1,7 +1,7 @@
 import { Avatar, Button, Col, List, Menu, Row } from "antd";
-import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import React from "react";
 export const data = [
   {
     id: 1,
@@ -15,7 +15,7 @@ export const data = [
   },
 ];
 const SchoolBoard = () => {
-  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <div>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
