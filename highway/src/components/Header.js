@@ -1,4 +1,10 @@
-import { FileTextOutlined } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  CustomerServiceOutlined,
+  FileTextOutlined,
+  NotificationOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 import { Avatar, Button, Col, FloatButton, Row } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LOGOUT_REQUEST } from "../constants/actionTypes";
 import { NoDecoLink } from "../styles/PageStyle";
+import { info } from "../utils/Message";
 const imgUrl = "/assets/TitleIcon.png";
 //사이트 로고 부분
 const Title = styled(Link)`
@@ -19,6 +26,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogOut = () => {
+    info("로그아웃");
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -65,11 +73,34 @@ const Header = () => {
         icon={<FileTextOutlined />}
         tooltip={<div>적성검사 하러가기</div>}
         style={{
-          height: 60,
-          width: 60,
+          // height: 60,
+          // width: 60,
           right: 40,
         }}
       />
+      {/* <FloatButton
+        type="primary"
+        icon={<QuestionCircleOutlined />}
+        tooltip={<div>서비스에 대한 생각을 남겨주세요</div>}
+        style={{
+          height: 60,
+          width: 60,
+          right: 40,
+          bottom: 120,
+        }}
+      /> */}
+      <FloatButton.Group
+        trigger="click"
+        type="primary"
+        style={{ right: 40, bottom: 100 }}
+        icon={<CustomerServiceOutlined />}
+      >
+        <FloatButton
+          icon={<CommentOutlined />}
+          tooltip={<div>서비스에 대한 생각을 남겨주세요</div>}
+        />
+        <FloatButton icon={<QuestionCircleOutlined />} tooltip={<div>버그 리포트</div>} />
+      </FloatButton.Group>
     </>
   );
 };

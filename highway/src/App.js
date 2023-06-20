@@ -1,4 +1,4 @@
-import { ConfigProvider } from "antd";
+import { ConfigProvider, message } from "antd";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { useEffect } from "react";
@@ -37,13 +37,14 @@ import UserInfo from "./components/Profile/UserInfo";
 import ProfileRecentRecord from "./components/Profile/ProfileRecentRecord";
 import BoardMain from "./pages/Board/BoardMain";
 import BoardPostForm from "./components/Board/BoardPostForm";
+import { info } from "./utils/Message";
 
 function App() {
   const dispatch = useDispatch();
   const access = localStorage.getItem("ACCESSTOKEN");
   const expire = localStorage.getItem("EXPIRES");
   const navigate = useNavigate();
-
+  const { me } = useSelector((state) => state.user);
   const reissueToken = () => {
     // Token 재발행
     dispatch({
@@ -65,7 +66,7 @@ function App() {
       localStorage.removeItem("ACCESSTOKEN");
       localStorage.removeItem("REFRESHTOKEN");
       localStorage.removeItem("EXPIRES");
-      alert("로그인 만료됨");
+      info("로그인 만료됨");
       navigate("/login");
       return;
     }
@@ -83,7 +84,12 @@ function App() {
       loadUser();
     }
   }, [access, expire]);
-
+  useEffect(() => {
+    // console.log(me);
+    if (me) {
+      info(`${me.userName}님 환영합니다.`);
+    }
+  }, [me]);
   return (
     <ConfigProvider theme={{ token: { colorPrimary: "#8282ff" } }}>
       <div className="App">

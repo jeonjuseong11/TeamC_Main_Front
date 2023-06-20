@@ -20,6 +20,7 @@ import {
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILURE,
 } from "../constants/actionTypes";
+import { error, success } from "../utils/Message";
 
 export const initialState = {
   checkIdLoading: false, // 유저 아이디 중복확인 시도중
@@ -44,22 +45,7 @@ export const initialState = {
   accessToken: null,
   expire: null,
 };
-const error = (props) => {
-  Modal.error({
-    title: "로그인 실패",
-    content: props,
-    style: { top: "40vh" },
-  });
-};
-const success = (props) => {
-  Modal.success({
-    content: props,
-    style: { top: "40vh" },
-  });
-};
-const info = (props) => {
-  message.info(props);
-};
+
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -122,7 +108,6 @@ const reducer = (state = initialState, action) =>
         draft.me = null;
         draft.refreshToken = null;
         draft.accessToken = null;
-        info("로그아웃");
         break;
       case LOGOUT_FAILURE:
         draft.logOutLoading = false;
@@ -137,7 +122,6 @@ const reducer = (state = initialState, action) =>
       case LOAD_USER_SUCCESS:
         draft.loadUserLoading = false;
         draft.me = action.data;
-        info(`${draft.me.userName}님 환영합니다.`);
         draft.loadUserDone = true;
         break;
       case LOAD_USER_FAILURE:
