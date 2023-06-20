@@ -6,7 +6,8 @@ import "moment/locale/ko"; //한국어 적용
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_REVIEW_REQUEST } from "../constants/actionTypes";
+import { ADD_SCHOOL_REVIEW_REQUEST, LOAD_SCHOOL_REVIEWS_REQUEST } from "../constants/actionTypes";
+import axios from "axios";
 const FormItemWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -22,13 +23,13 @@ const MessageWrapper = styled.div`
 const DetailReviewForm = ({ setWrite }) => {
   const { schoolId } = useParams();
   const { schools } = useSelector((state) => state.school);
-  const userInfo = localStorage.getItem("USERINFO");
   const { me } = useSelector((state) => state.user);
 
   const reviews = schools[schoolId - 1].reviews;
   const [form] = Form.useForm();
   // console.log(detailReviews);
   const dispatch = useDispatch();
+
   //별점 메시지를 위한 state
   const [trafficMessage, setTrafficMessage] = useState("평가해주세요.");
   const [facilityMessage, setFacilityMessage] = useState("평가해주세요.");
@@ -73,44 +74,50 @@ const DetailReviewForm = ({ setWrite }) => {
       return "";
     }
   };
+  const loadSchoolReviews = ({ schoolId }) => {
+    dispatch({
+      type: LOAD_SCHOOL_REVIEWS_REQUEST,
+      data: schoolId,
+    });
+  };
+  const accessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
+
   useEffect(() => {
     console.log(reviews);
   }, [reviews]);
-  const handleSubmit = useCallback(
-    (values) => {
-      // console.log(values);
-      if (!values) {
-        alert("빈칸이 있습니다.");
-        return;
-      }
-
-      dispatch({
-        type: ADD_REVIEW_REQUEST,
-        data: {
-          values: {
-            id: reviews.length + 1,
-            author: me.userId,
-            tags: ["디자인"],
-            content: values.content,
-            secretContent: values.secretContent,
-            datetime: moment(),
-            rate: {
-              trafficRate: values.trafficRate,
-              facilityRate: values.facilityRate,
-              cafeteriaRate: values.cafeteriaRate,
-              educationRate: values.educationRate,
-              employmentRate: values.employmentRate,
-            },
-          },
-          schoolId: schoolId,
-        },
-      });
-
-      form.setFieldsValue = "";
-      setWrite(false);
-    },
-    [schoolId]
-  );
+  const handleSubmit = useCallback((values) => {
+    // console.log(values);
+    if (!values) {
+      alert("빈칸이 있습니다.");
+      return;
+    }
+    dispatch({
+      type: ADD_SCHOOL_REVIEW_REQUEST,
+      data: {
+        // author: "11", //로그인 오류로 인한 테스트용
+        author: me.userId,
+        tags: "디자인",
+        content: values.content,
+        // secretContent: values.secretContent,
+        // datetime: moment(),
+        trafficRate: values.trafficRate,
+        facilityRate: values.facilityRate,
+        cafeteriaRate: values.cafeteriaRate,
+        educationRate: values.educationRate,
+        employmentRate: values.employmentRate,
+        schoolId: schoolId,
+      },
+    });
+    form.setFieldsValue = "";
+    setWrite(false);
+    // dispatch({
+    //   type: LOAD_SCHOOL_REVIEWS_REQUEST,
+    //   data: {
+    //     schoolId: schoolId,
+    //   },
+    // });
+  }, []);
 
   return (
     <Form
@@ -137,62 +144,36 @@ const DetailReviewForm = ({ setWrite }) => {
       </Form.Item>
       <FormItemWrapper>
         <FormItemP>교통</FormItemP>
-        <Form.Item
-          name="trafficRate"
-          rules={[{ required: true }]}
-          style={{ margin: "0" }}
-        >
+        <Form.Item name="trafficRate" rules={[{ required: true }]} style={{ margin: "0" }}>
           <Rate onChange={(value) => handleRateChange("trafficRate", value)} />
         </Form.Item>
         <MessageWrapper>{trafficMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>시설만족도</FormItemP>
-        <Form.Item
-          name="facilityRate"
-          rules={[{ required: true }]}
-          style={{ margin: "0" }}
-        >
+        <Form.Item name="facilityRate" rules={[{ required: true }]} style={{ margin: "0" }}>
           <Rate onChange={(value) => handleRateChange("facilityRate", value)} />
         </Form.Item>
         <MessageWrapper>{facilityMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>급식</FormItemP>
-        <Form.Item
-          name="cafeteriaRate"
-          rules={[{ required: true }]}
-          style={{ margin: "0" }}
-        >
-          <Rate
-            onChange={(value) => handleRateChange("cafeteriaRate", value)}
-          />
+        <Form.Item name="cafeteriaRate" rules={[{ required: true }]} style={{ margin: "0" }}>
+          <Rate onChange={(value) => handleRateChange("cafeteriaRate", value)} />
         </Form.Item>
         <MessageWrapper>{cafeteriaMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>수업만족도</FormItemP>
-        <Form.Item
-          name="educationRate"
-          rules={[{ required: true }]}
-          style={{ margin: "0" }}
-        >
-          <Rate
-            onChange={(value) => handleRateChange("educationRate", value)}
-          />
+        <Form.Item name="educationRate" rules={[{ required: true }]} style={{ margin: "0" }}>
+          <Rate onChange={(value) => handleRateChange("educationRate", value)} />
         </Form.Item>
         <MessageWrapper>{educationMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
         <FormItemP>취업</FormItemP>
-        <Form.Item
-          name="employmentRate"
-          rules={[{ required: true }]}
-          style={{ margin: "0" }}
-        >
-          <Rate
-            onChange={(value) => handleRateChange("employmentRate", value)}
-          />
+        <Form.Item name="employmentRate" rules={[{ required: true }]} style={{ margin: "0" }}>
+          <Rate onChange={(value) => handleRateChange("employmentRate", value)} />
         </Form.Item>
         <MessageWrapper>{employmentMessage}</MessageWrapper>
       </FormItemWrapper>

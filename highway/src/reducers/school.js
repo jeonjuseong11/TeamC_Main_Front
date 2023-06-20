@@ -1,22 +1,28 @@
 import { produce } from "immer";
 import {
-  ADD_REVIEW_FAILURE,
-  ADD_REVIEW_REQUEST,
-  ADD_REVIEW_SUCCESS,
+  ADD_SCHOOL_REVIEW_FAILURE,
+  ADD_SCHOOL_REVIEW_REQUEST,
+  ADD_SCHOOL_REVIEW_SUCCESS,
   // LOAD_SCHOOL_INFO_FAILURE,
   // LOAD_SCHOOL_INFO_REQUEST,
   // LOAD_SCHOOL_INFO_SUCCESS,
   LOAD_SCHOOL_LIST_FAILURE,
   LOAD_SCHOOL_LIST_REQUEST,
   LOAD_SCHOOL_LIST_SUCCESS,
+  LOAD_SCHOOL_REVIEWS_FAILURE,
+  LOAD_SCHOOL_REVIEWS_REQUEST,
+  LOAD_SCHOOL_REVIEWS_SUCCESS,
 } from "../constants/actionTypes";
 export const initialState = {
-  addReviewLoading: false,
-  addReviewDone: false,
-  addReviewError: null,
+  addSchoolReviewLoading: false,
+  addSchoolReviewDone: false,
+  addSchoolReviewError: null,
   loadSchoolListLoading: false,
   loadSchoolListDone: false,
   loadSchoolListError: null,
+  loadSchoolReviewsLoading: false,
+  loadSchoolReviewsDone: false,
+  loadSchoolReviewsError: null,
   schools: [
     {
       id: 1,
@@ -55,52 +61,7 @@ export const initialState = {
         { id: 1, userName: "student1" },
         { id: 2, userName: "student2" },
       ],
-      reviews: [
-        {
-          id: 1,
-          author: "student1",
-          tags: "전기전자과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review1 contents",
-        },
-        {
-          id: 2,
-          author: "student2",
-          tags: "컴퓨터소프트웨어과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review2 contents",
-        },
-        {
-          id: 3,
-          author: "student3",
-          tags: "전기전자과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review3 contents",
-        },
-        {
-          id: 4,
-          author: "student4",
-          tags: "산업디자인과",
-          trafficRate: 5.0,
-          facilityRate: 5.0,
-          cafeteriaRate: 5.0,
-          educationRate: 5.0,
-          employmentRate: 5.0,
-          content: "Review4 contents",
-        },
-      ],
+      reviews: [],
       good: 10,
       followList: ["1", "2"],
       trafficRate: 5,
@@ -156,6 +117,52 @@ export const initialState = {
     },
   ],
   school: [],
+  schoolReviews: [
+    // {
+    //   id: 1,
+    //   author: "student1",
+    //   tags: "전기전자과",
+    //   trafficRate: 5.0,
+    //   facilityRate: 5.0,
+    //   cafeteriaRate: 5.0,
+    //   educationRate: 5.0,
+    //   employmentRate: 5.0,
+    //   content: "Review1 contents",
+    // },
+    // {
+    //   id: 2,
+    //   author: "student2",
+    //   tags: "컴퓨터소프트웨어과",
+    //   trafficRate: 5.0,
+    //   facilityRate: 5.0,
+    //   cafeteriaRate: 5.0,
+    //   educationRate: 5.0,
+    //   employmentRate: 5.0,
+    //   content: "Review2 contents",
+    // },
+    // {
+    //   id: 3,
+    //   author: "student3",
+    //   tags: "전기전자과",
+    //   trafficRate: 5.0,
+    //   facilityRate: 5.0,
+    //   cafeteriaRate: 5.0,
+    //   educationRate: 5.0,
+    //   employmentRate: 5.0,
+    //   content: "Review3 contents",
+    // },
+    // {
+    //   id: 4,
+    //   author: "student4",
+    //   tags: "산업디자인과",
+    //   trafficRate: 5.0,
+    //   facilityRate: 5.0,
+    //   cafeteriaRate: 5.0,
+    //   educationRate: 5.0,
+    //   employmentRate: 5.0,
+    //   content: "Review4 contents",
+    // },
+  ],
 };
 
 const reducer = (state = initialState, action) =>
@@ -175,23 +182,37 @@ const reducer = (state = initialState, action) =>
         draft.loadSchoolListLoading = false;
         draft.loadSchoolListError = action.error;
         break;
-      case ADD_REVIEW_REQUEST:
-        draft.addReviewLoading = true;
-        draft.addReviewDone = false;
-        draft.addReviewError = null;
+      case ADD_SCHOOL_REVIEW_REQUEST:
+        draft.addSchoolReviewLoading = true;
+        draft.addSchoolReviewDone = false;
+        draft.addSchoolReviewError = null;
         break;
-      case ADD_REVIEW_SUCCESS:
-        const school = draft.schools.find(
-          (v) => v.id === parseInt(action.data.schoolId)
-        );
-        school.reviews.unshift(action.data.values);
-        console.log(action.data);
-        draft.addReviewLoading = false;
-        draft.addReviewDone = true;
+      case ADD_SCHOOL_REVIEW_SUCCESS:
+        // const school = draft.schools.find((v) => v.id === parseInt(action.data.schoolId));
+        draft.schoolReviews.unshift(action.data);
+        // console.log(action.data);
+        draft.addSchoolReviewLoading = false;
+        draft.addSchoolReviewDone = true;
         break;
-      case ADD_REVIEW_FAILURE:
-        draft.addReviewLoading = false;
-        draft.addReviewError = action.error;
+      case ADD_SCHOOL_REVIEW_FAILURE:
+        draft.addSchoolReviewLoading = false;
+        draft.addSchoolReviewError = action.error;
+        break;
+      case LOAD_SCHOOL_REVIEWS_REQUEST:
+        draft.loadSchoolReviewsLoading = true;
+        draft.loadSchoolReviewsDone = false;
+        draft.loadSchoolReviewsError = null;
+        break;
+      case LOAD_SCHOOL_REVIEWS_SUCCESS:
+        draft.schoolReviews = action.data;
+        // draft.schools.find((v) => v.id === parseInt(action.data.schoolId)).reviews =
+        //   draft.schoolReviews;
+        draft.loadSchoolReviewsLoading = false;
+        draft.loadSchoolReviewsDone = true;
+        break;
+      case LOAD_SCHOOL_REVIEWS_FAILURE:
+        draft.loadSchoolReviewsLoading = false;
+        draft.loadSchoolReviewsError = action.error;
         break;
       default:
         return state;
