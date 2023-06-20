@@ -2,10 +2,7 @@ import { AutoComplete, Button, Checkbox, Form, Radio, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  CHECK_DUPLICATE_ID_REQUEST,
-  SIGNUP_REQUEST,
-} from "../constants/actionTypes";
+import { CHECK_DUPLICATE_ID_REQUEST, SIGNUP_REQUEST } from "../constants/actionTypes";
 import {
   ButtonWrapper,
   CancelBtn,
@@ -14,7 +11,6 @@ import {
   SignUpInput,
   SignUpInputPassword,
   SignUpWrapper,
-  SmallFormItem,
 } from "../styles/SignUpStyle";
 import {
   agreeValidate,
@@ -26,6 +22,7 @@ import {
   validatePassword,
 } from "../utils/signUpValidator";
 import { useSelector } from "react-redux";
+import { error, info } from "../utils/Message";
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,22 +40,22 @@ const SignUp = () => {
       type: SIGNUP_REQUEST,
       data: values,
     });
-    alert("회원가입 성공! 로그인창으로 이동합니다");
+    info("회원가입 성공! 로그인창으로 이동합니다");
     navigate("/login");
   };
 
   const onCheckUserId = () => {
     const userIdValue = form.getFieldValue("userId");
     if (!userIdValue) {
-      alert("아이디를 입력해주세요");
+      error("아이디를 입력해주세요");
     } else if (!idRegExp.test(userIdValue)) {
-      alert("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요");
+      error("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요");
     } else {
       dispatch({
         type: CHECK_DUPLICATE_ID_REQUEST,
         data: userIdValue,
       });
-      alert("사용가능한 아이디입니다.");
+      info("사용가능한 아이디입니다.");
     }
   };
 
@@ -68,9 +65,7 @@ const SignUp = () => {
       setAutoCompleteResult([]);
     } else {
       setAutoCompleteResult(
-        ["@gmail.com", "@naver.com", "@hanmail.net"].map(
-          (domain) => `${value}${domain}`
-        )
+        ["@gmail.com", "@naver.com", "@hanmail.net"].map((domain) => `${value}${domain}`)
       );
     }
   };
@@ -99,16 +94,8 @@ const SignUp = () => {
           validateStatus={idValid ? "success" : "error"}
         >
           <Space.Compact style={{ width: "100%" }}>
-            <SignUpInput
-              allowClear
-              placeholder="아이디를 입력해주세요"
-              disabled={idValid}
-            />
-            <Button
-              onClick={onCheckUserId}
-              disabled={idValid}
-              style={{ height: "3rem" }}
-            >
+            <SignUpInput allowClear placeholder="아이디를 입력해주세요" disabled={idValid} />
+            <Button onClick={onCheckUserId} disabled={idValid} style={{ height: "3rem" }}>
               중복확인
             </Button>
           </Space.Compact>
@@ -136,10 +123,7 @@ const SignUp = () => {
           ]}
           hasFeedback
         >
-          <SignUpInputPassword
-            allowClear
-            placeholder="비밀번호를 입력해주세요(8~50)"
-          />
+          <SignUpInputPassword allowClear placeholder="비밀번호를 입력해주세요(8~50)" />
         </Form.Item>
         <label>비밀번호 확인</label>
         <Form.Item
@@ -155,17 +139,12 @@ const SignUp = () => {
                 if (getFieldValue("userPw") === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(
-                  new Error("비밀번호가 일치하지 않습니다.")
-                );
+                return Promise.reject(new Error("비밀번호가 일치하지 않습니다."));
               },
             }),
           ]}
         >
-          <SignUpInputPassword
-            allowClear
-            placeholder="비밀번호를 입력해주세요"
-          />
+          <SignUpInputPassword allowClear placeholder="비밀번호를 입력해주세요" />
         </Form.Item>
         <label>닉네임</label>
         <Form.Item name="userName" rules={[{ validator: validateNickname }]}>
@@ -177,36 +156,29 @@ const SignUp = () => {
             <SignUpInput placeholder="이메일을 입력해주세요" />
           </AutoComplete>
         </Form.Item>
-
+        <label>나이</label>
         <Form.Item name="userAge" rules={[{ validator: validateAge }]}>
-          <label>나이</label>
           <SignUpInput type="number" placeholder="나이를 입력해주세요" />
         </Form.Item>
-        <Form.Item
-          name="userSex"
-          rules={[
-            {
-              required: true,
-              message: "성별를 선택해주세요",
-            },
-          ]}
-        >
-          <label>성별</label>
-          <div
-            style={{ display: "flex", height: "3rem", alignItems: "center" }}
+        <label>성별</label>
+        <div style={{ display: "flex", height: "3rem", alignItems: "center" }}>
+          <Form.Item
+            name="userSex"
+            rules={[
+              {
+                required: true,
+                message: "성별를 선택해주세요",
+              },
+            ]}
           >
             <Radio.Group>
               <Radio value="male">남성</Radio>
               <Radio value="female">여성</Radio>
             </Radio.Group>
-          </div>
-        </Form.Item>
+          </Form.Item>
+        </div>
 
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[{ validator: agreeValidate }]}
-        >
+        <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: agreeValidate }]}>
           <Checkbox>
             <Link to={`/signup/student/terms`} state={{ data: identity }}>
               이용약관

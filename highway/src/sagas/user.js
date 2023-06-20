@@ -43,10 +43,7 @@ function* checkUserId(action) {
 }
 
 const logInAPI = (data) => {
-  return axios.post(
-    `user/login?userId=${data.userId}&userPw=${data.userPw}`,
-    data
-  );
+  return axios.post(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data);
 };
 function setAccessToken(accessToken, refreshToken, expiration) {
   localStorage.removeItem("ACCESSTOKEN");
@@ -70,8 +67,7 @@ function setAccessToken(accessToken, refreshToken, expiration) {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    const { access_TOKEN, access_TOKEN_EXPIRATION, refresh_TOKEN } =
-      result.data;
+    const { access_TOKEN, access_TOKEN_EXPIRATION, refresh_TOKEN } = result.data;
     // console.log(result.data.token);//토큰 확인용
     axios.defaults.headers.common["ACCESS_TOKEN"] = `${access_TOKEN}`;
     setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
@@ -94,7 +90,7 @@ function* logIn(action) {
 
 const signUpAPI = (data) => {
   return axios.post(
-    `/user/join?userId=${data.userId}&userPw=${data.userPw}&userName=${data.userName}&userEmail=${data.userEmail}&userSex=${data.userSex}&userAge=${data.userAge}`
+    `/user/join?uid=${data.userId}&pwd=${data.userPw}&name=${data.userName}&email=${data.userEmail}&gender=${data.userSex}&age=${data.userAge}`
   );
 };
 function* signUp(action) {
@@ -168,8 +164,7 @@ const refreshTokenAPI = () => {
 function* refreshToken() {
   try {
     const result = yield call(refreshTokenAPI);
-    const { access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION } =
-      result.data;
+    const { access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION } = result.data;
     axios.defaults.headers.common["ACCESS_TOKEN"] = access_TOKEN;
     setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
     // console.log(action.data);
