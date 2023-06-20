@@ -44,6 +44,9 @@ import {
   REMOVE_POST_COMMENT_REQUEST,
   REMOVE_POST_COMMENT_SUCCESS,
   REMOVE_POST_COMMENT_FAILURE,
+  ADD_POST_COMMENT_REPLY_FAILURE,
+  ADD_POST_COMMENT_REPLY_REQUEST,
+  ADD_POST_COMMENT_REPLY_SUCCESS,
 } from "../constants/actionTypes";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../constants/actionTypes";
 
@@ -173,9 +176,8 @@ function* loadTagPosts(action) {
   }
 }
 
-function loadPostsAPI(data) {
-  //게시글 리스트 로딩
-  return axios.get(``);
+function loadPostsAPI() {
+  return axios.get(`/board/list`);
 }
 
 function* loadPosts(action) {
@@ -183,7 +185,7 @@ function* loadPosts(action) {
     const result = yield call(loadPostsAPI, action.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -201,15 +203,15 @@ function addPostAPI(data) {
 
 function* addPost(action) {
   try {
-    const result = yield call(addPostAPI, action.data);
+    // const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
-      data: result.data,
+      data: action.data,
     });
-    yield put({
-      type: ADD_POST_TO_ME,
-      data: result.data.id,
-    });
+    // yield put({
+    //   type: ADD_POST_TO_ME,
+    //   data: result.data.id,
+    // });
   } catch (err) {
     console.error(err);
     yield put({
@@ -268,10 +270,7 @@ function* updatePost(action) {
 function addCommentAPI(data) {
   // 게시물 댓글 작성
   // return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
-  return axios.post(
-    `/comment?content=${data.content}&boardId=${data.boardId}`,
-    data
-  ); // POSTMAN에 나온 주소
+  return axios.post(`/comment?content=${data.content}&boardId=${data.boardId}`, data); // POSTMAN에 나온 주소
 }
 
 function* addComment(action) {
@@ -313,12 +312,12 @@ function* loadPostComments(action) {
 
 function removePostCommentAPI(data) {
   // 게시물 댓글 삭제
-  return axios.delete(`/comment?id=${data.id}&content=${data.contnet}`, data);
+  return axios.delete(`/comment?id=${data.id}`, data);
 }
 
 function* removePostComment(action) {
   try {
-    const result = yield call(removePostAPI, action.data);
+    const result = yield call(removePostCommentAPI, action.data);
     yield put({
       type: REMOVE_POST_COMMENT_SUCCESS,
       data: result.data,
@@ -334,7 +333,7 @@ function* removePostComment(action) {
 
 function updatePostCommentAPI(data) {
   // 게시물 댓글 수정
-  return axios.patch(`/comment?id=${data.id}&content=${data.content}`, data);
+  return axios.put(`/comment?id=${data.id}&content=${data.content}`, data);
 }
 
 function* updatePostComment(action) {
@@ -348,6 +347,31 @@ function* updatePostComment(action) {
     console.error(err);
     yield put({
       type: UPDATE_POST_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function addCommentReplyAPI(data) {
+  // 게시물 대댓글 작성
+  // return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
+  return axios.post(
+    `/comment?content=${data.content}&boardId=${data.boardId}&parentId=${data.parentId}`,
+    data
+  ); // POSTMAN에 나온 주소
+}
+
+function* addCommentReply(action) {
+  try {
+    const result = yield call(addCommentReplyAPI, action.data);
+    yield put({
+      type: ADD_POST_COMMENT_REPLY_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_POST_COMMENT_REPLY_FAILURE,
       error: err.response.data,
     });
   }
@@ -409,6 +433,10 @@ function* watchRemovePostComment() {
   yield takeLatest(REMOVE_POST_COMMENT_REQUEST, removePostComment);
 }
 
+function* watchAddCommentReply() {
+  yield takeLatest(ADD_POST_COMMENT_REPLY_REQUEST, addCommentReply);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchUploadImages),
@@ -425,5 +453,6 @@ export default function* postSaga() {
     fork(watchLoadPostComments),
     fork(watchUpdatePostComment),
     fork(watchRemovePostComment),
+    fork(watchAddCommentReply),
   ]);
 }
