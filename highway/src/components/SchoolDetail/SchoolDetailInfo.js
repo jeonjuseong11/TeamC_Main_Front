@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import SchoolDetailReview from "./SchoolDetailReview";
 import { QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
 
-const SchoolDetailInfo = () => {
+const SchoolDetailInfo = ({ rateAverages, roundedTotalRate, reviewCount }) => {
   const { schoolId } = useParams();
   const schools = useSelector((state) => state.school.schools);
   const school = schools[schoolId - 1];
@@ -24,7 +24,7 @@ const SchoolDetailInfo = () => {
   };
   return (
     <SubPageWrapper>
-      <Row justify="center" gutter={[24, 24]} style={{ marginBottom: "1rem" }}>
+      <Row justify="center" gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
         <Col xs={22} md={6} style={{ minWidth: "15rem" }}>
           <QuestionWrapper style={{ textAlign: "left", padding: "2rem" }}>
             <h3 style={{ margin: "0" }}>학교 정보</h3>
@@ -35,10 +35,7 @@ const SchoolDetailInfo = () => {
             <p style={{ margin: "0" }}>{school.USER_TELNO_SW}(교무실)</p>
             <p style={{ margin: "0" }}>{school.USER_TELNO_GA}(행정실)</p>
             <h4>홈페이지</h4>
-            <a
-              style={{ color: "black", textDecoration: "none" }}
-              href={school.hmpg_ADRES}
-            >
+            <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
               {school.hmpg_ADRES}
             </a>
           </QuestionWrapper>
@@ -46,11 +43,7 @@ const SchoolDetailInfo = () => {
         <Col xs={22} md={9} style={{ minWidth: "30rem" }}>
           <QuestionWrapper style={{ padding: "2rem", textAlign: "left" }}>
             <h3 style={{ margin: "0" }}>학과소개</h3>
-            <Tabs
-              defaultActiveKey="0"
-              items={departsList}
-              onChange={onChange}
-            />
+            <Tabs defaultActiveKey="0" items={departsList} onChange={onChange} />
           </QuestionWrapper>
         </Col>
       </Row>
@@ -59,7 +52,11 @@ const SchoolDetailInfo = () => {
           <SchoolDetailJob />
         </Col>
       </Row> */}
-      <SchoolDetailReview />
+      <SchoolDetailReview
+        reviewCount={reviewCount}
+        rateAverages={rateAverages}
+        roundedTotalRate={roundedTotalRate}
+      />
     </SubPageWrapper>
   );
 };

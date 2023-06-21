@@ -48,40 +48,7 @@ const ReviewDetailList = () => {
   useEffect(() => {
     console.log(loadSchoolReviewsLoading);
   }, [loadSchoolReviewsLoading]);
-  // console.log(schoolReviews);
-  let trafficRateSum = 0;
-  let facilityRateSum = 0;
-  let cafeteriaRateSum = 0;
-  let educationRateSum = 0;
-  let employmentRateSum = 0;
 
-  // 객체들의 별점들을 합산합니다.
-  for (let i = 0; i < schoolReviews.length; i++) {
-    trafficRateSum += schoolReviews[i].trafficRate;
-    facilityRateSum += schoolReviews[i].facilityRate;
-    cafeteriaRateSum += schoolReviews[i].cafeteriaRate;
-    educationRateSum += schoolReviews[i].educationRate;
-    employmentRateSum += schoolReviews[i].employmentRate;
-  }
-
-  // 별점들의 평균을 계산합니다.
-  const trafficRateAverage = schoolReviews.length > 0 ? trafficRateSum / schoolReviews.length : 0;
-  const facilityRateAverage = schoolReviews.length > 0 ? facilityRateSum / schoolReviews.length : 0;
-  const cafeteriaRateAverage =
-    schoolReviews.length > 0 ? cafeteriaRateSum / schoolReviews.length : 0;
-  const educationRateAverage =
-    schoolReviews.length > 0 ? educationRateSum / schoolReviews.length : 0;
-  const employmentRateAverage =
-    schoolReviews.length > 0 ? employmentRateSum / schoolReviews.length : 0;
-  const totalRate =
-    schoolReviews.length > 0
-      ? (trafficRateAverage +
-          facilityRateAverage +
-          cafeteriaRateAverage +
-          educationRateAverage +
-          employmentRateAverage) /
-        5
-      : 0;
   return (
     <>
       <List
@@ -127,7 +94,7 @@ const ReviewDetailList = () => {
                       <Rate
                         disabled
                         allowHalf
-                        defaultValue={item.trafficRate}
+                        value={item.trafficRate}
                         style={{
                           alignItems: "center",
                           fontSize: "0.7rem",
@@ -137,7 +104,7 @@ const ReviewDetailList = () => {
                       <Rate
                         disabled
                         allowHalf
-                        defaultValue={item.facilityRate}
+                        value={item.facilityRate}
                         style={{
                           alignItems: "center",
                           fontSize: "0.7rem",
@@ -147,7 +114,7 @@ const ReviewDetailList = () => {
                       <Rate
                         disabled
                         allowHalf
-                        defaultValue={item.cafeteriaRate}
+                        value={item.cafeteriaRate}
                         style={{
                           alignItems: "center",
                           fontSize: "0.7rem",
@@ -157,7 +124,7 @@ const ReviewDetailList = () => {
                       <Rate
                         disabled
                         allowHalf
-                        defaultValue={item.educationRate}
+                        value={item.educationRate}
                         style={{
                           alignItems: "center",
                           fontSize: "0.7rem",
@@ -167,7 +134,7 @@ const ReviewDetailList = () => {
                       <Rate
                         disabled
                         allowHalf
-                        defaultValue={item.employmentRate}
+                        value={item.employmentRate}
                         style={{
                           alignItems: "center",
                           fontSize: "0.7rem",

@@ -1,7 +1,9 @@
 import { Avatar, Button, Col, List, Menu, Row } from "antd";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_POSTS_REQUEST } from "../constants/actionTypes";
 export const data = [
   {
     id: 1,
@@ -15,6 +17,19 @@ export const data = [
   },
 ];
 const SchoolBoard = () => {
+  const { schoolBoardPosts } = useSelector((state) => state.post);
+  // useEffect(() => {
+  //   console.log(schoolBoardPosts);
+  // }, [schoolBoardPosts]);
+  useEffect(() => {
+    loadPosts();
+  }, []);
+  const dispatch = useDispatch();
+  const loadPosts = () => {
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
+  };
   const location = useLocation();
   return (
     <div>
