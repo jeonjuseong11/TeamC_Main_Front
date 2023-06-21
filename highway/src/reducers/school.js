@@ -26,15 +26,16 @@ export const initialState = {
   schools: [
     {
       id: 1,
-      logoURL: "/assets/schoolLogo1.png",
+      logoURL: "/assets/schoolLogo1.png", //학교 심볼 이미지
       schul_NM: "대진디자인고등학교", //학교이름
-      descript: "학교 랭킹1",
+      descript: "학교 랭킹1", //학교 설명?
       schul_RDNMA: "서울특별시 강남구 광평로 39길", //주소
       user_TELNO: "02-2226-8418", //전화번호
       USER_TELNO_SW: "02-4321-4321", //교무실 전화번호
       USER_TELNO_GA: "02-6789-1234", //행정실 전화번호
       hmpg_ADRES: "http://daejindesign.sen.hs.kr", //학교 홈페이지
       departs: [
+        //학과 설명
         {
           depart: "전기전자과",
           description:
@@ -56,20 +57,13 @@ export const initialState = {
             "디자인 기초 이론 및 실기 교육을 바탕으로 창조적 발상, 디자인 표현기법, 응용소프트웨어를 활용한 전문 교육과 다양한 콘텐츠 제작을 통해 창의적인 디자이너 양성을 목표로 한다",
         },
       ],
-      tags: ["전자", "IT", "디자인"],
+      tags: ["전자", "IT", "디자인"], //해당 태그
       members: [
+        //해당 학교로 가입한 사용자 -> 못하면 빼고
         { id: 1, userName: "student1" },
         { id: 2, userName: "student2" },
       ],
-      reviews: [],
-      good: 10,
-      followList: ["1", "2"],
-      trafficRate: 5,
-      facilityRate: 5,
-      cafeteriaRate: 5,
-      educationRate: 5,
-      employmentRate: 5,
-      schoolWebsite: "https://000.000.com",
+      schoolWebsite: "https://000.000.com", //학교 사이트 주소
     },
     {
       id: 2,
@@ -104,15 +98,7 @@ export const initialState = {
         },
       ],
       tags: ["경영", "디자인"],
-      members: [],
-      reviews: [],
-      good: 10,
-      followList: ["1", "2"],
-      trafficRate: 0,
-      facilityRate: 0,
-      cafeteriaRate: 0,
-      educationRate: 0,
-      employmentRate: 0,
+      members: ["1", "2"], //해당 학교로 가입한 학생들? 안되면 뺴도됨
       schoolWebsite: "https://000.000.com",
     },
   ],

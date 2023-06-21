@@ -1,13 +1,7 @@
-import { CommentOutlined, FieldTimeOutlined, LikeOutlined } from "@ant-design/icons";
-import { Button, Descriptions, Input, List, Row, Form, Col, Breadcrumb } from "antd";
-import React, { useEffect, useState } from "react";
+import { Col, Breadcrumb } from "antd";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ADD_COMMENT_REQUEST,
-  LOAD_POST_COMMENTS_REQUEST,
-  REMOVE_POST_COMMENT_REQUEST,
-  UPDATE_POST_COMMENT_REQUEST,
-} from "../../constants/actionTypes";
+import { LOAD_POST_COMMENTS_REQUEST } from "../../constants/actionTypes";
 import { useParams } from "react-router-dom";
 import ToggleComment from "../../components/schoolBoardDetail/ToggleComment";
 import { formatDate } from "./BoardMain";
@@ -32,11 +26,15 @@ const SchoolBoardDetail = () => {
       <Col xs={23} md={11} style={{ textAlign: "left" }}>
         <Breadcrumb
           items={[
+            // {
+            //   title: <a href="">{schoolBoardPosts[postId - 1].board}</a>, //게시판으로 이동
+            // },
             {
-              title: <a href="">{schoolBoardPosts[postId - 1].board}</a>, //게시판으로 이동
-            },
-            {
-              title: <a href="">{schoolBoardPosts[postId - 1].category}</a>, //x특성화 분야로 이동하게
+              title: (
+                <a href={`/schoolboard/${schoolBoardPosts[postId - 1].category}`}>
+                  {schoolBoardPosts[postId - 1].category}
+                </a>
+              ), //x특성화 분야로 이동하게
             },
           ]}
         />

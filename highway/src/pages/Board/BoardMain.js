@@ -1,10 +1,9 @@
-import { LikeOutlined, MessageOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Col, Input, List, Tag } from "antd";
+import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { Button, Col, Input, List } from "antd";
 import React, { useState } from "react";
-import { data } from "../SchoolBoard";
 import moment from "moment";
 import { IconText } from "../../components/Card/CardStyle";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const formatDate = (dateString) => {
@@ -31,13 +30,16 @@ export const formatDate = (dateString) => {
   }
 };
 const BoardMain = () => {
+  const { category } = useParams();
   const { schoolBoardPosts } = useSelector((state) => state.post);
-
   const [hoveredItem, setHoveredItem] = useState(null);
   const [sortOrder, setSortOrder] = useState("latest");
   const sortedData = [...schoolBoardPosts];
   const [searchText, setSearchText] = useState("");
+  // if (category=="all") {
 
+  //   filteredData = sortedData.filter((item) => item.category.includes(category));
+  // }
   if (sortOrder === "latest") {
     sortedData.sort((a, b) => {
       return new Date(b.createDate) - new Date(a.createDate);
@@ -56,6 +58,9 @@ const BoardMain = () => {
     filteredData = sortedData.filter((item) =>
       item.title.toLowerCase().includes(searchText.toLowerCase())
     );
+  }
+  if (category == "all") {
+    filteredData = sortedData;
   }
 
   const handleSortOrder = (order) => {
@@ -115,7 +120,7 @@ const BoardMain = () => {
           >
             {/* <Link to={`/schoolboard/${item.category}/${item.id}`}> */}
             {/* 카테고리를 주소에 첨부할지 말지는 아직 고민중 */}
-            <Link to={`/schoolboard/${item.id}`}>
+            <Link to={`/schoolboard/${item.category}/${item.id}`}>
               <List.Item
                 key={item.title}
                 onMouseEnter={() => setHoveredItem(index)}

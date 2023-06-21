@@ -1,4 +1,4 @@
-import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { HeartOutlined, MessageOutlined } from "@ant-design/icons";
 import { Col, List, Row } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -50,7 +50,11 @@ const HomeBoardList = () => {
                   <List.Item.Meta
                     description={
                       <>
-                        <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />
+                        <IconText
+                          icon={HeartOutlined}
+                          text={item.good}
+                          key="list-vertical-like-o"
+                        />
                         <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />
                       </>
                     }

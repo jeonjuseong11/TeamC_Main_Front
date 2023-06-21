@@ -18,7 +18,7 @@ import axios from "axios";
 const SchoolDetail = () => {
   const { schoolId } = useParams();
   const accessToken = localStorage.getItem("ACCESSTOKEN");
-  const { schools } = useSelector((state) => state.school);
+  const { schools, schoolReviews } = useSelector((state) => state.school);
   // console.log(school[schoolId - 1]);
   const dispatch = useDispatch();
   const loadSchoolReviews = () => {
@@ -34,14 +34,66 @@ const SchoolDetail = () => {
   useEffect(() => {
     loadSchoolReviews();
   }, []);
+
+  useEffect(() => {
+    // Calculate the new average rating when a new review is added
+    const reviewCount = schoolReviews.length;
+    setReviewCount(reviewCount);
+
+    const rateSums = {
+      traffic: 0,
+      facility: 0,
+      cafeteria: 0,
+      education: 0,
+      employment: 0,
+    };
+
+    for (let i = 0; i < reviewCount; i++) {
+      const { trafficRate, facilityRate, cafeteriaRate, educationRate, employmentRate } =
+        schoolReviews[i];
+
+      rateSums.traffic += trafficRate;
+      rateSums.facility += facilityRate;
+      rateSums.cafeteria += cafeteriaRate;
+      rateSums.education += educationRate;
+      rateSums.employment += employmentRate;
+    }
+
+    const rateAverages = {
+      traffic: rateSums.traffic / reviewCount,
+      facility: rateSums.facility / reviewCount,
+      cafeteria: rateSums.cafeteria / reviewCount,
+      education: rateSums.education / reviewCount,
+      employment: rateSums.employment / reviewCount,
+    };
+
+    const totalRate =
+      (rateAverages.traffic +
+        rateAverages.facility +
+        rateAverages.cafeteria +
+        rateAverages.education +
+        rateAverages.employment) /
+      5;
+
+    const roundedTotalRate = Math.round(totalRate * 2) / 2;
+
+    // Update the average rating in the component's state
+    setAverageRating(roundedTotalRate);
+    setRateAverages(rateAverages);
+  }, [schoolReviews]);
+
+  const [averageRating, setAverageRating] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
+  const [rateAverages, setRateAverages] = useState({
+    traffic: 0,
+    facility: 0,
+    cafeteria: 0,
+    education: 0,
+    employment: 0,
+  });
+
   const school = schools[schoolId - 1];
-  const totalStarRate =
-    (school.trafficRate +
-      school.facilityRate +
-      school.cafeteriaRate +
-      school.educationRate +
-      school.employmentRate) /
-    5;
+
   return (
     <div>
       <SchoolDetailWrapper>
@@ -78,12 +130,12 @@ const SchoolDetail = () => {
             <SchoolInfo>
               <h2 style={{ margin: "0" }}>{school.schul_NM}</h2>
               <div>
-                {totalStarRate === 0 ? (
+                {averageRating === 0 ? (
                   <StarOutlined />
                 ) : (
                   <StarFilled style={{ color: "#FFDC82" }} />
                 )}
-                <span style={{ marginRight: "10px" }}>{totalStarRate}</span>
+                <span style={{ marginRight: "10px" }}>{averageRating}</span>
                 <DepartsTags schoolInfo={school} />
                 <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
                   {school.hmpg_ADRES}
@@ -94,7 +146,11 @@ const SchoolDetail = () => {
         </Row>
 
         <SubWrapper>
-          <SchoolDetailInfo />
+          <SchoolDetailInfo
+            reviewCount={reviewCount}
+            rateAverages={rateAverages}
+            roundedTotalRate={averageRating}
+          />
         </SubWrapper>
       </SchoolDetailWrapper>
     </div>

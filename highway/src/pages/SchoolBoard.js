@@ -1,8 +1,8 @@
 import { Avatar, Button, Col, List, Menu, Row } from "antd";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { LOAD_POSTS_REQUEST } from "../constants/actionTypes";
 export const data = [
   {
@@ -17,10 +17,7 @@ export const data = [
   },
 ];
 const SchoolBoard = () => {
-  const { schoolBoardPosts } = useSelector((state) => state.post);
-  // useEffect(() => {
-  //   console.log(schoolBoardPosts);
-  // }, [schoolBoardPosts]);
+  const { category } = useParams();
   useEffect(() => {
     loadPosts();
   }, []);
@@ -30,13 +27,27 @@ const SchoolBoard = () => {
       type: LOAD_POSTS_REQUEST,
     });
   };
+  const [title, setTItle] = useState("");
+  useEffect(() => {
+    // console.log(category);
+    if (category == "all") {
+      setTItle("커뮤니티");
+    } else if (category == "free") {
+      setTItle("자유게시판");
+    } else if (category == "question") {
+      setTItle("질문게시판");
+    } else if (category == "project") {
+      setTItle("프로젝트 모집");
+    }
+  }, [category]);
+
   const location = useLocation();
   return (
     <div>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
         <Col xs={23} md={15}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <h1 style={{ margin: "0" }}>커뮤니티</h1>
+            <h1 style={{ margin: "0", marginLeft: "1rem" }}>{title}</h1>
             <Link to="/schoolboard/post">
               <Button
                 type="primary"
@@ -66,17 +77,14 @@ const SchoolBoard = () => {
               borderRadius: "10px",
             }}
           >
-            <Menu.Item key="/schoolboard">
-              <NavLink to="/schoolboard">전체</NavLink>
+            <Menu.Item key="/schoolboard/all">
+              <NavLink to="/schoolboard/all">전체</NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/free">
               <NavLink to="/schoolboard/free">😀 자유게시판</NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/question">
               <NavLink to="/schoolboard/question">고민게시판</NavLink>
-            </Menu.Item>
-            <Menu.Item key="/schoolboard/popular">
-              <NavLink to="/schoolboard/popular">인기글</NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/project">
               <NavLink to="/schoolboard/project">프로젝트 모집</NavLink>

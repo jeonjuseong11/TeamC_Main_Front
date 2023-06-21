@@ -180,9 +180,10 @@ function loadPostsAPI() {
   return axios.get(`/board/list`);
 }
 
-function* loadPosts(action) {
+function* loadPosts() {
   try {
-    const result = yield call(loadPostsAPI, action.data);
+    // const result = yield call(loadPostsAPI, action.data);
+    const result = yield call(loadPostsAPI);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data.data,
