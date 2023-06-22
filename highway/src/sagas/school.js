@@ -58,10 +58,9 @@ const loadSchoolReviewsAPI = (data) => {
 function* loadSchoolReviews(action) {
   try {
     const result = yield call(loadSchoolReviewsAPI, action.data); //schoolId
-    // console.log(action.data);
     yield put({
       type: LOAD_SCHOOL_REVIEWS_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);

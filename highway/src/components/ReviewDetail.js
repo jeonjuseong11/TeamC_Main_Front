@@ -18,22 +18,16 @@ const ReviewPost = () => {
     }
   }, []);
   return (
-    <>
-      {me ? (
-        <NoDecoLink
-          style={{ position: "relative", top: "1rem", left: "-1rem" }}
-          onClick={onToggleWrite}
-        >
-          {write ? "취소" : "리뷰작성"}
-        </NoDecoLink>
-      ) : (
-        <></>
-      )}
-
-      <ReviewDetailWrapper>
-        {write ? <DetailReviewForm setWrite={setWrite} /> : <ReviewDetailList />}
-      </ReviewDetailWrapper>
-    </>
+    <ReviewDetailWrapper>
+      <div style={{ textAlign: "right" }}>
+        {me ? (
+          <NoDecoLink onClick={onToggleWrite}>{write ? "취소" : "리뷰작성"}</NoDecoLink>
+        ) : (
+          <></>
+        )}
+      </div>
+      {write ? <DetailReviewForm setWrite={setWrite} /> : <ReviewDetailList />}
+    </ReviewDetailWrapper>
   );
 };
 

@@ -69,9 +69,9 @@ const ReviewDetailList = () => {
                   <>
                     <DetailReviewAvatarWrapper>
                       <Avatar size={50} style={{ marginTop: "2rem" }}>
-                        {item?.id[0]}
+                        {item?.userName[0]}
                       </Avatar>
-                      <h3>{item?.id}</h3>
+                      <h3>{item?.userName}</h3>
                       <span>
                         <StarFilled style={{ color: "#FFDC82", marginLeft: "-5rem" }} />
                         {(item.trafficRate +

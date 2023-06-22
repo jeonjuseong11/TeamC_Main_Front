@@ -29,11 +29,11 @@ export const initialState = {
       logoURL: "/assets/schoolLogo1.png", //학교 심볼 이미지
       schul_NM: "근명고등학교", //학교이름
       descript: "학교 랭킹1", //학교 설명?
-      schul_RDNMA: "서울특별시 강남구 광평로 39길", //주소
-      user_TELNO: "02-2226-8418", //전화번호
-      USER_TELNO_SW: "02-4321-4321", //교무실 전화번호
-      USER_TELNO_GA: "02-6789-1234", //행정실 전화번호
-      hmpg_ADRES: "http://daejindesign.sen.hs.kr", //학교 홈페이지
+      schul_RDNMA: "경기도 안양시 만안구 삼덕로 49", //주소
+      user_TELNO: "031-449-3567", //전화번호
+      USER_TELNO_SW: "031-446-1201", //교무실 전화번호
+      USER_TELNO_GA: "031-449-3567", //행정실 전화번호
+      hmpg_ADRES: "http://www.kmh.hs.kr", //학교 홈페이지
       departs: [
         //학과 설명
         {
@@ -63,18 +63,17 @@ export const initialState = {
         { id: 1, userName: "student1" },
         { id: 2, userName: "student2" },
       ],
-      schoolWebsite: "https://000.000.com", //학교 사이트 주소
     },
     {
       id: 2,
       logoURL: null,
       schul_NM: "안양공업고등학교", //학교이름
       descript: "학교 랭킹2",
-      schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소
-      user_TELNO: "02-2226-8418", //전화번호
-      USER_TELNO_SW: "02-1234-1234", //교무실 전화번호
-      USER_TELNO_GA: "02-9876-4531", //행정실 전화번호
-      hmpg_ADRES: "http://daejindesign.sen.hs.kr2", //학교 홈페이지
+      schul_RDNMA: "경기도 안양시 만안구 양화로28번길 69", //주소
+      user_TELNO: "031-463-0110", //전화번호
+      USER_TELNO_SW: "031-463-0114", //교무실 전화번호
+      USER_TELNO_GA: "031-463-0110", //행정실 전화번호
+      hmpg_ADRES: "anyang-t.hs.kr", //학교 홈페이지
       departs: [
         {
           depart: "패션소재디자인과",
@@ -124,18 +123,17 @@ export const initialState = {
       ],
       tags: ["경영", "디자인"],
       members: ["1", "2"], //해당 학교로 가입한 학생들? 안되면 뺴도됨
-      schoolWebsite: "https://000.000.com",
     },
     {
       id: 3,
       logoURL: null,
       schul_NM: "안양문화고등학교", //학교이름
       descript: "학교 랭킹2",
-      schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소
-      user_TELNO: "02-2226-8418", //전화번호
-      USER_TELNO_SW: "02-1234-1234", //교무실 전화번호
-      USER_TELNO_GA: "02-9876-4531", //행정실 전화번호
-      hmpg_ADRES: "http://daejindesign.sen.hs.kr2", //학교 홈페이지
+      schul_RDNMA: "경기도 안양시 만안구 양화로37번길 36", //주소
+      user_TELNO: "031-470-4100", //전화번호
+      USER_TELNO_SW: "031-470-4100", //교무실 전화번호
+      USER_TELNO_GA: "031-470-4100", //행정실 전화번호
+      hmpg_ADRES: "https://anyangculture.hs.kr", //학교 홈페이지
       departs: [
         {
           depart: "관광비즈니스과",
@@ -170,18 +168,17 @@ export const initialState = {
       ],
       tags: ["경영", "디자인"],
       members: ["1", "2"], //해당 학교로 가입한 학생들? 안되면 뺴도됨
-      schoolWebsite: "https://000.000.com",
     },
     {
       id: 4,
       logoURL: null,
       schul_NM: "군포e비즈니스고등학교", //학교이름
       descript: "학교 랭킹2",
-      schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소
-      user_TELNO: "02-2226-8418", //전화번호
-      USER_TELNO_SW: "02-1234-1234", //교무실 전화번호
-      USER_TELNO_GA: "02-9876-4531", //행정실 전화번호
-      hmpg_ADRES: "http://daejindesign.sen.hs.kr2", //학교 홈페이지
+      schul_RDNMA: "경기도 군포시 수리산로 153", //주소
+      user_TELNO: "031-390-5322", //전화번호
+      USER_TELNO_SW: "031-390-5308", //교무실 전화번호
+      USER_TELNO_GA: "031-390-5322", //행정실 전화번호
+      hmpg_ADRES: "http://www.gunpo-ebiz.hs.kr", //학교 홈페이지
       departs: [
         {
           depart: "금융회계과",
@@ -216,18 +213,17 @@ export const initialState = {
       ],
       tags: ["경영", "디자인"],
       members: ["1", "2"], //해당 학교로 가입한 학생들? 안되면 뺴도됨
-      schoolWebsite: "https://000.000.com",
     },
     {
       id: 5,
       logoURL: null,
       schul_NM: "경기폴리텍고등학교", //학교이름
       descript: "학교 랭킹2",
-      schul_RDNMA: "서울특별시 강남구 광평로 39길2", //주소
-      user_TELNO: "02-2226-8418", //전화번호
-      USER_TELNO_SW: "02-1234-1234", //교무실 전화번호
-      USER_TELNO_GA: "02-9876-4531", //행정실 전화번호
-      hmpg_ADRES: "http://daejindesign.sen.hs.kr2", //학교 홈페이지
+      schul_RDNMA: "경기도 군포시 고산로 524", //주소
+      user_TELNO: "031-390-4514", //전화번호
+      USER_TELNO_SW: "031-390-4587", //교무실 전화번호
+      USER_TELNO_GA: "031-390-4501", //행정실 전화번호
+      hmpg_ADRES: "www.g-polytech.hs.kr", //학교 홈페이지
       departs: [
         {
           depart: "자동차금형과(디자인모터스과)",
@@ -257,7 +253,6 @@ export const initialState = {
       ],
       tags: ["경영", "디자인"],
       members: ["1", "2"], //해당 학교로 가입한 학생들? 안되면 뺴도됨
-      schoolWebsite: "https://000.000.com",
     },
   ],
   school: [],
