@@ -7,18 +7,23 @@ export const MenuWrapper = styled.header`
 `;
 
 export const MenuLists = [
-  //메뉴 리스트 key : Menu 컴포넌트에 해당 항목 밑줄 쳐짐
   {
     key: "/schoolRanking",
     label: <NavLink to="/schoolRanking">학교 랭킹</NavLink>,
   },
-
   {
     key: "/promotion",
     label: <NavLink to="/promotion">홍보자료</NavLink>,
   },
   {
     key: "/schoolboard",
-    label: <NavLink to="schoolboard/all">커뮤니티</NavLink>,
+    label: <NavLink to="/schoolboard">커뮤니티</NavLink>,
   },
 ];
+
+// 현재 선택된 경로에 대한 key 값을 반환하는 함수
+export const getSelectedKey = () => {
+  const currentPath = window.location.pathname;
+  const selectedMenuItem = MenuLists.find((item) => currentPath.startsWith(item.key));
+  return selectedMenuItem ? selectedMenuItem.key : null;
+};
