@@ -6,7 +6,7 @@ import RankSchoolCard from "../components/RankSchoolCard";
 import RankSelector from "../components/RankSelector";
 
 const SchoolRanking = () => {
-  const { schools } = useSelector((state) => state.school);
+  const { schools, schoolReviews } = useSelector((state) => state.school);
   const [rankData, setRankData] = useState([]);
   const [selectedSchool, setSelectedSchool] = useState(null);
   const [filterValue, setFilterValue] = useState("");
@@ -19,7 +19,7 @@ const SchoolRanking = () => {
         id: 1,
         schul_NM: "OO1고등학교", //학교 이름
         rank: 1, //랭크
-        reviews: 10, //리뷰 수
+        // reviews: 10, //리뷰 수
         members: 10, //재학생 회원 수
         male: 100, //남자 학생수
         female: 120, //여자 학생 수
@@ -29,13 +29,13 @@ const SchoolRanking = () => {
       },
     ];
     const copiedData = schools.slice();
-    const sortedData = copiedData.sort((a, b) => b.reviews.length - a.reviews.length);
-    const rankedData = sortedData.map((item, index) => ({
+    const rankedData = copiedData.map((item, index) => ({
       ...item,
       rank: index + 1,
       views: Math.floor(Math.random() * 101), //더미데이터 생성
       male: Math.floor(Math.random() * 101), //더미데이터 생성
       female: Math.floor(Math.random() * 101), //더미데이터 생성
+      reviews: schoolReviews.length,
     }));
     setRankData(rankedData);
   }, []);
@@ -82,12 +82,12 @@ const SchoolRanking = () => {
         </a>
       ),
     },
-    {
-      title: "리뷰 수",
-      dataIndex: "reviews",
-      key: "reviews",
-      render: (reviews) => reviews.length,
-    },
+    // {
+    //   title: "리뷰 수",
+    //   dataIndex: "reviews",
+    //   key: "reviews",
+    //   render: (reviews) => reviews,
+    // },
     {
       title: "유저 수",
       dataIndex: "members",

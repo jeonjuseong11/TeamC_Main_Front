@@ -24,7 +24,7 @@ const items = [
 ];
 const SchoolBoardList = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
-  const schoolId = useParams();
+  const { schoolId } = useParams();
   const handleMouseEnter = (item) => {
     setHoveredItem(item);
   };
@@ -70,7 +70,7 @@ const SchoolBoardList = () => {
                   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
                 ]}
               >
-                <Link to={`/schoolboard/${schoolId.schoolId}/list/${idx + 1}`}>
+                <Link to={`/schoolboard/${schoolId}/list/${idx + 1}`}>
                   <List.Item.Meta title={"글제목" + item.title} description={item} />
                 </Link>
               </List.Item>
