@@ -2,7 +2,6 @@ import {
   CommentOutlined,
   CustomerServiceOutlined,
   FileTextOutlined,
-  NotificationOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Button, Col, FloatButton, Row } from "antd";
@@ -11,10 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LOGOUT_REQUEST } from "../constants/actionTypes";
-import { NoDecoLink } from "../styles/PageStyle";
 import { info } from "../utils/Message";
+
 const imgUrl = "/assets/TitleIcon.png";
-//사이트 로고 부분
+
 const Title = styled(Link)`
   text-decoration: none;
   color: black;
@@ -25,20 +24,22 @@ const Header = () => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const onLogOut = () => {
     info("로그아웃");
     dispatch({
       type: LOGOUT_REQUEST,
     });
   };
-  function navigateToSchoolBoard() {
-    //학교 게시판으로 이동
-    navigate("/schoolboard/1");
-  }
 
   useEffect(() => {
     // console.log(me);
   }, [me]);
+
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   return (
     <>
       <Row justify="center" gutter={[16, 16]} style={{ marginTop: "0.5rem" }}>
@@ -48,21 +49,19 @@ const Header = () => {
           </Title>
         </Col>
         <Col xs={16} md={9} style={{ textAlign: "right", marginTop: "0.3rem" }}>
-          {me != null ? (
+          {me !== null ? (
             <>
-              <NoDecoLink to="/profile">
-                <Avatar size={28} style={{ marginRight: "5px" }}>
-                  {me.userName[0]}
-                </Avatar>
-                {me?.userName}
-              </NoDecoLink>
+              <Button onClick={handleProfileClick} type="link" style={{ color: "black" }}>
+                <Avatar size={28}>{me?.userName[0]}</Avatar>
+                <span style={{ marginLeft: "0.5rem" }}>{me?.userName}</span>
+              </Button>
               <Button onClick={onLogOut} danger style={{ marginLeft: "0.5rem" }}>
                 로그아웃
               </Button>
             </>
           ) : (
             <div style={{ marginTop: "0.7rem" }}>
-              <NoDecoLink to="/login">로그인</NoDecoLink>
+              <Link to="/login">로그인</Link>
             </div>
           )}
         </Col>
@@ -73,22 +72,9 @@ const Header = () => {
         icon={<FileTextOutlined />}
         tooltip={<div>적성검사 하러가기</div>}
         style={{
-          // height: 60,
-          // width: 60,
           right: 40,
         }}
       />
-      {/* <FloatButton
-        type="primary"
-        icon={<QuestionCircleOutlined />}
-        tooltip={<div>서비스에 대한 생각을 남겨주세요</div>}
-        style={{
-          height: 60,
-          width: 60,
-          right: 40,
-          bottom: 120,
-        }}
-      /> */}
       <FloatButton.Group
         trigger="click"
         type="primary"
