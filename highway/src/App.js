@@ -88,6 +88,7 @@ function App() {
     // console.log(me);
     if (me) {
       info(`${me.userName}님 환영합니다.`);
+      localStorage.setItem("USERINFO", JSON.stringify(me));
     }
   }, [me]);
   return (
