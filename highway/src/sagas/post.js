@@ -73,7 +73,7 @@ function* uploadImages(action) {
 
 function likePostAPI(data) {
   //게시글 좋아요
-  return axios.patch(``);
+  return axios.post(`heart?boardId=${data.boardId}`);
 }
 
 function* likePost(action) {
@@ -81,7 +81,7 @@ function* likePost(action) {
     const result = yield call(likePostAPI, action.data);
     yield put({
       type: LIKE_POST_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -94,7 +94,7 @@ function* likePost(action) {
 
 function unlikePostAPI(data) {
   //게시글 좋아요 취소
-  return axios.delete(``);
+  return axios.delete(`heart?heartId=${data.heartId}`);
 }
 
 function* unlikePost(action) {
@@ -102,7 +102,7 @@ function* unlikePost(action) {
     const result = yield call(unlikePostAPI, action.data);
     yield put({
       type: UNLIKE_POST_SUCCESS,
-      data: result.data,
+      data: { data: result.data.data, heartId: action.data.heartId },
     });
   } catch (err) {
     console.error(err);
@@ -292,7 +292,7 @@ function* addComment(action) {
 
 function loadPostCommentsAPI(data) {
   //학교 게시판 댓글 조회
-  return axios.get(`/comment?boardId=${data.boardId}`);
+  return axios.get(`/comment/list?boardId=${data.boardId}`);
 }
 
 function* loadPostComments(action) {
@@ -300,7 +300,7 @@ function* loadPostComments(action) {
     const result = yield call(loadPostCommentsAPI, action.data);
     yield put({
       type: LOAD_POST_COMMENTS_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -313,7 +313,7 @@ function* loadPostComments(action) {
 
 function removePostCommentAPI(data) {
   // 게시물 댓글 삭제
-  return axios.delete(`/comment?id=${data.id}`, data);
+  return axios.delete(`/comment/?id=${data.id}`, data);
 }
 
 function* removePostComment(action) {
@@ -334,7 +334,7 @@ function* removePostComment(action) {
 
 function updatePostCommentAPI(data) {
   // 게시물 댓글 수정
-  return axios.put(`/comment?id=${data.id}&content=${data.content}`, data);
+  return axios.put(`/comment/?id=${data.id}&content=${data.content}`, data);
 }
 
 function* updatePostComment(action) {

@@ -140,6 +140,7 @@ export const initialState = {
   addPostCommentReplyLoading: false, //게시글 대댓글 추가
   addPostCommentReplyDone: false,
   addPostCommentReplyError: null,
+  Likers: [],
 };
 
 const reducer = (state = initialState, action) =>
@@ -169,8 +170,9 @@ const reducer = (state = initialState, action) =>
         draft.likePostError = null;
         break;
       case LIKE_POST_SUCCESS: {
-        const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
-        post.Likers.push({ id: action.data.userId });
+        // const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
+        draft.Likers.push(action.data);
+        localStorage.setItem("LIKER", JSON.stringify(draft.Likers));
         draft.likePostLoading = false;
         draft.likePostDone = true;
         break;
@@ -185,8 +187,8 @@ const reducer = (state = initialState, action) =>
         draft.unlikePostError = null;
         break;
       case UNLIKE_POST_SUCCESS: {
-        const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
-        post.Likers = post.Likers.filter((v) => v.id !== action.data.userId);
+        draft.Likers = draft.Likers.filter((liker) => liker.id !== action.data.heartId);
+        localStorage.setItem("LIKER", JSON.stringify(draft.Likers));
         draft.unlikePostLoading = false;
         draft.unlikePostDone = true;
         break;
