@@ -48,10 +48,6 @@ const ToggleComment = ({ loadPostComments }) => {
   const [toggle, setToggle] = useState(false);
   const [good, setGood] = useState(false);
 
-  const onToggleGoods = useCallback(() => {
-    setGood(!good);
-  });
-
   const onCheckReply = (item) => {
     if (item > 0) {
       setCheckReply(true);

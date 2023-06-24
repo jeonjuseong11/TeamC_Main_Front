@@ -18,6 +18,7 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
       type: LIKE_POST_REQUEST,
       data: { boardId: postId },
     });
+    setGood(true);
   };
   const unlikePost = () => {
     const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
@@ -37,16 +38,14 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
   const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
 
   useEffect(() => {
-    // console.log(Likers);
-    // const hasLiked = likers.some((liker) => liker.uid === userinfo.userId);
-    // const [good, setGood] = useState(hasLiked);
-
-    const hasLiked = Likers.some(
-      (liker) => liker.boardId == postId && liker.uid == userinfo.userId
-    );
+    const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
+    const likers = JSON.parse(localStorage.getItem("LIKER"));
+    const userId = userinfo.userId;
+    const hasLiked = likers.some((liker) => liker.uid == userId && liker.boardId == postId);
+    console.log(hasLiked);
 
     setGood(hasLiked);
-  }, [Likers, postId]);
+  }, [postId]);
 
   return (
     <Col xs={23} md={11}>
