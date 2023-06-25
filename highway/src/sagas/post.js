@@ -383,11 +383,13 @@ function* watchUploadImages() {
 }
 
 function* watchLikePost() {
-  yield takeLatest(LIKE_POST_REQUEST, likePost);
+  yield throttle(5000, LIKE_POST_REQUEST, likePost);
+  // yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
 
 function* watchUnlikePost() {
-  yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
+  // yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
+  yield throttle(5000, UNLIKE_POST_REQUEST, unlikePost);
 }
 
 function* watchLoadPost() {

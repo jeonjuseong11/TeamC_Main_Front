@@ -8,24 +8,22 @@ import { useParams } from "react-router-dom";
 
 const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
   const dispatch = useDispatch();
-  const { Likers } = useSelector((state) => state.post);
-  const { me } = useSelector((state) => state.user);
+  const { likePostLoading, unlikePostLoading } = useSelector((state) => state.post);
   const [good, setGood] = useState(false);
   const { postId } = useParams();
+  const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
+  const likers = JSON.parse(localStorage.getItem("LIKER"));
 
   const likePost = () => {
     dispatch({
       type: LIKE_POST_REQUEST,
       data: { boardId: postId },
     });
-    setGood(true);
+    // setGood(true);
   };
   const unlikePost = () => {
-    const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
-    const likers = JSON.parse(localStorage.getItem("LIKER"));
     const userId = userinfo.userId;
     const targetLiker = likers.find((liker) => liker.boardId == postId && liker.uid == userId);
-
     if (targetLiker) {
       const { id } = targetLiker;
       dispatch({
@@ -33,30 +31,27 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
         data: { heartId: id },
       });
     }
-    setGood(false);
+    // setGood(false);
   };
-  const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
 
   useEffect(() => {
-    const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
-    const likers = JSON.parse(localStorage.getItem("LIKER"));
     const userId = userinfo.userId;
     const hasLiked = likers.some((liker) => liker.uid == userId && liker.boardId == postId);
     console.log(hasLiked);
 
     setGood(hasLiked);
-  }, [postId]);
+  }, [postId, userinfo, likers]);
 
   return (
     <Col xs={23} md={11}>
       <div style={{ display: "inline-block", float: "left" }}>
         {good ? (
-          <Button type="text" onClick={unlikePost}>
+          <Button type="text" onClick={unlikePost} loading={unlikePostLoading}>
             <HeartTwoTone twoToneColor="#eb2f96" key="heart" />
             좋아요
           </Button>
         ) : (
-          <Button type="text" onClick={likePost}>
+          <Button type="text" onClick={likePost} loading={likePostLoading}>
             <HeartOutlined key="heart" /> 좋아요
           </Button>
         )}
