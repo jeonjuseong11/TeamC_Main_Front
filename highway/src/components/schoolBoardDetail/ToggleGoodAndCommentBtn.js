@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HeartOutlined, HeartTwoTone, MessageOutlined, MessageTwoTone } from "@ant-design/icons";
-import { Button, Col } from "antd";
+import { Button, Col, Row } from "antd";
 import CommentDummyDatas from "../../utils/CommentDummyDatas";
 import { useDispatch, useSelector } from "react-redux";
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from "../../constants/actionTypes";
@@ -33,18 +33,17 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
     }
     // setGood(false);
   };
-
   useEffect(() => {
     const userId = userinfo.userId;
-    const hasLiked = likers.some((liker) => liker.uid == userId && liker.boardId == postId);
-    console.log(hasLiked);
+    const hasLiked = likers?.some((liker) => liker.uid == userId && liker.boardId == postId);
+    // console.log(hasLiked);
 
     setGood(hasLiked);
   }, [postId, userinfo, likers]);
 
   return (
-    <Col xs={23} md={11}>
-      <div style={{ display: "inline-block", float: "left" }}>
+    <>
+      <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 4 }} style={{ textAlign: "left" }}>
         {good ? (
           <Button type="text" onClick={unlikePost} loading={unlikePostLoading}>
             <HeartTwoTone twoToneColor="#eb2f96" key="heart" />
@@ -85,8 +84,8 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
             </span>
           </Button>
         )}
-      </div>
-    </Col>
+      </Col>
+    </>
   );
 };
 
