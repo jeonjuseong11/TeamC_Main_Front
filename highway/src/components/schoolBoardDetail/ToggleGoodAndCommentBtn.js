@@ -8,7 +8,9 @@ import { useParams } from "react-router-dom";
 
 const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
   const dispatch = useDispatch();
-  const { likePostLoading, unlikePostLoading } = useSelector((state) => state.post);
+  const { likePostLoading, unlikePostLoading, schoolBoardPostComments } = useSelector(
+    (state) => state.post
+  );
   const [good, setGood] = useState(false);
   const { postId } = useParams();
   const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
@@ -63,7 +65,7 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
             }}
             icon={<MessageOutlined />}
           >
-            댓글 {CommentDummyDatas.data.length}
+            댓글 {schoolBoardPostComments.length}
           </Button>
         ) : (
           <Button
@@ -80,7 +82,7 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
                 fontWeight: !toggle ? "" : "700",
               }}
             >
-              댓글 {CommentDummyDatas.data.length}
+              댓글 {schoolBoardPostComments.length}
             </span>
           </Button>
         )}

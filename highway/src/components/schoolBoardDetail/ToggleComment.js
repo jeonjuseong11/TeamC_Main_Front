@@ -1,10 +1,9 @@
-import { Col, Input, List, Button, Row } from "antd";
-import React, { useState, useCallback } from "react";
-import { ADD_COMMENT_REQUEST, LIKE_POST_REQUEST } from "../../constants/actionTypes";
+import { Col, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { ADD_COMMENT_REQUEST } from "../../constants/actionTypes";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import CommentDummyDatas from "../../utils/CommentDummyDatas";
 import ToggleGoodAndCommentBtn from "./ToggleGoodAndCommentBtn";
 import SchoolBoardDetailComments from "./SchoolBoardDetailComments";
 
@@ -32,87 +31,74 @@ export const formatDate = (dateString) => {
   }
 };
 
-const ToggleComment = ({ loadPostComments }) => {
+const ToggleComment = React.memo(({ loadPostComments }) => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  // const { schoolBoardPostComments } = useSelector((state) => state.post);
-  // const schoolBoardPostCommentsData = schoolBoardPostComments.data;
-  // console.log(CommentDummyDatas);
+
   const { postId } = useParams();
-  const [replyCommentNum, setReplyCommnetNum] = useState([]);
-  const [commentNum, setCommentNum] = useState(false);
-  const [commnetCount, setCommentCount] = useState(0);
-  const [parentId, setParentId] = useState(false);
-  const [InputContent, setInputContent] = useState("");
-  const [checkReply, setCheckReply] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const [good, setGood] = useState(false);
+  const [commentValue, setCommentValue] = useState("");
 
-  const onCheckReply = (item) => {
-    if (item > 0) {
-      setCheckReply(true);
-    } else {
-      setCheckReply(false);
-    }
-  };
-
-  const onFinish = (values) => {
-    if (values === undefined) {
+  const handleAddComment = () => {
+    if (commentValue.trim() === "") {
       alert("빈칸이 있습니다.");
       return;
     }
+    if (me === null) {
+      alert("로그인이 필요한 기능입니다.");
+      return;
+    }
+
+    // 댓글 추가 요청 전에 toggle 값을 변경하여 중복 요청을 방지
+    setToggle(false);
+
     dispatch({
       type: ADD_COMMENT_REQUEST,
       data: {
-        content: values,
-        createData: moment(),
-        modifiedDate: moment(),
+        content: commentValue,
         userId: me.userId,
         boardId: postId,
-        parentId: parentId,
       },
     });
+
+    setCommentValue(""); // 댓글 작성 후 입력 값 초기화
+  };
+
+  useEffect(() => {
     loadPostComments();
+  }, []);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (me === null) {
+        alert("로그인이 필요한 기능입니다.");
+      } else {
+        handleAddComment();
+      }
+    }
   };
 
   return (
     <>
-      {!toggle ? (
+      <ToggleGoodAndCommentBtn toggle={toggle} setToggle={setToggle} />
+      {toggle && (
         <>
-          <Col xs={23} md={11} justify="center">
-            <ToggleGoodAndCommentBtn toggle={toggle} setToggle={setToggle} />
-          </Col>
-        </>
-      ) : (
-        <>
-          <Col xs={23} md={11} justify="center">
-            <Col xs={24} md={24}>
-              <ToggleGoodAndCommentBtn toggle={toggle} setToggle={setToggle} />
-              <Input
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    if (me === null) {
-                      alert("로그인이 필요한 기능입니다.");
-                    } else {
-                      onFinish(e.target.value);
-                    }
-                  }
-                }}
-                name="content"
-                placeholder="댓글을 적어주세요."
-                style={{
-                  height: "5rem",
-                  marginBottom: "1rem",
-                  marginTop: "1rem",
-                }}
-              />
-              <SchoolBoardDetailComments loadPostComments={loadPostComments} />
-            </Col>
+          <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 4 }}>
+            <Input.TextArea
+              style={{ padding: "1rem", resize: "none" }}
+              maxLength="100"
+              value={commentValue}
+              onChange={(e) => setCommentValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="댓글을 적어주세요.(100자 이내) &#13;&#10;작성 완료시 엔터키를 눌러주세요"
+            />
           </Col>
         </>
       )}
+      <SchoolBoardDetailComments />
     </>
   );
-};
+});
 
 export default ToggleComment;

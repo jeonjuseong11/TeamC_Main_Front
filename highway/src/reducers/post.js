@@ -97,7 +97,7 @@ export const initialState = {
     },
   ], //게시글 리스트
   schoolBoardPost: null, //단일 게시글
-  schoolBoardPostComments: { data: [] }, // 게시글 댓글
+  schoolBoardPostComments: [], // 게시글 댓글
   loadPostsLoading: false, //게시글 리스트
   loadPostsDone: false,
   loadPostsError: null,
@@ -113,7 +113,6 @@ export const initialState = {
   unlikePostLoading: false, //게시글 좋아요 취소
   unlikePostDone: false,
   unlikePostError: null,
-  addPostLoading: false, //게시글 추가
   addPostDone: false,
   addPostError: null,
   updatePostLoading: false, //게시글 수정

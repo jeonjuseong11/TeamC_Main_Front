@@ -281,6 +281,10 @@ function* addComment(action) {
       type: ADD_COMMENT_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: LOAD_POST_COMMENTS_REQUEST,
+      data: { boardId: action.data.boardId },
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -323,6 +327,10 @@ function* removePostComment(action) {
       type: REMOVE_POST_COMMENT_SUCCESS,
       data: result.data,
     });
+    yield put({
+      type: LOAD_POST_COMMENTS_REQUEST,
+      data: { boardId: action.data.boardId },
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -343,6 +351,10 @@ function* updatePostComment(action) {
     yield put({
       type: UPDATE_POST_COMMENT_SUCCESS,
       data: result.data,
+    });
+    yield put({
+      type: LOAD_POST_COMMENTS_REQUEST,
+      data: { boardId: action.data.boardId },
     });
   } catch (err) {
     console.error(err);
@@ -368,6 +380,10 @@ function* addCommentReply(action) {
     yield put({
       type: ADD_POST_COMMENT_REPLY_SUCCESS,
       data: result.data,
+    });
+    yield put({
+      type: LOAD_POST_COMMENTS_REQUEST,
+      data: { boardId: action.data.boardId },
     });
   } catch (err) {
     console.error(err);

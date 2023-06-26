@@ -73,3 +73,10 @@ textarea:where(.css-dev-only-do-not-override-1mb9uag).ant-input::placeholder {
   font-weight: 400;
   margin-left: 1rem;
 }
+.ant-list-item-action-split {
+  display: none;
+}
+
+.ant-list .ant-list-item .ant-list-item-action > li {
+  padding: 0;
+}
