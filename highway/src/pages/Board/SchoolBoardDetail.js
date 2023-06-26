@@ -40,9 +40,10 @@ const SchoolBoardDetail = () => {
           <h2>{schoolBoardPost?.title}</h2>
           <p>작성자 : {schoolBoardPost?.userId}</p>
           <p>{formatDate(schoolBoardPost?.createDate)}</p>
-          <p style={{ borderTop: "1px solid #c2c2c2", paddingTop: "1rem", paddingBottom: "5rem" }}>
-            {schoolBoardPost?.content}
-          </p>
+          <p
+            style={{ borderTop: "1px solid #c2c2c2", paddingTop: "1rem", paddingBottom: "5rem" }}
+            dangerouslySetInnerHTML={{ __html: schoolBoardPost?.content }}
+          ></p>
         </div>
       </Col>
       <ToggleComment loadPostComments={loadPostComments} />

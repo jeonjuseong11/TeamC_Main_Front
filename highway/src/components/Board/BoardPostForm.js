@@ -1,47 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Upload, message, Modal, Row, Col, Select } from "antd";
+import React, { useCallback, useState } from "react";
+import { Form, Input, Button, Upload, Modal, Row, Col, Select } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ADD_POST_REQUEST } from "../../constants/actionTypes";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const { TextArea } = Input;
-const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-const onFinish = (values) => {
-  console.log("Received values of form:", values);
-  // 여기에서 폼 데이터를 서버로 전송하거나 처리할 수 있습니다.
-};
+
 const BoardPostForm = () => {
-  const boardPost = () => {
-    dispatch({
-      type: ADD_POST_REQUEST,
-      data: {
-        values: {
-          id: reviews.length + 1,
-          author: "11", //로그인 오류로 인한 테스트용
-          // author: me.userId,
-          tags: ["디자인"],
-          content: values.content,
-          secretContent: values.secretContent,
-          datetime: moment(),
-          trafficRate: values.trafficRate,
-          facilityRate: values.facilityRate,
-          cafeteriaRate: values.cafeteriaRate,
-          educationRate: values.educationRate,
-          employmentRate: values.employmentRate,
-        },
-        schoolId: schoolId,
-      },
-    });
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { addPostLoading } = useSelector((state) => state.post);
   const [form] = Form.useForm();
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
+
+  const boardPost = useCallback(
+    (values) => {
+      dispatch({
+        type: ADD_POST_REQUEST,
+        data: {
+          title: values.title,
+          content: values.content.replace(/\r?\n/g, "<br>"),
+          category: values.category,
+        },
+      });
+      navigateToHomeBoard();
+    },
+    [dispatch]
+  );
+
+  const navigateToHomeBoard = useCallback(() => {
+    navigate("/schoolboard");
+  }, [navigate]);
+
+  const onFinish = (values) => {
+    console.log(values);
+    boardPost(values);
+  };
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -72,69 +69,68 @@ const BoardPostForm = () => {
   };
 
   return (
-    <>
-      <Row gutter={[16, 16]} justify="center">
-        <Col xs={24} md={15} style={{ textAlign: "left", marginTop: "1rem", padding: "1rem" }}>
-          <Form form={form} onFinish={onFinish}>
-            <Form.Item name="category">
-              <Select
-                placeholder="게시판 종류"
-                style={{
-                  width: "30%",
-                  borderRadius: "0",
-                }}
-                options={[
-                  { value: "자유게시판", label: "자유게시판" },
-                  { value: "질문게시판", label: "질문게시판" },
-                  { value: "프로젝트 모집", label: "프로젝트 모집" },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item name="title">
-              <Input className="custom-input" placeholder="제목을 입력해주세요" />
-            </Form.Item>
-            <Form.Item name="content">
-              <TextArea
-                rows={10}
-                style={{ resize: "none", padding: "1rem" }}
-                placeholder="
-                    글의 내용을 입력해주세요 &#13;&#10;주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되어 일정 수
-                    이상 신고를 받는 경우 글이 블라인드 처리될 수 있습니다.
-                "
-              />
-            </Form.Item>
-            <Form.Item name="photo">
-              <label>사진</label>
-              <Upload
-                beforeUpload={beforeUpload}
-                fileList={fileList}
-                onChange={handleChange}
-                onPreview={handlePreview}
-                listType="picture-card"
-              >
-                {fileList.length >= 8 ? null : (
-                  <div>
-                    <PlusOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
-                  </div>
-                )}
-              </Upload>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ width: "10rem", height: "3rem", borderRadius: "50px", float: "right" }}
-              >
-                완료 <EditOutlined />
-              </Button>
-            </Form.Item>
-            <Form.Item></Form.Item>
-            <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
-              <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
-            </Modal>
-          </Form>
-        </Col>
-      </Row>
-    </>
+    <Row gutter={[16, 16]} justify="center">
+      <Col xs={24} md={15} style={{ textAlign: "left", marginTop: "1rem", padding: "1rem" }}>
+        <Form form={form} onFinish={onFinish}>
+          <Form.Item name="category">
+            <Select
+              placeholder="게시판 종류"
+              style={{
+                width: "30%",
+                borderRadius: "0",
+              }}
+              options={[
+                { value: 1, label: "자유게시판" },
+                { value: 2, label: "질문게시판" },
+                { value: 3, label: "프로젝트 모집" },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item name="title">
+            <Input className="custom-input" placeholder="제목을 입력해주세요" />
+          </Form.Item>
+          <Form.Item name="content">
+            <TextArea
+              rows={10}
+              style={{ resize: "none", padding: "1rem" }}
+              placeholder="
+                글의 내용을 입력해주세요 &#13;&#10;주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되어 일정 수
+                이상 신고를 받는 경우 글이 블라인드 처리될 수 있습니다.
+              "
+            />
+          </Form.Item>
+          <Form.Item name="photo">
+            <label>사진</label>
+            <Upload
+              beforeUpload={beforeUpload}
+              fileList={fileList}
+              onChange={handleChange}
+              onPreview={handlePreview}
+              listType="picture-card"
+            >
+              {fileList.length >= 8 ? null : (
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>Upload</div>
+                </div>
+              )}
+            </Upload>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ width: "10rem", height: "3rem", borderRadius: "50px", float: "right" }}
+              loading={addPostLoading}
+            >
+              완료 <EditOutlined />
+            </Button>
+          </Form.Item>
+          <Form.Item></Form.Item>
+          <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
+            <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
+          </Modal>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 

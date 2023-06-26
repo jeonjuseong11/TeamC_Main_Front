@@ -113,8 +113,6 @@ export const initialState = {
   unlikePostLoading: false, //게시글 좋아요 취소
   unlikePostDone: false,
   unlikePostError: null,
-  addPostDone: false,
-  addPostError: null,
   updatePostLoading: false, //게시글 수정
   updatePostDone: false,
   updatePostError: null,

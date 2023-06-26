@@ -199,15 +199,21 @@ function* loadPosts() {
 
 function addPostAPI(data) {
   //게시글 작성
-  return axios.post("/post", data);
+  return axios.post(
+    `/board?title=${data.title}&content=${data.content}&category=${data.category}`,
+    data
+  );
 }
 
 function* addPost(action) {
   try {
-    // const result = yield call(addPostAPI, action.data);
+    const result = yield call(addPostAPI, action.data);
     yield put({
       type: ADD_POST_SUCCESS,
-      data: action.data,
+      data: result.data,
+    });
+    yield put({
+      type: LOAD_POSTS_REQUEST,
     });
     // yield put({
     //   type: ADD_POST_TO_ME,
