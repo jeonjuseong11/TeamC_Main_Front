@@ -16,7 +16,7 @@ const RankSchoolCard = ({ selectedSchool }) => {
     <Card
       style={{ backgroundColor: "#f2f2f2", minWidth: "18rem" }}
       actions={[
-        <Link to={`/schooldetail/${selectedSchool.id}/review/`}>
+        <Link to={`/schooldetail/${selectedSchool.id}`}>
           <SearchOutlined /> 상세 정보 보기
         </Link>,
       ]}
@@ -34,15 +34,13 @@ const RankSchoolCard = ({ selectedSchool }) => {
           <>
             <DepartsTags schoolInfo={selectedSchool} />
             <p>
-              <a href={selectedSchool.hmpg_ADRES}>
-                {selectedSchool.hmpg_ADRES}
-              </a>
+              <a href={selectedSchool.hmpg_ADRES}>{selectedSchool.hmpg_ADRES}</a>
             </p>
-            <p>
+            {/* <p>
               <ProfileOutlined />
               <span style={{ marginRight: "1rem" }}>리뷰 수</span>
-              {selectedSchool.reviews.length}
-            </p>
+              {selectedSchool.reviews}
+            </p> */}
             <p>
               <UserOutlined />
               <span style={{ marginRight: "1rem" }}>사용자 수</span>
@@ -57,12 +55,7 @@ const RankSchoolCard = ({ selectedSchool }) => {
         }
       />
       <Card.Meta
-        description={
-          <CircleChart
-            male={selectedSchool.male}
-            female={selectedSchool.female}
-          />
-        }
+        description={<CircleChart male={selectedSchool.male} female={selectedSchool.female} />}
       />
     </Card>
   );
