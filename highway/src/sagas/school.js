@@ -4,6 +4,12 @@ import {
   ADD_SCHOOL_REVIEW_REQUEST,
   ADD_SCHOOL_REVIEW_FAILURE,
   ADD_SCHOOL_REVIEW_SUCCESS,
+  REMOVE_SCHOOL_REVIEW_REQUEST,
+  REMOVE_SCHOOL_REVIEW_SUCCESS,
+  REMOVE_SCHOOL_REVIEW_FAILURE,
+  UPDATE_SCHOOL_REVIEW_REQUEST,
+  UPDATE_SCHOOL_REVIEW_SUCCESS,
+  UPDATE_SCHOOL_REVIEW_FAILURE,
   LOAD_SCHOOL_INFO_SUCCESS,
   LOAD_SCHOOL_INFO_FAILURE,
   LOAD_SCHOOL_INFO_REQUEST,
@@ -98,15 +104,13 @@ function* addSchoolReview(action) {
   // console.log(action.data.values);
   try {
     const result = yield call(addSchoolReviewAPI, action.data);
-    // console.log(action.data);
-    // console.log(result.data.schoolId.id);
     yield put({
       type: ADD_SCHOOL_REVIEW_SUCCESS,
       data: result.data,
     });
     yield put({
       type: LOAD_SCHOOL_REVIEWS_REQUEST,
-      data: { schoolId: result.data.schoolId.id },
+      data: { schoolId: action.data.schoolId },
     });
   } catch (err) {
     console.error(err);
@@ -116,7 +120,55 @@ function* addSchoolReview(action) {
     });
   }
 }
+function removeSchoolReviewAPI(data) {
+  // 게시물 댓글 삭제
+  return axios.post(`/review/${data.id}`);
+}
 
+function* removeSchoolReview(action) {
+  try {
+    const result = yield call(removeSchoolReviewAPI, action.data);
+    yield put({
+      type: REMOVE_SCHOOL_REVIEW_SUCCESS,
+      data: result.data,
+    });
+    yield put({
+      type: LOAD_SCHOOL_REVIEWS_REQUEST,
+      data: { schoolId: action.data.schoolId },
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: REMOVE_SCHOOL_REVIEW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function updatePostCommentAPI(data) {
+  // 게시물 댓글 수정
+  return axios.put(`/comment/?id=${data.id}&content=${data.content}`, data);
+}
+
+function* updatePostComment(action) {
+  try {
+    const result = yield call(updatePostCommentAPI, action.data);
+    yield put({
+      type: UPDATE_POST_COMMENT_SUCCESS,
+      data: result.data,
+    });
+    yield put({
+      type: LOAD_POST_COMMENTS_REQUEST,
+      data: { boardId: action.data.boardId },
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPDATE_POST_COMMENT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 // function* watchLoadSchool() {
 //   yield takeLatest(CHECK_DUPLICATE_ID_REQUEST, loadSchool);
 // }
@@ -135,6 +187,9 @@ function* watchAddSchoolReview() {
 function* watchLoadSchoolReview() {
   yield takeLatest(LOAD_SCHOOL_REVIEWS_REQUEST, loadSchoolReviews);
 }
+function* watchRemoveSchoolReview() {
+  yield takeLatest(REMOVE_SCHOOL_REVIEW_REQUEST, removeSchoolReview);
+}
 
 export default function* userSaga() {
   yield all([
@@ -142,5 +197,6 @@ export default function* userSaga() {
     fork(watchLoadSchoolInfo),
     fork(watchLoadSchoolList),
     fork(watchLoadSchoolReview),
+    fork(watchRemoveSchoolReview),
   ]);
 }
