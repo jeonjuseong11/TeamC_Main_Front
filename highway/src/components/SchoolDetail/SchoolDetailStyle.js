@@ -45,10 +45,10 @@ export const SchoolLogo = styled.div`
   align-items: middle;
   border: 1px solid #c2c2c2;
   height: 5rem;
-  width: 4rem;
+  width: 5rem;
   border-radius: 5px;
   position: relative;
-  top: -2.5rem;
+  top: 6rem;
   right: 26vw;
 `;
 

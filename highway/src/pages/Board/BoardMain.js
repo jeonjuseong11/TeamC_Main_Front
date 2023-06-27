@@ -29,7 +29,18 @@ export const formatDate = (dateString) => {
     return `${months}달 전`;
   }
 };
+
+export const changeCategory = (category) => {
+  if (category == 1) {
+    return "자유게시판";
+  } else if (category == 2) {
+    return "질문게시판";
+  } else if (category == 3) {
+    return "프로젝트 모집";
+  }
+};
 const BoardMain = () => {
+  const MAX_CONTENT_LENGTH = 30; //최대 글자수
   const { category } = useParams();
   const { schoolBoardPosts } = useSelector((state) => state.post);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -59,12 +70,18 @@ const BoardMain = () => {
       item.title.toLowerCase().includes(searchText.toLowerCase())
     );
   }
-  if (category == "all") {
-    filteredData = sortedData;
-  }
 
   const handleSortOrder = (order) => {
     setSortOrder((prevOrder) => (prevOrder === order ? "" : order));
+  };
+  const formatContent = (content, maxLength) => {
+    if (!content) return null;
+    if (content.length <= maxLength) {
+      return content;
+    }
+
+    const truncatedContent = content.slice(0, maxLength);
+    return truncatedContent.trim() + "...";
   };
   return (
     <Col xs={24} md={11}>
@@ -138,8 +155,26 @@ const BoardMain = () => {
                   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
                 ]}
               >
-                <span style={{ color: "gray" }}>{item.category}</span>
-                <List.Item.Meta title={item.title} description={item.content} />
+                <span style={{ color: "gray" }}>{changeCategory(item.category)}</span>
+                <List.Item.Meta
+                  title={item.title}
+                  description={
+                    <div
+                      style={{
+                        maxHeight: "30px", // 원하는 높이값으로 변경
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 1, // 원하는 줄 수로 변경
+                      }}
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{ __html: formatContent(item?.content, 50) }}
+                      ></span>
+                    </div>
+                  }
+                />
                 <div
                   style={{
                     position: "absolute",

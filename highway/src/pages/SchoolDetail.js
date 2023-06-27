@@ -98,14 +98,14 @@ const SchoolDetail = () => {
     <div>
       <SchoolDetailWrapper>
         <SchoolImg>
-          <Empty
+          {/* <Empty
             imageStyle={{
               height: 60,
             }}
             description={<span>학교 배경이미지를 설정해주세요</span>}
           >
             <Button type="primary">배경 이미지 추가하기</Button>
-          </Empty>
+          </Empty> */}
           {school.logoURL !== null ? (
             <SchoolLogo>
               <img
