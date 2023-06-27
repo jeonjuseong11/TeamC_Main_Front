@@ -16,9 +16,8 @@ const HomeBoardList = () => {
         <h3>Highway 커뮤니티에 물어보세요</h3>
         <List
           size="large"
-          dataSource={schoolBoardPosts}
+          dataSource={schoolBoardPosts.slice(0, 4)}
           itemLayout="horizontal"
-          pagination={true}
           grid={{
             gutter: 0,
             column: 2,
