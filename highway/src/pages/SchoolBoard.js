@@ -1,9 +1,7 @@
 import { Avatar, Button, Col, List, Menu, Row } from "antd";
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { EditOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { LOAD_POSTS_REQUEST } from "../constants/actionTypes";
 export const data = [
   {
     id: 1,
@@ -23,13 +21,11 @@ const SchoolBoard = () => {
   const [title, setTItle] = useState("커뮤니티");
   useEffect(() => {
     // console.log(category);
-    if (location.pathname == "/schoolboard/0") {
-      setTItle("커뮤니티");
-    } else if (category == "1") {
+    if (category == "0") {
       setTItle("자유게시판");
-    } else if (category == "2") {
+    } else if (category == "1") {
       setTItle("질문게시판");
-    } else if (category == "3") {
+    } else if (category == "2") {
       setTItle("프로젝트 모집");
     }
   }, [category]);
@@ -69,17 +65,17 @@ const SchoolBoard = () => {
               borderRadius: "10px",
             }}
           >
-            <Menu.Item key="/schoolboard/0">
+            {/* <Menu.Item key="/schoolboard/0">
               <NavLink to="/schoolboard/0">전체</NavLink>
+            </Menu.Item> */}
+            <Menu.Item key="/schoolboard/0">
+              <NavLink to="/schoolboard/0">😀 자유게시판</NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/1">
-              <NavLink to="/schoolboard/1">😀 자유게시판</NavLink>
+              <NavLink to="/schoolboard/1">질문게시판</NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/2">
-              <NavLink to="/schoolboard/2">고민게시판</NavLink>
-            </Menu.Item>
-            <Menu.Item key="/schoolboard/3">
-              <NavLink to="/schoolboard/3">프로젝트 모집</NavLink>
+              <NavLink to="/schoolboard/2">프로젝트 모집</NavLink>
             </Menu.Item>
           </Menu>
           <div

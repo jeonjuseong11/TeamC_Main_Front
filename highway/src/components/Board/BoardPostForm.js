@@ -26,14 +26,17 @@ const BoardPostForm = () => {
           category: values.category,
         },
       });
-      navigateToHomeBoard();
+      navigateToHomeBoard(values.category);
     },
     [dispatch]
   );
 
-  const navigateToHomeBoard = useCallback(() => {
-    navigate("/schoolboard");
-  }, [navigate]);
+  const navigateToHomeBoard = useCallback(
+    (category) => {
+      navigate(`/schoolboard/${category}`);
+    },
+    [navigate]
+  );
 
   const onFinish = (values) => {
     console.log(values);
@@ -80,9 +83,9 @@ const BoardPostForm = () => {
                 borderRadius: "0",
               }}
               options={[
-                { value: 1, label: "자유게시판" },
-                { value: 2, label: "질문게시판" },
-                { value: 3, label: "프로젝트 모집" },
+                { value: 0, label: "자유게시판" },
+                { value: 1, label: "질문게시판" },
+                { value: 2, label: "프로젝트 모집" },
               ]}
             />
           </Form.Item>
@@ -99,7 +102,7 @@ const BoardPostForm = () => {
               "
             />
           </Form.Item>
-          <Form.Item name="photo">
+          {/* <Form.Item name="photo">
             <label>사진</label>
             <Upload
               beforeUpload={beforeUpload}
@@ -115,6 +118,8 @@ const BoardPostForm = () => {
                 </div>
               )}
             </Upload>
+          </Form.Item> */}
+          <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
@@ -124,7 +129,6 @@ const BoardPostForm = () => {
               완료 <EditOutlined />
             </Button>
           </Form.Item>
-          <Form.Item></Form.Item>
           <Modal visible={previewVisible} footer={null} onCancel={handleCancel}>
             <img alt="Preview" style={{ width: "100%" }} src={previewImage} />
           </Modal>

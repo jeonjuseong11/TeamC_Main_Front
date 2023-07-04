@@ -44,12 +44,12 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
     <>
       <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 4 }} style={{ textAlign: "left" }}>
         {good ? (
-          <Button type="text" onClick={unlikePost} loading={unlikePostLoading}>
+          <Button type="text" onClick={unlikePost} loading={likePostLoading}>
             <HeartTwoTone twoToneColor="#eb2f96" key="heart" />
             좋아요
           </Button>
         ) : (
-          <Button type="text" onClick={likePost} loading={likePostLoading}>
+          <Button type="text" onClick={likePost} loading={unlikePostLoading}>
             <HeartOutlined key="heart" /> 좋아요
           </Button>
         )}

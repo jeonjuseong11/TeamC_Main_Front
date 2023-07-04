@@ -223,6 +223,7 @@ function* addPost(action) {
     });
     yield put({
       type: LOAD_POSTS_REQUEST,
+      data: action.data.category,
     });
     // yield put({
     //   type: ADD_POST_TO_ME,

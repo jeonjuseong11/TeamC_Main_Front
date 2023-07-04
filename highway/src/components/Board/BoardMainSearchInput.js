@@ -1,10 +1,11 @@
 import { LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Button, Col, Input, List } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { IconText } from "../../components/Card/CardStyle";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_POSTS_REQUEST } from "../../constants/actionTypes";
 
 export const formatDate = (dateString) => {
   const currentTime = moment();
@@ -31,22 +32,34 @@ export const formatDate = (dateString) => {
 };
 
 export const changeCategory = (category) => {
-  if (category == 1) {
+  if (category == 0) {
     return "자유게시판";
-  } else if (category == 2) {
+  } else if (category == 1) {
     return "질문게시판";
-  } else if (category == 3) {
+  } else if (category == 2) {
     return "프로젝트 모집";
   }
 };
 const BoardMain = () => {
   const MAX_CONTENT_LENGTH = 30; //최대 글자수
   const { category } = useParams();
+  const dispatch = useDispatch();
   const { schoolBoardPosts } = useSelector((state) => state.post);
   const [hoveredItem, setHoveredItem] = useState(null);
   const [sortOrder, setSortOrder] = useState("latest");
   const sortedData = [...schoolBoardPosts];
   const [searchText, setSearchText] = useState("");
+  const loadPosts = (category) => {
+    dispatch({
+      type: LOAD_POSTS_REQUEST,
+      data: category,
+    });
+  };
+  useEffect(() => {
+    if (category) {
+      loadPosts(category);
+    }
+  }, [category]);
   // if (category=="all") {
 
   //   filteredData = sortedData.filter((item) => item.category.includes(category));
@@ -75,6 +88,7 @@ const BoardMain = () => {
     setSortOrder((prevOrder) => (prevOrder === order ? "" : order));
   };
   const formatContent = (content, maxLength) => {
+    if (!content) return null;
     if (content.length <= maxLength) {
       return content;
     }
