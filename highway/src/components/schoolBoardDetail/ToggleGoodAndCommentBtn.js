@@ -7,8 +7,9 @@ import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from "../../constants/actionTy
 import { useParams } from "react-router-dom";
 
 const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
-  const { schoolBoardPost } = useSelector((state) => state.post);
+  const { schoolBoardPost, Likers } = useSelector((state) => state.post);
   // console.log(schoolBoardPost);
+  // console.log(Likers);
   const dispatch = useDispatch();
   const { likePostLoading, unlikePostLoading, schoolBoardPostComments } = useSelector(
     (state) => state.post
@@ -17,35 +18,27 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
 
   const [good, setGood] = useState(false);
   const { postId } = useParams();
-  const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
-  const likers = JSON.parse(localStorage.getItem("LIKER"));
-
+  useEffect(() => {
+    console.log(schoolBoardPost);
+    if (schoolBoardPost) {
+      setGood(schoolBoardPost.heart == null ? false : true);
+    }
+  }, [schoolBoardPost]);
   const likePost = () => {
     dispatch({
       type: LIKE_POST_REQUEST,
       data: { boardId: postId },
     });
-    // setGood(true);
+    setGood(true);
   };
   const unlikePost = () => {
-    const userId = userinfo.userId;
-    const targetLiker = likers.find((liker) => liker.boardId == postId && liker.uid == userId);
-    if (targetLiker) {
-      const { id } = targetLiker;
-      dispatch({
-        type: UNLIKE_POST_REQUEST,
-        data: { heartId: id },
-      });
-    }
-    // setGood(false);
+    // console.log(schoolBoardPost);
+    dispatch({
+      type: UNLIKE_POST_REQUEST,
+      data: { boardId: postId, heartId: schoolBoardPost.heart.id },
+    });
+    setGood(false);
   };
-  useEffect(() => {
-    const userId = userinfo.userId;
-    const hasLiked = likers?.some((liker) => liker.uid == userId && liker.boardId == postId);
-    // console.log(hasLiked);
-
-    setGood(hasLiked);
-  }, [postId, userinfo, likers]);
 
   return (
     <>

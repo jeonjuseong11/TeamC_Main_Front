@@ -83,6 +83,10 @@ function* likePost(action) {
       type: LIKE_POST_SUCCESS,
       data: result.data.data,
     });
+    yield put({
+      type: LOAD_POST_REQUEST,
+      data: action.data.boardId,
+    });
   } catch (err) {
     console.error(err);
     yield put({
@@ -103,6 +107,10 @@ function* unlikePost(action) {
     yield put({
       type: UNLIKE_POST_SUCCESS,
       data: { data: result.data.data, heartId: action.data.heartId },
+    });
+    yield put({
+      type: LOAD_POST_REQUEST,
+      data: action.data.boardId,
     });
   } catch (err) {
     console.error(err);

@@ -169,7 +169,6 @@ const reducer = (state = initialState, action) =>
       case LIKE_POST_SUCCESS: {
         // const post = draft.schoolBoardPosts.find((v) => v.id === action.data.PostId);
         draft.Likers.push(action.data);
-        localStorage.setItem("LIKER", JSON.stringify(draft.Likers));
         draft.likePostLoading = false;
         draft.likePostDone = true;
         break;
@@ -185,7 +184,6 @@ const reducer = (state = initialState, action) =>
         break;
       case UNLIKE_POST_SUCCESS: {
         draft.Likers = draft.Likers.filter((liker) => liker.id !== action.data.heartId);
-        localStorage.setItem("LIKER", JSON.stringify(draft.Likers));
         draft.unlikePostLoading = false;
         draft.unlikePostDone = true;
         break;
