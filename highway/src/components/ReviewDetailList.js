@@ -1,7 +1,7 @@
 import { StarFilled } from "@ant-design/icons";
 import { Avatar, Button, List, Rate, Skeleton } from "antd";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -43,18 +43,14 @@ const DetailReviewContentWrapper = styled.div`
   margin-left: 1.5rem;
   margin-top: 1rem;
 `;
-const ReviewDetailList = () => {
+const ReviewDetailList = ({ setWrite, setEditing, setEditContent }) => {
   const { schoolReviews, loadSchoolReviewsLoading } = useSelector((state) => state.school);
   const { me } = useSelector((state) => state.user);
   const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
+
   const dispatch = useDispatch();
   const { schoolId } = useParams();
-  // useEffect(() => {
-  //   console.log(userinfo);
-  // }, [me, userinfo]);
-  // useEffect(() => {
-  //   console.log(loadSchoolReviewsLoading);
-  // }, [loadSchoolReviewsLoading]);
+
   const filteredReviews = schoolReviews.filter((item) => !item.deleted);
 
   const removeReview = (id) => {
@@ -65,6 +61,15 @@ const ReviewDetailList = () => {
       data: { id: id, schoolId: schoolId },
     });
   };
+
+  const handleEdit = (review) => {
+    // 수정 상태로 변경하고 리뷰 데이터를 전달합니다.
+    console.log(review);
+    setEditContent(review);
+    setEditing(true);
+    setWrite(true);
+  };
+
   return (
     <>
       <List
@@ -97,7 +102,7 @@ const ReviewDetailList = () => {
                           item?.employmentRate) /
                           5}
                       </span>
-                      {item.userName == userinfo.userName && (
+                      {item.userName === userinfo.userName && (
                         <div
                           style={{
                             gap: "10px",

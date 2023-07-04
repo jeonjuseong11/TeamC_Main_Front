@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import DepartsTags from "../components/DepartsTags";
 import SchoolDetailInfo from "../components/SchoolDetail/SchoolDetailInfo";
-import { LOAD_SCHOOL_REVIEWS_REQUEST } from "../constants/actionTypes";
+import { LOAD_SCHOOL_INFO_REQUEST, LOAD_SCHOOL_REVIEWS_REQUEST } from "../constants/actionTypes";
 import axios from "axios";
 
 const SchoolDetail = () => {
@@ -37,7 +37,8 @@ const SchoolDetail = () => {
 
   useEffect(() => {
     // Calculate the new average rating when a new review is added
-    const reviewCount = schoolReviews.length;
+    const filteredReviews = schoolReviews.filter((item) => !item.deleted);
+    const reviewCount = filteredReviews.length;
     setReviewCount(reviewCount);
 
     const rateSums = {
@@ -130,12 +131,15 @@ const SchoolDetail = () => {
             <SchoolInfo>
               <h2 style={{ margin: "0" }}>{school.schul_NM}</h2>
               <div>
-                {averageRating === 0 ? (
+                {averageRating == 0 ? (
                   <StarOutlined />
                 ) : (
-                  <StarFilled style={{ color: "#FFDC82" }} />
+                  <>
+                    <StarFilled style={{ color: "#FFDC82" }} />
+                    <span style={{ marginRight: "10px" }}>{averageRating}</span>
+                  </>
                 )}
-                <span style={{ marginRight: "10px" }}>{averageRating}</span>
+
                 <DepartsTags schoolInfo={school} />
                 <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
                   {school.hmpg_ADRES}

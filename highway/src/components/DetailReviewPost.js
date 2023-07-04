@@ -1,42 +1,46 @@
+import React, { useCallback, useEffect, useState } from "react";
 import { Form, Rate, Button } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import React, { useCallback, useEffect, useState } from "react";
-import moment from "moment";
-import "moment/locale/ko"; //한국어 적용
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ADD_SCHOOL_REVIEW_REQUEST, LOAD_SCHOOL_REVIEWS_REQUEST } from "../constants/actionTypes";
+import {
+  ADD_SCHOOL_REVIEW_REQUEST,
+  UPDATE_SCHOOL_REVIEW_REQUEST,
+  LOAD_SCHOOL_REVIEWS_REQUEST,
+} from "../constants/actionTypes";
 import axios from "axios";
+
 const FormItemWrapper = styled.div`
   display: flex;
   width: 100%;
   line-height: 2.3rem;
 `;
+
 const FormItemP = styled.p`
   margin: 0px;
   width: 30%;
 `;
+
 const MessageWrapper = styled.div`
   margin-left: 1rem;
 `;
-const DetailReviewForm = ({ setWrite }) => {
+
+const DetailReviewForm = ({ setWrite, review, editing, setEditing }) => {
   const { schoolId } = useParams();
-  const { schools } = useSelector((state) => state.school);
   const { me } = useSelector((state) => state.user);
 
-  const reviews = schools[schoolId - 1].reviews;
+  // Form instance with form hook
   const [form] = Form.useForm();
-  // console.log(detailReviews);
-  const dispatch = useDispatch();
 
-  //별점 메시지를 위한 state
+  // State to manage messages for each rate category
   const [trafficMessage, setTrafficMessage] = useState("평가해주세요.");
   const [facilityMessage, setFacilityMessage] = useState("평가해주세요.");
   const [cafeteriaMessage, setCafeteriaMessage] = useState("평가해주세요.");
   const [educationMessage, setEducationMessage] = useState("평가해주세요.");
   const [employmentMessage, setEmploymentMessage] = useState("평가해주세요.");
 
+  // Function to handle rate change for each category
   const handleRateChange = (name, value) => {
     const message = getMessage(value);
     switch (name) {
@@ -59,6 +63,8 @@ const DetailReviewForm = ({ setWrite }) => {
         break;
     }
   };
+
+  // Function to get the message based on the rate value
   const getMessage = (value) => {
     if (value === 1) {
       return "매우 나쁨";
@@ -74,50 +80,71 @@ const DetailReviewForm = ({ setWrite }) => {
       return "";
     }
   };
-  const loadSchoolReviews = ({ schoolId }) => {
-    dispatch({
-      type: LOAD_SCHOOL_REVIEWS_REQUEST,
-      data: schoolId,
-    });
-  };
-  const accessToken = localStorage.getItem("ACCESSTOKEN");
-  axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
+
+  const dispatch = useDispatch();
+
+  // Function to handle form submission
+  const handleSubmit = useCallback(
+    (values) => {
+      if (me.schoolId === schoolId) {
+        if (editing) {
+          // When in edit mode, dispatch update review action
+          dispatch({
+            type: UPDATE_SCHOOL_REVIEW_REQUEST,
+            data: {
+              id: review.id,
+              author: me.userId,
+              tags: "디자인",
+              content: values.content,
+              trafficRate: values.trafficRate,
+              facilityRate: values.facilityRate,
+              cafeteriaRate: values.cafeteriaRate,
+              educationRate: values.educationRate,
+              employmentRate: values.employmentRate,
+              schoolId: schoolId,
+            },
+          });
+          setEditing(false); // Disable edit mode
+        } else {
+          // When not in edit mode, dispatch add review action
+          dispatch({
+            type: ADD_SCHOOL_REVIEW_REQUEST,
+            data: {
+              author: me.userId,
+              tags: "디자인",
+              content: values.content,
+              trafficRate: values.trafficRate,
+              facilityRate: values.facilityRate,
+              cafeteriaRate: values.cafeteriaRate,
+              educationRate: values.educationRate,
+              employmentRate: values.employmentRate,
+              schoolId: schoolId,
+            },
+          });
+        }
+        form.setFieldsValue(""); // Clear form fields
+        setWrite(false); // Close write mode
+      } else {
+        alert("현재 학교는 본인의 학교가 아닙니다.");
+      }
+    },
+    [form, me, schoolId, setWrite, dispatch, editing, review]
+  );
 
   useEffect(() => {
-    console.log(reviews);
-  }, [reviews]);
-  const handleSubmit = useCallback((values) => {
-    // console.log(values);
-    if (!values) {
-      alert("빈칸이 있습니다.");
-      return;
+    // When a review is provided (entered edit mode), set the form fields with the review data
+    if (review) {
+      form.setFieldsValue({
+        content: review.content,
+        secretContent: review.secretContent,
+        trafficRate: review.trafficRate,
+        facilityRate: review.facilityRate,
+        cafeteriaRate: review.cafeteriaRate,
+        educationRate: review.educationRate,
+        employmentRate: review.employmentRate,
+      });
     }
-    dispatch({
-      type: ADD_SCHOOL_REVIEW_REQUEST,
-      data: {
-        // author: "11", //로그인 오류로 인한 테스트용
-        author: me.userId,
-        tags: "디자인",
-        content: values.content,
-        // secretContent: values.secretContent,
-        // datetime: moment(),
-        trafficRate: values.trafficRate,
-        facilityRate: values.facilityRate,
-        cafeteriaRate: values.cafeteriaRate,
-        educationRate: values.educationRate,
-        employmentRate: values.employmentRate,
-        schoolId: schoolId,
-      },
-    });
-    form.setFieldsValue = "";
-    setWrite(false);
-    // dispatch({
-    //   type: LOAD_SCHOOL_REVIEWS_REQUEST,
-    //   data: {
-    //     schoolId: schoolId,
-    //   },
-    // });
-  }, []);
+  }, [form, review]);
 
   return (
     <Form
@@ -164,7 +191,7 @@ const DetailReviewForm = ({ setWrite }) => {
         <MessageWrapper>{cafeteriaMessage}</MessageWrapper>
       </FormItemWrapper>
       <FormItemWrapper>
-        <FormItemP>수업만족도</FormItemP>
+        <FormItemP>교육</FormItemP>
         <Form.Item name="educationRate" rules={[{ required: true }]} style={{ margin: "0" }}>
           <Rate onChange={(value) => handleRateChange("educationRate", value)} />
         </Form.Item>
@@ -179,7 +206,8 @@ const DetailReviewForm = ({ setWrite }) => {
       </FormItemWrapper>
       <Form.Item style={{ float: "right", marginTop: "1rem" }}>
         <Button htmlType="submit" type="primary">
-          리뷰 작성
+          {editing ? "리뷰 수정" : "리뷰 작성"}
+          {/* Show "리뷰 수정" button when in edit mode */}
         </Button>
       </Form.Item>
     </Form>

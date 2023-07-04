@@ -14,7 +14,8 @@ const ReviewPost = () => {
   const { me } = useSelector((state) => state.user);
   const { schoolReviews } = useSelector((state) => state.school);
   const filteredReviews = schoolReviews.filter((item) => !item.deleted);
-
+  const [editing, setEditing] = useState(false); // 수정 상태를 관리하는 상태
+  const [editContent, setEditContent] = useState("");
   useEffect(() => {
     if (me) {
       const isUserReviewExist = filteredReviews.some((review) => review.userId.id === me.userNo);
@@ -29,7 +30,21 @@ const ReviewPost = () => {
           <NoDecoLink onClick={onToggleWrite}>{write ? "취소" : "리뷰작성"}</NoDecoLink>
         )}
       </div>
-      {write ? <DetailReviewForm setWrite={setWrite} /> : <ReviewDetailList />}
+      {write ? (
+        <DetailReviewForm
+          editing={editing}
+          setEditing={setEditing}
+          setWrite={setWrite}
+          review={editContent}
+        />
+      ) : (
+        <ReviewDetailList
+          editing={editing}
+          setEditing={setEditing}
+          setWrite={setWrite}
+          setEditContent={setEditContent}
+        />
+      )}
     </ReviewDetailWrapper>
   );
 };
