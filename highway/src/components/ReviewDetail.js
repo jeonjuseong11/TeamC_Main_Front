@@ -10,20 +10,23 @@ const ReviewPost = () => {
   const onToggleWrite = () => {
     setWrite(!write);
   };
+  const [reviewWrite, setReviewWrite] = useState(false);
   const { me } = useSelector((state) => state.user);
+  const { schoolReviews } = useSelector((state) => state.school);
+  const filteredReviews = schoolReviews.filter((item) => !item.deleted);
 
   useEffect(() => {
     if (me) {
-      // console.log(me);
+      const isUserReviewExist = filteredReviews.some((review) => review.userId.id === me.userNo);
+      setReviewWrite(isUserReviewExist);
     }
-  }, []);
+  }, [filteredReviews, me]);
+
   return (
     <ReviewDetailWrapper>
       <div style={{ textAlign: "right" }}>
-        {me ? (
+        {me && !reviewWrite && (
           <NoDecoLink onClick={onToggleWrite}>{write ? "취소" : "리뷰작성"}</NoDecoLink>
-        ) : (
-          <></>
         )}
       </div>
       {write ? <DetailReviewForm setWrite={setWrite} /> : <ReviewDetailList />}

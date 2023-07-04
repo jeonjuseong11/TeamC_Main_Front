@@ -77,118 +77,111 @@ const ReviewDetailList = () => {
           },
           pageSize: 2,
         }}
-        renderItem={(item) =>
-          item.deleted == false ? (
-            <List.Item key={item?.id}>
-              <Skeleton loading={loadSchoolReviewsLoading} active>
-                <List.Item.Meta
-                  title={
-                    <>
-                      <DetailReviewAvatarWrapper>
-                        <Avatar size={50} style={{ marginTop: "2rem" }}>
-                          {item?.userName && item.userName.length > 0 ? item.userName[0] : ""}
-                        </Avatar>
-                        <h3>{item?.userName}</h3>
-                        <span>
-                          <StarFilled style={{ color: "#FFDC82", marginLeft: "-5rem" }} />
-                          {(item?.trafficRate +
-                            item?.facilityRate +
-                            item?.cafeteriaRate +
-                            item?.educationRate +
-                            item?.employmentRate) /
-                            5}
-                        </span>
-                        {item.userName == userinfo.userName && (
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "10px",
-                              fontWeight: "500",
-                              color: "#a2a2a2",
-                            }}
-                          >
-                            <span style={{ cursor: "pointer" }} onClick={() => handleEdit(item)}>
-                              수정
-                            </span>
-                            <span
-                              style={{ cursor: "pointer" }}
-                              onClick={() => removeReview(item.id)}
-                            >
-                              삭제
-                            </span>
-                          </div>
-                        )}
-                      </DetailReviewAvatarWrapper>
+        renderItem={(item) => (
+          <List.Item key={item?.id}>
+            <Skeleton loading={loadSchoolReviewsLoading} active>
+              <List.Item.Meta
+                title={
+                  <>
+                    <DetailReviewAvatarWrapper>
+                      <Avatar size={50} style={{ marginTop: "2rem" }}>
+                        {item?.userName && item.userName.length > 0 ? item.userName[0] : ""}
+                      </Avatar>
+                      <h3>{item?.userName}</h3>
+                      <span>
+                        <StarFilled style={{ color: "#FFDC82", marginLeft: "-5rem" }} />
+                        {(item?.trafficRate +
+                          item?.facilityRate +
+                          item?.cafeteriaRate +
+                          item?.educationRate +
+                          item?.employmentRate) /
+                          5}
+                      </span>
+                      {item.userName == userinfo.userName && (
+                        <div
+                          style={{
+                            gap: "10px",
+                            fontWeight: "500",
+                            color: "#a2a2a2",
+                          }}
+                        >
+                          <span style={{ cursor: "pointer" }} onClick={() => handleEdit(item)}>
+                            수정
+                          </span>
+                          <br />
+                          <span style={{ cursor: "pointer" }} onClick={() => removeReview(item.id)}>
+                            삭제
+                          </span>
+                        </div>
+                      )}
+                    </DetailReviewAvatarWrapper>
 
-                      <DetailReviewUserTagsWrapper>
-                        <TagsItem>{item?.tags}</TagsItem>
-                      </DetailReviewUserTagsWrapper>
-                    </>
-                  }
-                  description={
-                    <>
-                      <DetailReviewsWrapper>
-                        <DetailReviewP>교통</DetailReviewP>
-                        <Rate
-                          disabled
-                          allowHalf
-                          value={item.trafficRate}
-                          style={{
-                            alignItems: "center",
-                            fontSize: "0.7rem",
-                          }}
-                        />
-                        <DetailReviewP>시설만족도</DetailReviewP>
-                        <Rate
-                          disabled
-                          allowHalf
-                          value={item?.facilityRate}
-                          style={{
-                            alignItems: "center",
-                            fontSize: "0.7rem",
-                          }}
-                        />
-                        <DetailReviewP>급식</DetailReviewP>
-                        <Rate
-                          disabled
-                          allowHalf
-                          value={item?.cafeteriaRate}
-                          style={{
-                            alignItems: "center",
-                            fontSize: "0.7rem",
-                          }}
-                        />
-                        <DetailReviewP>수업만족도</DetailReviewP>
-                        <Rate
-                          disabled
-                          allowHalf
-                          value={item?.educationRate}
-                          style={{
-                            alignItems: "center",
-                            fontSize: "0.7rem",
-                          }}
-                        />
-                        <DetailReviewP>취업</DetailReviewP>
-                        <Rate
-                          disabled
-                          allowHalf
-                          value={item?.employmentRate}
-                          style={{
-                            alignItems: "center",
-                            fontSize: "0.7rem",
-                          }}
-                        />
-                      </DetailReviewsWrapper>
-                      <DetailReviewContentWrapper>{item?.content}</DetailReviewContentWrapper>
-                    </>
-                  }
-                />
-              </Skeleton>
-            </List.Item>
-          ) : (
-            <></>
-          )
-        }
+                    <DetailReviewUserTagsWrapper>
+                      <TagsItem>{item?.tags}</TagsItem>
+                    </DetailReviewUserTagsWrapper>
+                  </>
+                }
+                description={
+                  <>
+                    <DetailReviewsWrapper>
+                      <DetailReviewP>교통</DetailReviewP>
+                      <Rate
+                        disabled
+                        allowHalf
+                        value={item.trafficRate}
+                        style={{
+                          alignItems: "center",
+                          fontSize: "0.7rem",
+                        }}
+                      />
+                      <DetailReviewP>시설만족도</DetailReviewP>
+                      <Rate
+                        disabled
+                        allowHalf
+                        value={item?.facilityRate}
+                        style={{
+                          alignItems: "center",
+                          fontSize: "0.7rem",
+                        }}
+                      />
+                      <DetailReviewP>급식</DetailReviewP>
+                      <Rate
+                        disabled
+                        allowHalf
+                        value={item?.cafeteriaRate}
+                        style={{
+                          alignItems: "center",
+                          fontSize: "0.7rem",
+                        }}
+                      />
+                      <DetailReviewP>수업만족도</DetailReviewP>
+                      <Rate
+                        disabled
+                        allowHalf
+                        value={item?.educationRate}
+                        style={{
+                          alignItems: "center",
+                          fontSize: "0.7rem",
+                        }}
+                      />
+                      <DetailReviewP>취업</DetailReviewP>
+                      <Rate
+                        disabled
+                        allowHalf
+                        value={item?.employmentRate}
+                        style={{
+                          alignItems: "center",
+                          fontSize: "0.7rem",
+                        }}
+                      />
+                    </DetailReviewsWrapper>
+                    <DetailReviewContentWrapper>{item?.content}</DetailReviewContentWrapper>
+                  </>
+                }
+              />
+            </Skeleton>
+          </List.Item>
+        )}
       />
     </>
   );
