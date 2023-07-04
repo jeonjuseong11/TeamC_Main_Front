@@ -71,8 +71,6 @@ const reducer = (state = initialState, action) =>
         draft.logInDone = false;
         break;
       case LOGIN_SUCCESS:
-        draft.refreshToken = action.data.refresh_TOKEN;
-        draft.accessToken = action.data.access_TOKEN;
         draft.logInLoading = false;
         draft.logInDone = true;
         break;

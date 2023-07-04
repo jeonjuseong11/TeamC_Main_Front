@@ -7,10 +7,6 @@ import { LOAD_USER_REQUEST, REFRESH_TOKEN_REQUEST } from "./constants/actionType
 
 import TopMenu from "./components/Menu/TopMenu";
 import SchoolDetail from "./pages/SchoolDetail";
-import SchoolDetailInfo from "./components/SchoolDetail/SchoolDetailInfo";
-import SchoolDetailJob from "./components/SchoolDetail/SchoolDetailJob";
-import SchoolDetailReview from "./components/SchoolDetail/SchoolDetailReview";
-import SchoolDetailQuestion from "./components/SchoolDetail/SchoolDetailQuestion";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
