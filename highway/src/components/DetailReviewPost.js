@@ -26,10 +26,10 @@ const MessageWrapper = styled.div`
   margin-left: 1rem;
 `;
 
-const DetailReviewForm = ({ setWrite, review, editing, setEditing }) => {
+const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditContent }) => {
   const { schoolId } = useParams();
   const { me } = useSelector((state) => state.user);
-
+  // console.log(review);
   // Form instance with form hook
   const [form] = Form.useForm();
 
@@ -105,6 +105,7 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing }) => {
             },
           });
           setEditing(false); // Disable edit mode
+          setEditContent("");
         } else {
           // When not in edit mode, dispatch add review action
           dispatch({
@@ -208,6 +209,16 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing }) => {
         <Button htmlType="submit" type="primary">
           {editing ? "리뷰 수정" : "리뷰 작성"}
           {/* Show "리뷰 수정" button when in edit mode */}
+        </Button>
+        <Button
+          style={{ marginLeft: "1rem" }}
+          onClick={() => {
+            setWrite(false);
+            setEditing(false);
+            setEditContent("");
+          }}
+        >
+          취소
         </Button>
       </Form.Item>
     </Form>

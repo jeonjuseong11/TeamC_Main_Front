@@ -27,7 +27,7 @@ const ReviewPost = () => {
     <ReviewDetailWrapper>
       <div style={{ textAlign: "right" }}>
         {me && !reviewWrite && (
-          <NoDecoLink onClick={onToggleWrite}>{write ? "취소" : "리뷰작성"}</NoDecoLink>
+          <NoDecoLink onClick={onToggleWrite}>{write ? "" : "리뷰작성"}</NoDecoLink>
         )}
       </div>
       {write ? (
@@ -36,6 +36,7 @@ const ReviewPost = () => {
           setEditing={setEditing}
           setWrite={setWrite}
           review={editContent}
+          setEditContent={setEditContent}
         />
       ) : (
         <ReviewDetailList

@@ -64,7 +64,7 @@ const ReviewDetailList = ({ setWrite, setEditing, setEditContent }) => {
 
   const handleEdit = (review) => {
     // 수정 상태로 변경하고 리뷰 데이터를 전달합니다.
-    console.log(review);
+    // console.log(review);
     setEditContent(review);
     setEditing(true);
     setWrite(true);
