@@ -1,27 +1,9 @@
 import { HeartOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Col, List, Menu, Row } from "antd";
-import BoardMenu from "../../components/Board/BoardMenu";
 import { IconText } from "../../components/Card/CardStyle";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-const data = [
-  "Racing car sprays burning fuel into crowd.",
-  "Japanese princess to wed commoner.",
-  "Australian walks 100km after outback crash.",
-  "Man charged over missing wedding girl.",
-  "Los Angeles battles huge wildfires.",
-  "Los Angeles battles huge wildfires111.",
-];
-const items = [
-  {
-    label: "인기게시판",
-    key: "app",
-  },
-  {
-    label: "자유게시판",
-    key: "SubMenu",
-  },
-];
+
 const SchoolBoardList = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const { schoolId } = useParams();

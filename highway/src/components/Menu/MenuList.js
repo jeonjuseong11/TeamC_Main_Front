@@ -17,7 +17,7 @@ export const MenuLists = [
   },
   {
     key: "/schoolboard",
-    label: <NavLink to="/schoolboard">커뮤니티</NavLink>,
+    label: <NavLink to="/schoolboard/0">커뮤니티</NavLink>,
   },
 ];
 

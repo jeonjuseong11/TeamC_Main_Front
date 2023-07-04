@@ -1,5 +1,5 @@
 import { Button, Col, Input, List, Modal } from "antd";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SchoolBoardDetailReplys from "./SchoolBoardDetailReplys";
 import {
   ADD_POST_COMMENT_REPLY_REQUEST,
@@ -74,8 +74,9 @@ const SchoolBoardDetailComments = () => {
     });
     setParentId(""); //답글 입력창 닫기
   }, []);
-
-  if (schoolBoardPostComments.length === 0) {
+  const filteredComments = schoolBoardPostComments.filter((item) => !item.isDeleted);
+  // console.log(schoolBoardPostComments);
+  if (filteredComments.length === 0) {
     return <div style={{ height: "10rem" }}></div>; // 렌더링하지 않고 종료
   }
 
@@ -84,7 +85,7 @@ const SchoolBoardDetailComments = () => {
       <List
         itemLayout="vertical"
         size="large"
-        dataSource={schoolBoardPostComments}
+        dataSource={filteredComments}
         renderItem={(item) => {
           const isEditing = editingCommentId === item.id; //수정중인 상태를 위해
 

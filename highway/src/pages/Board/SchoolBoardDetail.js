@@ -1,18 +1,16 @@
 import { Col, Breadcrumb, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_POST_COMMENTS_REQUEST } from "../../constants/actionTypes";
+import { LOAD_POST_COMMENTS_REQUEST, LOAD_POST_REQUEST } from "../../constants/actionTypes";
 import { useParams } from "react-router-dom";
 import ToggleComment from "../../components/schoolBoardDetail/ToggleComment";
 import { changeCategory, formatDate } from "./BoardMain";
 
 const SchoolBoardDetail = () => {
   const dispatch = useDispatch();
-  const { schoolBoardPosts } = useSelector((state) => state.post);
+  const { schoolBoardPosts, schoolBoardPost } = useSelector((state) => state.post);
   const [parentId, setParentId] = useState(null);
   const { postId, category } = useParams();
-
-  const schoolBoardPost = schoolBoardPosts.find((post) => post.id === Number(postId));
   const loadPostComments = () => {
     dispatch({
       type: LOAD_POST_COMMENTS_REQUEST,
@@ -21,8 +19,15 @@ const SchoolBoardDetail = () => {
       },
     });
   };
+  const loadPost = (postId) => {
+    dispatch({
+      type: LOAD_POST_REQUEST,
+      data: postId,
+    });
+  };
 
   useEffect(() => {
+    loadPost(postId);
     loadPostComments();
   }, [postId, category]);
 
@@ -37,12 +42,12 @@ const SchoolBoardDetail = () => {
           ]}
         />
         <div>
-          <h2>{schoolBoardPost?.title}</h2>
-          <p>작성자 : {schoolBoardPost?.userId}</p>
-          <p>{formatDate(schoolBoardPost?.createDate)}</p>
+          <h2>{schoolBoardPost?.board.title}</h2>
+          <p>작성자 : {schoolBoardPost?.board.userId}</p>
+          <p>{formatDate(schoolBoardPost?.board.createDate)}</p>
           <p
             style={{ borderTop: "1px solid #c2c2c2", paddingTop: "1rem", paddingBottom: "5rem" }}
-            dangerouslySetInnerHTML={{ __html: schoolBoardPost?.content }}
+            dangerouslySetInnerHTML={{ __html: schoolBoardPost?.board.content }}
           ></p>
         </div>
       </Col>

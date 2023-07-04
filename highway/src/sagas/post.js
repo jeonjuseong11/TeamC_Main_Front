@@ -115,15 +115,16 @@ function* unlikePost(action) {
 
 function loadPostAPI(data) {
   //단일 게시글 로딩
-  return axios.get(`/post/${data}`);
+  return axios.get(`/board/detail/${data}`);
 }
 
 function* loadPost(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
+    // console.log(result.data.data);
     yield put({
       type: LOAD_POST_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -176,14 +177,14 @@ function* loadTagPosts(action) {
   }
 }
 
-function loadPostsAPI() {
-  return axios.get(`/board/list`);
+function loadPostsAPI(data) {
+  // console.log(data)
+  return axios.get(`/board/list/1?cateNo=${data}`);
 }
 
-function* loadPosts() {
+function* loadPosts(action) {
   try {
-    // const result = yield call(loadPostsAPI, action.data);
-    const result = yield call(loadPostsAPI);
+    const result = yield call(loadPostsAPI, action.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data.data,
@@ -427,7 +428,8 @@ function* watchLoadTagPosts() {
 }
 
 function* watchLoadPosts() {
-  yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
+  // yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
+  yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
 }
 
 function* watchAddPost() {

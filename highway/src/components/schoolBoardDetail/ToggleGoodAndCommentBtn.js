@@ -7,10 +7,14 @@ import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from "../../constants/actionTy
 import { useParams } from "react-router-dom";
 
 const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
+  const { schoolBoardPost } = useSelector((state) => state.post);
+  // console.log(schoolBoardPost);
   const dispatch = useDispatch();
   const { likePostLoading, unlikePostLoading, schoolBoardPostComments } = useSelector(
     (state) => state.post
   );
+  const filteredComments = schoolBoardPostComments.filter((item) => !item.isDeleted);
+
   const [good, setGood] = useState(false);
   const { postId } = useParams();
   const userinfo = JSON.parse(localStorage.getItem("USERINFO"));
@@ -65,7 +69,7 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
             }}
             icon={<MessageOutlined />}
           >
-            댓글 {schoolBoardPostComments.length}
+            댓글 {filteredComments.length}
           </Button>
         ) : (
           <Button
@@ -82,7 +86,7 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
                 fontWeight: !toggle ? "" : "700",
               }}
             >
-              댓글 {schoolBoardPostComments.length}
+              댓글 {filteredComments.length}
             </span>
           </Button>
         )}

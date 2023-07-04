@@ -27,7 +27,7 @@ const SchoolBoardDetailReplys = ({ info, updatePostComment, removePostComment })
 
   return (
     <>
-      {info.children.length === 0 ? (
+      {info.children == null ? (
         <></>
       ) : (
         <List

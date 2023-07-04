@@ -202,7 +202,7 @@ const reducer = (state = initialState, action) =>
       case LOAD_POST_SUCCESS:
         draft.loadPostLoading = false;
         draft.loadPostDone = true;
-        draft.singlePost = action.data;
+        draft.schoolBoardPost = action.data;
         break;
       case LOAD_POST_FAILURE:
         draft.loadPostLoading = false;

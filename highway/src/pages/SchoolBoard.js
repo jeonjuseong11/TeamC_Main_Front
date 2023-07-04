@@ -18,26 +18,18 @@ export const data = [
 ];
 const SchoolBoard = () => {
   const { category } = useParams();
-  useEffect(() => {
-    loadPosts();
-  }, []);
   const location = useLocation();
-  const dispatch = useDispatch();
-  const loadPosts = () => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
-  };
+
   const [title, setTItle] = useState("커뮤니티");
   useEffect(() => {
     // console.log(category);
-    if (location.pathname == "/schoolboard") {
+    if (location.pathname == "/schoolboard/0") {
       setTItle("커뮤니티");
-    } else if (category == "free") {
+    } else if (category == "1") {
       setTItle("자유게시판");
-    } else if (category == "question") {
+    } else if (category == "2") {
       setTItle("질문게시판");
-    } else if (category == "project") {
+    } else if (category == "3") {
       setTItle("프로젝트 모집");
     }
   }, [category]);
@@ -77,17 +69,17 @@ const SchoolBoard = () => {
               borderRadius: "10px",
             }}
           >
-            <Menu.Item key="/schoolboard">
-              <NavLink to="/schoolboard">전체</NavLink>
+            <Menu.Item key="/schoolboard/0">
+              <NavLink to="/schoolboard/0">전체</NavLink>
             </Menu.Item>
-            <Menu.Item key="/schoolboard/free">
-              <NavLink to="/schoolboard/free">😀 자유게시판</NavLink>
+            <Menu.Item key="/schoolboard/1">
+              <NavLink to="/schoolboard/1">😀 자유게시판</NavLink>
             </Menu.Item>
-            <Menu.Item key="/schoolboard/question">
-              <NavLink to="/schoolboard/question">고민게시판</NavLink>
+            <Menu.Item key="/schoolboard/2">
+              <NavLink to="/schoolboard/2">고민게시판</NavLink>
             </Menu.Item>
-            <Menu.Item key="/schoolboard/project">
-              <NavLink to="/schoolboard/project">프로젝트 모집</NavLink>
+            <Menu.Item key="/schoolboard/3">
+              <NavLink to="/schoolboard/3">프로젝트 모집</NavLink>
             </Menu.Item>
           </Menu>
           <div
