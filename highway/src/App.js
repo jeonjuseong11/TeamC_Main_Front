@@ -23,7 +23,6 @@ import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
 import axios from "axios";
 import SchoolBoard from "./pages/SchoolBoard";
-import SchoolBoardList from "./pages/Board/SchoolBoardList";
 import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 
 import moment from "moment";
@@ -111,7 +110,6 @@ function App() {
               <Route exact path="/schoolboard/:category/:postId" element={<SchoolBoardDetail />} />
             </Route>
             <Route exact path="/schoolboard/post" element={<BoardPostForm />} />
-            <Route exact path="/schoolboard/list" element={<SchoolBoardList />} />
             <Route exact path="/promotion" element={<Promotion />}>
               <Route exact path="/promotion" element={<PromotionHome />} />
               <Route exact path="/promotion/news" element={<PromotionNews />} />

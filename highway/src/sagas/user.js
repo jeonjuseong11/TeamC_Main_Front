@@ -43,7 +43,8 @@ function* checkUserId(action) {
 }
 
 const logInAPI = (data) => {
-  return axios.post(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data);
+  console.log(data);
+  return axios.post(`user/login`, data);
 };
 function setAccessToken(accessToken, refreshToken, expiration) {
   localStorage.removeItem("ACCESSTOKEN");
@@ -74,7 +75,7 @@ function* logIn(action) {
 
     yield put({
       type: LOGIN_SUCCESS,
-      data: result.data,
+      data: result.data.body,
     });
     yield put({
       type: LOAD_USER_REQUEST,
@@ -90,7 +91,7 @@ function* logIn(action) {
 
 const signUpAPI = (data) => {
   return axios.post(
-    `/user/join?uid=${data.userId}&pwd=${data.userPw}&name=${data.userName}&email=${data.userEmail}&gender=${data.userSex}&age=${data.userAge}`
+    `/user/join?uid=${data.userId}&pwd=${data.userPw}&name=${data.userName}&email=${data.userEmail}&gender=${data.userSex}&age=${data.userAge}&schoolId=${data.schoolId}`
   );
 };
 function* signUp(action) {

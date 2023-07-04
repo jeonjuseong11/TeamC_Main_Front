@@ -19,6 +19,9 @@ import {
   LOAD_SCHOOL_REVIEWS_SUCCESS,
   LOAD_SCHOOL_REVIEWS_FAILURE,
   LOAD_SCHOOL_REVIEWS_REQUEST,
+  LOAD_SAVED_SCHOOL_FAILURE,
+  LOAD_SAVED_SCHOOL_SUCCESS,
+  LOAD_SAVED_SCHOOL_REQUEST,
 } from "../constants/actionTypes";
 
 const loadSchoolListAPI = () => {
@@ -53,6 +56,25 @@ function* loadSchoolInfo(action) {
     console.error(err);
     yield put({
       type: LOAD_SCHOOL_INFO_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+const loadSavedSchoolsAPI = (data) => {
+  //학교 찜하기
+  return axios.get(`/school/heart`);
+};
+function* loadSavedSchools(action) {
+  const result = yield call(loadSchoolInfoAPI, action.data);
+  try {
+    yield put({
+      type: LOAD_SAVED_SCHOOL_SUCCESS,
+      data: action.data, //result.data
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_SAVED_SCHOOL_FAILURE,
       error: err.response.data,
     });
   }
@@ -144,6 +166,30 @@ function* removeSchoolReview(action) {
     });
   }
 }
+function updateSchoolReviewAPI(data) {
+  // 게시물 댓글 삭제
+  return axios.put(`/review/${data.id}`);
+}
+
+function* updateSchoolReview(action) {
+  try {
+    const result = yield call(updateSchoolReviewAPI, action.data);
+    yield put({
+      type: UPDATE_SCHOOL_REVIEW_SUCCESS,
+      data: result.data,
+    });
+    yield put({
+      type: LOAD_SCHOOL_REVIEWS_REQUEST,
+      data: { schoolId: action.data.schoolId },
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPDATE_SCHOOL_REVIEW_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function updatePostCommentAPI(data) {
   // 게시물 댓글 수정
@@ -190,6 +236,12 @@ function* watchLoadSchoolReview() {
 function* watchRemoveSchoolReview() {
   yield takeLatest(REMOVE_SCHOOL_REVIEW_REQUEST, removeSchoolReview);
 }
+function* watchLoadSavedSchools() {
+  yield takeLatest(LOAD_SAVED_SCHOOL_REQUEST, loadSavedSchools);
+}
+function* watchUpdateSchoolReview() {
+  yield takeLatest(UPDATE_SCHOOL_REVIEW_REQUEST, updateSchoolReview);
+}
 
 export default function* userSaga() {
   yield all([
@@ -198,5 +250,6 @@ export default function* userSaga() {
     fork(watchLoadSchoolList),
     fork(watchLoadSchoolReview),
     fork(watchRemoveSchoolReview),
+    fork(watchUpdateSchoolReview),
   ]);
 }

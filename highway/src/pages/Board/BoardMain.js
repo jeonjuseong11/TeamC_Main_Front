@@ -32,11 +32,11 @@ export const formatDate = (dateString) => {
 };
 
 export const changeCategory = (category) => {
-  if (category == 1) {
+  if (category == 0) {
     return "자유게시판";
-  } else if (category == 2) {
+  } else if (category == 1) {
     return "질문게시판";
-  } else if (category == 3) {
+  } else if (category == 2) {
     return "프로젝트 모집";
   }
 };
@@ -163,10 +163,10 @@ const BoardMain = () => {
                   background: hoveredItem === index ? "#f5f5f5" : "transparent",
                   transition: "background 0.3s",
                 }}
-                actions={[
-                  <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />,
-                  <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                ]}
+                // actions={[
+                //   <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />,
+                //   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                // ]}
               >
                 <span style={{ color: "gray" }}>{changeCategory(item.category)}</span>
                 <List.Item.Meta
@@ -174,7 +174,8 @@ const BoardMain = () => {
                   description={
                     <div
                       style={{
-                        maxHeight: "30px", // 원하는 높이값으로 변경
+                        height: "40px",
+                        maxHeight: "40px", // 원하는 높이값으로 변경
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         display: "-webkit-box",
