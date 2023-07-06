@@ -8,9 +8,7 @@ export const validateId = (_, value) => {
     return Promise.reject(new Error("아이디를 입력해주세요"));
   }
   if (!regExp.test(value)) {
-    return Promise.reject(
-      new Error("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요")
-    );
+    return Promise.reject(new Error("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요"));
   }
   return Promise.resolve();
 };
@@ -23,9 +21,7 @@ export const validatePassword = (_, value) => {
     return Promise.reject(new Error("비밀번호는 필수 항목입니다."));
   }
   if (!regExp.test(value)) {
-    return Promise.reject(
-      new Error("영문 소,대문자, 숫자, 특수문자를 모두 포함해야 합니다")
-    );
+    return Promise.reject(new Error("영문 소,대문자, 숫자, 특수문자를 모두 포함해야 합니다"));
   }
   return Promise.resolve();
 };
@@ -49,9 +45,7 @@ export const validateNickname = (_, value) => {
     }
   }
   if (nicknameLength < 2 || nicknameLength >= 20) {
-    return Promise.reject(
-      new Error("한글 1~10자, 영문 및 숫자 2~20자까지 입력해주세요")
-    );
+    return Promise.reject(new Error("한글 1~10자, 영문 및 숫자 2~20자까지 입력해주세요"));
   }
   return Promise.resolve();
 };
@@ -81,6 +75,20 @@ export const validateAge = (_, value) => {
   }
   if (!value.match(regExp)) {
     return Promise.reject(new Error("숫자로만 이루어진 나이 형식이 아닙니다."));
+  }
+  return Promise.resolve();
+};
+//역할 선택
+export const roleValidate = (_, value) => {
+  if (!value) {
+    return Promise.reject(new Error("역할를 선택해주세요"));
+  }
+  return Promise.resolve();
+};
+//학교 선택 유효성 검사
+export const schoolValidate = (_, value) => {
+  if (!value) {
+    return Promise.reject(new Error("학교를 선택해주세요"));
   }
   return Promise.resolve();
 };

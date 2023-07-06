@@ -1,7 +1,7 @@
-import { AutoComplete, Button, Checkbox, Form, Radio, Space } from "antd";
+import { AutoComplete, Button, Form, Radio, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CHECK_DUPLICATE_ID_REQUEST, SIGNUP_REQUEST } from "../constants/actionTypes";
 import {
   ButtonWrapper,
@@ -13,8 +13,9 @@ import {
   SignUpWrapper,
 } from "../styles/SignUpStyle";
 import {
-  agreeValidate,
   idRegExp,
+  roleValidate,
+  schoolValidate,
   validateAge,
   validateEmail,
   validateId,
@@ -24,18 +25,19 @@ import {
 import { useSelector } from "react-redux";
 import { error, info } from "../utils/Message";
 const SignUp = () => {
+  const { schools } = useSelector((state) => state.school);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const identity = "student";
+  const [role, setRole] = useState("");
 
   const { idValid } = useSelector((state) => state.user);
+
   useEffect(() => {
     console.log(idValid);
   }, [idValid]);
 
   const onFinish = (values) => {
-    console.log(values);
     dispatch({
       type: SIGNUP_REQUEST,
       data: values,
@@ -45,7 +47,7 @@ const SignUp = () => {
   };
 
   const onCheckUserId = () => {
-    const userIdValue = form.getFieldValue("userId");
+    const userIdValue = form.getFieldValue("uid");
     if (!userIdValue) {
       error("아이디를 입력해주세요");
     } else if (!idRegExp.test(userIdValue)) {
@@ -55,8 +57,11 @@ const SignUp = () => {
         type: CHECK_DUPLICATE_ID_REQUEST,
         data: userIdValue,
       });
-      info("사용가능한 아이디입니다.");
+      if (idValid) {
+        info("사용가능한 아이디입니다.");
+      }
     }
+    console.log(idValid);
   };
 
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
@@ -73,6 +78,7 @@ const SignUp = () => {
     label: email,
     value: email,
   }));
+
   return (
     <SignUpWrapper>
       <SignUpForm
@@ -87,20 +93,20 @@ const SignUp = () => {
         <h2>재학생 회원가입</h2>
         <label>아이디</label>
         <Form.Item
-          name="userId"
+          name="uid"
           tooltip="아이디는 영어로 시작해여 숫자와의 조합으로 작성해주세요"
           rules={[{ validator: validateId }]}
           hasFeedback
-          validateStatus={idValid ? "success" : "error"}
+          validateStatus={idValid.data ? "success" : "error"}
         >
           <Space.Compact style={{ width: "100%" }}>
-            <SignUpInput allowClear placeholder="아이디를 입력해주세요" disabled={idValid} />
-            <Button onClick={onCheckUserId} disabled={idValid} style={{ height: "3rem" }}>
+            <SignUpInput allowClear placeholder="아이디를 입력해주세요" disabled={idValid.data} />
+            <Button onClick={onCheckUserId} disabled={idValid.data} style={{ height: "3rem" }}>
               중복확인
             </Button>
           </Space.Compact>
         </Form.Item>
-        {idValid ? (
+        {idValid.data ? (
           <p
             style={{
               color: "green",
@@ -115,7 +121,7 @@ const SignUp = () => {
         )}
         <label>비밀번호</label>
         <Form.Item
-          name="userPw"
+          name="pwd"
           rules={[
             {
               validator: validatePassword,
@@ -136,7 +142,7 @@ const SignUp = () => {
                 if (!value) {
                   return Promise.reject(new Error("비밀번호를 확인해주세요."));
                 }
-                if (getFieldValue("userPw") === value) {
+                if (getFieldValue("pwd") === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(new Error("비밀번호가 일치하지 않습니다."));
@@ -147,23 +153,23 @@ const SignUp = () => {
           <SignUpInputPassword allowClear placeholder="비밀번호를 입력해주세요" />
         </Form.Item>
         <label>닉네임</label>
-        <Form.Item name="userName" rules={[{ validator: validateNickname }]}>
+        <Form.Item name="name" rules={[{ validator: validateNickname }]}>
           <SignUpInput allowClear placeholder="닉네임을 입력해주세요" />
         </Form.Item>
         <label>이메일</label>
-        <Form.Item name="userEmail" rules={[{ validator: validateEmail }]}>
+        <Form.Item name="email" rules={[{ validator: validateEmail }]}>
           <AutoComplete options={emailOptions} onChange={onEmailChange}>
             <SignUpInput placeholder="이메일을 입력해주세요" />
           </AutoComplete>
         </Form.Item>
         <label>나이</label>
-        <Form.Item name="userAge" rules={[{ validator: validateAge }]}>
+        <Form.Item name="age" rules={[{ validator: validateAge }]}>
           <SignUpInput type="number" placeholder="나이를 입력해주세요" />
         </Form.Item>
         <label>성별</label>
         <div style={{ display: "flex", height: "3rem", alignItems: "center" }}>
           <Form.Item
-            name="userSex"
+            name="gender"
             rules={[
               {
                 required: true,
@@ -177,15 +183,85 @@ const SignUp = () => {
             </Radio.Group>
           </Form.Item>
         </div>
-
-        <Form.Item name="agreement" valuePropName="checked" rules={[{ validator: agreeValidate }]}>
-          <Checkbox>
-            <Link to={`/signup/student/terms`} state={{ data: identity }}>
-              이용약관
-            </Link>
-            에 동의합니다
-          </Checkbox>
+        <label>역할</label>
+        <Form.Item name="role" rules={[{ validator: roleValidate }]}>
+          <Select
+            onSelect={(value) => {
+              if (value === 1) {
+                // alert("학생");
+                setRole(1);
+              } else if (value === 2) {
+                // alert("선생님");
+                setRole(2);
+              } else if (value === 3) {
+                // alert("부모님");
+                setRole(3);
+              }
+            }}
+            placeholder="선택해주세요"
+            options={[
+              {
+                value: 1,
+                label: "학생",
+              },
+              {
+                value: 2,
+                label: "선생님",
+              },
+              {
+                value: 3,
+                label: "부모님",
+              },
+            ]}
+          />
         </Form.Item>
+        {role === 1 ? (
+          <>
+            <label>학교</label>
+            <Form.Item name="schoolId" rules={[{ validator: schoolValidate }]}>
+              <Select
+                showSearch
+                type="number"
+                style={{
+                  width: 200,
+                }}
+                placeholder="Search to Select"
+                optionFilterProp="children"
+                filterOption={(input, option) => (option?.label ?? "").includes(input)}
+                filterSort={(optionA, optionB) =>
+                  (optionA?.label ?? "")
+                    .toLowerCase()
+                    .localeCompare((optionB?.label ?? "").toLowerCase())
+                }
+                options={[
+                  {
+                    value: schools[0].id,
+                    label: schools[0].schul_NM,
+                  },
+                  {
+                    value: schools[1].id,
+                    label: schools[1].schul_NM,
+                  },
+                  {
+                    value: schools[2].id,
+                    label: schools[2].schul_NM,
+                  },
+                  {
+                    value: schools[3].id,
+                    label: schools[3].schul_NM,
+                  },
+                  {
+                    value: schools[4].id,
+                    label: schools[4].schul_NM,
+                  },
+                ]}
+              />
+            </Form.Item>
+          </>
+        ) : (
+          <></>
+        )}
+
         <Form.Item>
           <ButtonWrapper>
             <StudentSignUpBtn type="primary" htmlType="submit">

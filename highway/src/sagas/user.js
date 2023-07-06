@@ -72,10 +72,9 @@ function* logIn(action) {
     // console.log(result.data.token);//토큰 확인용
     axios.defaults.headers.common["ACCESS_TOKEN"] = `${access_TOKEN}`;
     setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
-
     yield put({
       type: LOGIN_SUCCESS,
-      data: result.data.body,
+      data: result.data,
     });
     yield put({
       type: LOAD_USER_REQUEST,
@@ -90,16 +89,24 @@ function* logIn(action) {
 }
 
 const signUpAPI = (data) => {
-  return axios.post(
-    `/user/join?uid=${data.userId}&pwd=${data.userPw}&name=${data.userName}&email=${data.userEmail}&gender=${data.userSex}&age=${data.userAge}&schoolId=${data.schoolId}`
-  );
+  console.log(data);
+  return axios.post(`/user/join`, data);
 };
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data);
     yield put({
       type: SIGNUP_SUCCESS,
-      data: result.data,
+      data: result.data.data,
+    });
+    const { access_TOKEN, access_TOKEN_EXPIRATION, refresh_TOKEN } = result.data;
+    setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
+    axios.defaults.headers.common["ACCESS_TOKEN"] = `${result.data.access_TOKEN}`;
+
+    // console.log(result.data);
+
+    yield put({
+      type: LOAD_USER_REQUEST,
     });
   } catch (err) {
     console.error(err);
@@ -143,7 +150,7 @@ function* loadUser() {
     // console.log(action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
-      data: result.data.body,
+      data: result.data.data,
     });
   } catch (e) {
     yield put({
