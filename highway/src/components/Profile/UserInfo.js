@@ -1,69 +1,44 @@
-import { Avatar, Button, Col } from "antd";
-import React, { useEffect } from "react";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Col, Menu, Row } from "antd";
+import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
-const UserInfo = () => {
+const UserProfile = () => {
   const { me } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+  const location = useLocation();
+
+  const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
   return (
-    <>
-      <Col xs={24} md={11} style={{ marginBottom: "27vh" }}>
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "10px",
-            textAlign: "left",
-            padding: "2rem",
-          }}
-        >
-          <h3 style={{ margin: "0" }}>기본 정보</h3>
-          <table style={{ marginTop: "1rem", width: "100%", height: "10rem" }}>
-            <tbody>
-              <tr>
-                <th style={{ width: "5rem" }}>이름</th>
-                <td>{me?.userName}</td>
-              </tr>
-              <tr>
-                <th>아이디</th>
-                <td>{me?.userId}</td>
-              </tr>
-              <tr>
-                <th>이메일</th>
-                <td>{me?.userEmail}</td>
-              </tr>
-              <tr>
-                <th>성별</th>
-                <td>{me?.userGender}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div
-          style={{
-            backgroundColor: "white",
-            borderRadius: "10px",
-            textAlign: "left",
-            marginTop: "1rem",
-            padding: "2rem",
-          }}
-        >
-          <h3 style={{ marginTop: "0" }}>소속학교</h3>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Avatar size={128}>학교로고</Avatar>
-            <div style={{ marginLeft: "2rem" }}>
-              <p>학교명</p>
-              <h3>OOO 고등학교</h3>
-              <p>학과</p>
-              <h3>OO학과</h3>
+    <div style={{ backgroundColor: "#f2f2f2", height: "89vh" }}>
+      <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
+        <Col xs={24} md={4}>
+          <Menu
+            className="custom-menu"
+            selectedKeys={location.pathname}
+            style={{
+              paddingBottom: "1rem",
+              backgroundColor: "white",
+              borderRadius: "10px",
+            }}
+          >
+            <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
+              <Avatar size={100} icon={<UserOutlined />} />
+              <h2 style={{ marginTop: "2rem" }}>{me?.userName} 님</h2>
             </div>
-          </div>
-        </div>
-        <Button danger>계정 탈퇴</Button>
-      </Col>
-    </>
+            <Menu.Item key="/profile">
+              <NavLink to="/profile">회원 정보</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/profile/recentrecord">
+              <NavLink to="/profile/recentrecord">나의 관심</NavLink>
+            </Menu.Item>
+          </Menu>
+        </Col>
+        <Outlet />
+      </Row>
+    </div>
   );
 };
 
-export default UserInfo;
+export default UserProfile;

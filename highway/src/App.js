@@ -80,7 +80,6 @@ function App() {
     }
   }, [access, expire]);
   useEffect(() => {
-    // console.log(me);
     if (me) {
       info(`${me.userName}님 환영합니다.`);
       localStorage.setItem("USERINFO", JSON.stringify(me));
@@ -91,6 +90,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/terms" element={<Terms />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/signup/student" element={<StudentSignUp />} />
           <Route exact path="/signup/other" element={<OtherSignUp />} />
