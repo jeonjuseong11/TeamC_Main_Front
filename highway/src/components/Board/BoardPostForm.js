@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Form, Input, Button, Upload, Modal, Row, Col, Select } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ADD_POST_REQUEST } from "../../constants/actionTypes";
@@ -15,7 +15,14 @@ const BoardPostForm = () => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
-
+  const { me } = useSelector((state) => state.user);
+  useEffect(() => {
+    console.log(me);
+    if (me === null) {
+      alert("로그인이 필요합니다");
+      navigate(-1);
+    }
+  }, [me]);
   const boardPost = useCallback(
     (values) => {
       dispatch({
