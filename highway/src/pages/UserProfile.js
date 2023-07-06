@@ -1,15 +1,30 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Col, Menu, Row } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { me } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const location = useLocation();
-
+  useEffect(() => {
+    if (me === null) {
+      navigate("/");
+    }
+  }, [me]);
   const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-
+  const renderUserRole = () => {
+    if (me?.userRole === 1) {
+      return " 학생";
+    } else if (me?.userRole === 2) {
+      return " 부모님";
+    } else if (me?.userRole === 3) {
+      return " 선생님";
+    } else {
+      return "";
+    }
+  };
   return (
     <div style={{ backgroundColor: "#f2f2f2", height: "100%" }}>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
@@ -25,7 +40,11 @@ const UserProfile = () => {
           >
             <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
               <Avatar size={100} icon={<UserOutlined />} />
-              <h2 style={{ marginTop: "2rem" }}>{me?.userName} 님</h2>
+              <h2 style={{ marginTop: "2rem" }}>
+                {me?.userName}
+                {renderUserRole()}
+              </h2>
+              <h4 style={{ paddingTop: "1rem" }}>{me?.schoolName}</h4>
             </div>
             <Menu.Item key="/profile">
               <NavLink to="/profile">회원 정보</NavLink>

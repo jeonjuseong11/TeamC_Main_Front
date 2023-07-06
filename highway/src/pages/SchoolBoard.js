@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "reac
 import { EditOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { needLoginError } from "../utils/Message";
 export const data = [
   {
     id: 1,
@@ -45,7 +46,7 @@ const SchoolBoard = () => {
             <Button
               onClick={() => {
                 if (me === null) {
-                  alert("로그인이 필요합니다");
+                  needLoginError("글쓰기는 로그인 후에 가능합니다.", navigate);
                   return;
                 } else {
                   navigate("/schoolboard/post");
