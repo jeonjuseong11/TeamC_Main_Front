@@ -11,7 +11,7 @@ const UserProfile = () => {
   const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
   return (
-    <div style={{ backgroundColor: "#f2f2f2", height: "89vh" }}>
+    <div style={{ backgroundColor: "#f2f2f2", height: "100%" }}>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
         <Col xs={24} md={4}>
           <Menu
