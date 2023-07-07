@@ -90,7 +90,6 @@ function App() {
     <ConfigProvider theme={{ token: { colorPrimary: "#8282ff" } }}>
       <div className="App">
         <Routes>
-          <Route exact path="/login" element={<Login />} />
           <Route exact path="/terms" element={<Terms />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/signup/student/terms" element={<Terms />} />
@@ -98,6 +97,7 @@ function App() {
 
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
+            <Route exact path="/login" element={<Login />} />
             <Route exact path="/search" element={<Search />} />
             <Route element={<UserProfile />}>
               <Route exact path="/profile/recentrecord" element={<UserInfo />} />

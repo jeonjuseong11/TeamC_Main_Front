@@ -5,17 +5,23 @@ import { Link } from "react-router-dom";
 export const LoginWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
-  height: 100vh;
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  background-color: #f2f2f2;
 `;
 export const LoginForm = styled(Form)`
   text-align: left;
-  width: 20%;
+  width: 25%;
   min-width: 15rem;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 18.4rem;
 `;
 export const LoginFormTitle = styled.h1`
+  margin-top: 10rem;
   text-align: center;
 `;
 export const LoginInput = styled(Input)`

@@ -11,7 +11,7 @@ import {
   LoginFormTitle,
 } from "../styles/LoginStyle";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LOGIN_REQUEST } from "../constants/actionTypes";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,10 +28,6 @@ const Login = () => {
     // console.log("로그인 값: ", values);
   };
 
-  const goHome = () => {
-    navigate("/");
-  };
-
   useEffect(() => {
     // console.log(me);
     if (me) {
@@ -39,10 +35,10 @@ const Login = () => {
     }
   }, [me]);
   useEffect(() => {}, []);
-  const imgUrl = "/assets/TitleIcon.png";
 
   return (
     <LoginWrapper>
+      <LoginFormTitle>로그인</LoginFormTitle>
       <LoginForm
         name="normal_login"
         className="login-form"
@@ -51,13 +47,6 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Link to="/">
-            <img src={imgUrl} alt="Logo" style={{ width: "13rem", marginBottom: "1rem" }} />
-          </Link>
-        </div>
-        {/* <LeftOutlined onClick={goHome} style={{ marginBottom: "1rem" }} /> */}
-        {/* <LoginFormTitle>로그인</LoginFormTitle> */}
         <Form.Item
           name="userId"
           rules={[
