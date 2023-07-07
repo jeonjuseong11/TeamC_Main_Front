@@ -11,7 +11,7 @@ import {
   LoginFormTitle,
 } from "../styles/LoginStyle";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LOGIN_REQUEST } from "../constants/actionTypes";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -35,10 +35,11 @@ const Login = () => {
   useEffect(() => {
     // console.log(me);
     if (me) {
-      navigate("/");
+      navigate(-1);
     }
-  }, [me, navigate]);
+  }, [me]);
   useEffect(() => {}, []);
+  const imgUrl = "/assets/TitleIcon.png";
 
   return (
     <LoginWrapper>
@@ -50,8 +51,13 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
-        <LeftOutlined onClick={goHome} />
-        <LoginFormTitle>로그인</LoginFormTitle>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Link to="/">
+            <img src={imgUrl} alt="Logo" style={{ width: "13rem", marginBottom: "1rem" }} />
+          </Link>
+        </div>
+        {/* <LeftOutlined onClick={goHome} style={{ marginBottom: "1rem" }} /> */}
+        {/* <LoginFormTitle>로그인</LoginFormTitle> */}
         <Form.Item
           name="userId"
           rules={[
@@ -81,21 +87,21 @@ const Login = () => {
             placeholder="Password"
           />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="remember"
           valuePropName="checked"
           style={{ textAlign: "left", fontSize: "0.75rem" }}
         >
           <Checkbox>로그인 상태 유지</Checkbox>
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item>
           <LoginBtn type="primary" htmlType="submit" className="login-form-button">
             Log in
           </LoginBtn>
         </Form.Item>
         <LoginMenu>
-          <LoginMenuItem to="/signup">회원가입</LoginMenuItem>
-          <LoginMenuItem to="/findpw">비밀번호를 까먹었나요?</LoginMenuItem>
+          <LoginMenuItem to="/terms">회원가입</LoginMenuItem>
+          {/* <LoginMenuItem to="/findpw">비밀번호를 까먹었나요?</LoginMenuItem> */}
         </LoginMenu>
       </LoginForm>
     </LoginWrapper>

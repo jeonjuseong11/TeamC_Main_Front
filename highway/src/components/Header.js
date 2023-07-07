@@ -30,6 +30,8 @@ const Header = () => {
     dispatch({
       type: LOGOUT_REQUEST,
     });
+    // navigate(-1);
+    window.localStorage.clear();
   };
 
   useEffect(() => {
