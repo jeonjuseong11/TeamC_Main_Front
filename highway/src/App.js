@@ -10,12 +10,10 @@ import SchoolDetail from "./pages/SchoolDetail";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import OtherSignUp from "./pages/OtherSignUp";
 import Promotion from "./pages/Promotion";
 import SchoolRanking from "./pages/SchoolRanking";
 import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
-import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
 import Terms from "./pages/Terms";
 import PromotionNews from "./components/Promotion/PromotionNews";
@@ -71,6 +69,8 @@ function App() {
   };
 
   useEffect(() => {
+    const access = localStorage.getItem("ACCESSTOKEN");
+    const expire = localStorage.getItem("EXPIRES");
     if (access) {
       axios.defaults.headers.common["ACCESS_TOKEN"] = access;
     }
@@ -81,6 +81,7 @@ function App() {
   }, [access, expire]);
   useEffect(() => {
     if (me) {
+      // console.log(me);
       info(`${me.userName}님 환영합니다.`);
       localStorage.setItem("USERINFO", JSON.stringify(me));
     }
@@ -92,8 +93,6 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/terms" element={<Terms />} />
           <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/signup/student" element={<StudentSignUp />} />
-          <Route exact path="/signup/other" element={<OtherSignUp />} />
           <Route exact path="/signup/student/terms" element={<Terms />} />
           <Route exact path="/signup/other/terms" element={<Terms />} />
 
@@ -101,8 +100,8 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
             <Route element={<UserProfile />}>
-              <Route exact path="/profile/" element={<UserInfo />} />
-              <Route exact path="/profile/recentrecord" element={<ProfileRecentRecord />} />
+              <Route exact path="/profile/recentrecord" element={<UserInfo />} />
+              <Route exact path="/profile/" element={<ProfileRecentRecord />} />
             </Route>
             <Route element={<SchoolBoard />}>
               <Route exact path="/schoolboard/" element={<BoardMain />} />
