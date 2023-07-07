@@ -36,7 +36,6 @@ const SchoolDetail = () => {
   }, []);
 
   useEffect(() => {
-    // Calculate the new average rating when a new review is added
     const filteredReviews = schoolReviews.filter((item) => !item.deleted);
     const reviewCount = filteredReviews.length;
     setReviewCount(reviewCount);

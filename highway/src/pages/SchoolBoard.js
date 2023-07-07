@@ -1,6 +1,6 @@
 import { Avatar, Button, Col, List, Menu, Row } from "antd";
 import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, SearchOutlined, SmileOutlined, TeamOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { needLoginError } from "../utils/Message";
@@ -22,9 +22,11 @@ const SchoolBoard = () => {
   const [title, setTItle] = useState("커뮤니티");
   const { me } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
+  const tag = [
+    { id: 1, departs: "IT" },
+    { id: 2, departs: "디자인" },
+  ];
   useEffect(() => {
-    // console.log(category);
     if (category == "0") {
       setTItle("자유게시판");
     } else if (category == "1") {
@@ -33,9 +35,9 @@ const SchoolBoard = () => {
       setTItle("프로젝트 모집");
     }
   }, [category]);
-  useEffect(() => {
-    console.log(me);
-  }, [me]);
+  // useEffect(() => {
+  //   console.log(me);
+  // }, [me]);
   return (
     <div>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
@@ -83,16 +85,22 @@ const SchoolBoard = () => {
               <NavLink to="/schoolboard/0">전체</NavLink>
             </Menu.Item> */}
             <Menu.Item key="/schoolboard/0">
-              <NavLink to="/schoolboard/0">😀 자유게시판</NavLink>
+              <NavLink to="/schoolboard/0">
+                <SmileOutlined /> 자유게시판
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/1">
-              <NavLink to="/schoolboard/1">질문게시판</NavLink>
+              <NavLink to="/schoolboard/1">
+                <SearchOutlined /> 질문게시판
+              </NavLink>
             </Menu.Item>
             <Menu.Item key="/schoolboard/2">
-              <NavLink to="/schoolboard/2">프로젝트 모집</NavLink>
+              <NavLink to="/schoolboard/2">
+                <TeamOutlined /> 프로젝트 모집
+              </NavLink>
             </Menu.Item>
           </Menu>
-          <div
+          {/* <div
             style={{
               border: "1px solid #f2f2f2",
               borderRadius: "10px",
@@ -100,8 +108,8 @@ const SchoolBoard = () => {
               marginTop: "1rem",
             }}
           >
-            <h3 style={{ marginTop: "0", textAlign: "left" }}>하이웨이 Top user</h3>
-            <List
+            <h3 style={{ marginTop: "0", textAlign: "left" }}>하이웨이 Top user</h3> */}
+          {/* <List
               className="custom-list"
               itemLayout="horizontal"
               dataSource={data}
@@ -139,8 +147,8 @@ const SchoolBoard = () => {
                   </p>
                 </List.Item>
               )}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
         </Col>
         <Outlet />
       </Row>

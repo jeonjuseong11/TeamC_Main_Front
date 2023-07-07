@@ -52,7 +52,7 @@ const BoardMain = () => {
   const loadPosts = (category) => {
     dispatch({
       type: LOAD_POSTS_REQUEST,
-      data: category,
+      data: { category, schoolId: 1 },
     });
   };
   useEffect(() => {
@@ -121,7 +121,7 @@ const BoardMain = () => {
         >
           최신순
         </Button>
-        <Button
+        {/* <Button
           type="text"
           style={{
             borderRadius: "50px",
@@ -131,7 +131,7 @@ const BoardMain = () => {
           onClick={() => handleSortOrder("most-liked")}
         >
           좋아요 많은순
-        </Button>
+        </Button> */}
       </div>
       <List
         itemLayout="vertical"

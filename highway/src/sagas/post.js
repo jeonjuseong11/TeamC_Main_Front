@@ -187,7 +187,7 @@ function* loadTagPosts(action) {
 
 function loadPostsAPI(data) {
   // console.log(data)
-  return axios.get(`/board/list/1?cateNo=${data}`);
+  return axios.get(`/board/list/${data.schoolId}?cateNo=${data.category}`);
 }
 
 function* loadPosts(action) {

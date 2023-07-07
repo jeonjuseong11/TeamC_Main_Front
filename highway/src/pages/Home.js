@@ -11,6 +11,7 @@ import axios from "axios";
 const Home = () => {
   const accessToken = localStorage.getItem("ACCESSTOKEN");
   const [filterValue, setFilterValue] = useState([""]);
+  const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const loadSchoolInfo = () => {
     axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
@@ -22,12 +23,17 @@ const Home = () => {
     axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
     dispatch({
       type: LOAD_POSTS_REQUEST,
+      data: { category: 0, schoolId: 1 },
     });
   };
   useEffect(() => {
     loadSchoolInfo();
-    loadPosts();
   }, []);
+  useEffect(() => {
+    if (me) {
+      loadPosts();
+    }
+  }, [me]);
 
   return (
     <AppLayout>

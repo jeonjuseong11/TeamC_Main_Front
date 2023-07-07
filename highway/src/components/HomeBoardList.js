@@ -14,6 +14,7 @@ const HomeBoardList = () => {
     <Row justify="center" gutter={[16, 16]} style={{ marginTop: "1rem", textAlign: "left" }}>
       <Col xs={24} md={15} style={{ marginBottom: "2rem" }}>
         <h3>Highway 커뮤니티에 물어보세요</h3>
+        <p style={{ fontSize: "1.5rem" }}>자유게시판</p>
         <List
           size="large"
           dataSource={schoolBoardPosts.slice(0, 4)}
@@ -45,20 +46,7 @@ const HomeBoardList = () => {
                     transition: "background 0.3s",
                   }}
                 >
-                  <span style={{ color: "gray" }}>{changeCategory(item.category)}</span>
                   <List.Item.Meta title={item.title} description={item.content} />
-                  <List.Item.Meta
-                    description={
-                      <>
-                        <IconText
-                          icon={HeartOutlined}
-                          text={item.good}
-                          key="list-vertical-like-o"
-                        />
-                        <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />
-                      </>
-                    }
-                  />
                 </List.Item>
               </Link>
             </div>
