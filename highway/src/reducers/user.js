@@ -19,6 +19,7 @@ import {
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILURE,
+  RESET_DUPLICATE_ID_REQUEST,
 } from "../constants/actionTypes";
 import { error, success } from "../utils/Message";
 
@@ -49,6 +50,8 @@ export const initialState = {
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case RESET_DUPLICATE_ID_REQUEST:
+        draft.idValid = false;
       case CHECK_DUPLICATE_ID_REQUEST:
         draft.checkIdLoading = true;
         draft.checkIdError = null;
@@ -57,10 +60,13 @@ const reducer = (state = initialState, action) =>
       // 요기가 saga에 의해 실행된다.
       case CHECK_DUPLICATE_ID_SUCCESS:
         draft.idValid = action.data;
+        console.log(draft.idValid);
         draft.checkIdLoading = false;
         draft.checkIdDone = true;
+
         break;
       case CHECK_DUPLICATE_ID_FAILURE:
+        draft.idValid = false;
         draft.checkIdLoading = false;
         draft.checkIdError = action.error;
         break;

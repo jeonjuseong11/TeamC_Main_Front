@@ -31,7 +31,7 @@ function* checkUserId(action) {
     const result = yield call(checkUserIdAPI, action.data);
     yield put({
       type: CHECK_DUPLICATE_ID_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
