@@ -50,52 +50,7 @@ import {
 
 export const initialState = {
   imagePaths: [], //이미지 파일 관리
-  schoolBoardPosts: [
-    {
-      id: 1,
-      userId: "admin",
-      title: "제목",
-      content: "내용",
-      board: "자유게시판",
-      category: "IT",
-      createDate: "2023-06-14T17:01:59.744865",
-      modifiedDate: "2023-06-14T17:01:59.744865",
-      good: 1,
-    },
-    {
-      id: 2,
-      userId: "admin2",
-      title: "제목2",
-      content: "내용2",
-      board: "프로젝트 모집",
-      category: "예체능",
-      createDate: "2023-05-14T17:01:59.744865",
-      modifiedDate: "2023-05-14T17:01:59.744865",
-      good: 2,
-    },
-    {
-      id: 3,
-      userId: "admin3",
-      title: "제목3",
-      content: "내용3",
-      board: "고민게시판",
-      category: "경영",
-      createDate: "2023-06-12T17:01:59.744865",
-      modifiedDate: "2023-06-12T17:01:59.744865",
-      good: 3,
-    },
-    {
-      id: 4,
-      userId: "admin4",
-      title: "제목4",
-      content: "내용4",
-      board: "자유게시판",
-      category: "기계",
-      createDate: "2023-06-15T08:01:59.744865",
-      modifiedDate: "2023-06-15T08:01:59.744865",
-      good: 4,
-    },
-  ], //게시글 리스트
+  schoolBoardPosts: [], //게시글 리스트
   schoolBoardPost: null, //단일 게시글
   schoolBoardPostComments: [], // 게시글 댓글
   loadPostsLoading: false, //게시글 리스트

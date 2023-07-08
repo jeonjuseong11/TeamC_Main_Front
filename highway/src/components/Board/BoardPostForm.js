@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Form, Input, Button, Upload, Modal, Row, Col, Select } from "antd";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import { ADD_POST_REQUEST } from "../../constants/actionTypes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { info, needLoginError } from "../../utils/Message";
 
 const { TextArea } = Input;
 
@@ -16,13 +17,15 @@ const BoardPostForm = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState([]);
   const { me } = useSelector((state) => state.user);
+  const accessToken = localStorage.getItem("ACCESSTOKEN");
+
   useEffect(() => {
-    console.log(me);
-    if (me === null) {
-      alert("로그인이 필요합니다");
+    // 새로고침 시 로컬 스토리지에서 로그인 정보 가져오기
+    if (accessToken) {
+    } else {
       navigate(-1);
     }
-  }, [me]);
+  }, [navigate, accessToken]);
   const boardPost = useCallback(
     (values) => {
       dispatch({
@@ -31,6 +34,7 @@ const BoardPostForm = () => {
           title: values.title,
           content: values.content.replace(/\r?\n/g, "<br>"),
           category: values.category,
+          schoolId: 1,
         },
       });
       navigateToHomeBoard(values.category);
@@ -46,7 +50,7 @@ const BoardPostForm = () => {
   );
 
   const onFinish = (values) => {
-    console.log(values);
+    // console.log(values);
     boardPost(values);
   };
 

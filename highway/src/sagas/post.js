@@ -215,6 +215,7 @@ function addPostAPI(data) {
 }
 
 function* addPost(action) {
+  // console.log(action.data);
   try {
     const result = yield call(addPostAPI, action.data);
     yield put({
@@ -223,7 +224,7 @@ function* addPost(action) {
     });
     yield put({
       type: LOAD_POSTS_REQUEST,
-      data: action.data.category,
+      data: { category: action.data.category, schoolId: action.data.schoolId },
     });
     // yield put({
     //   type: ADD_POST_TO_ME,

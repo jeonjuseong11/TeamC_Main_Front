@@ -45,6 +45,7 @@ const BoardMain = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
   const { schoolBoardPosts } = useSelector((state) => state.post);
+  const me = JSON.parse(localStorage.getItem("USERINFO"));
   const [hoveredItem, setHoveredItem] = useState(null);
   const [sortOrder, setSortOrder] = useState("latest");
   const sortedData = [...schoolBoardPosts];
@@ -52,7 +53,7 @@ const BoardMain = () => {
   const loadPosts = (category) => {
     dispatch({
       type: LOAD_POSTS_REQUEST,
-      data: { category, schoolId: 1 },
+      data: { category, schoolId: me.schoolId },
     });
   };
   useEffect(() => {
