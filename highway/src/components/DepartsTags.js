@@ -4,8 +4,8 @@ import { CardItem, TagsItem } from "./Card/CardStyle";
 const DepartsTags = ({ schoolInfo }) => {
   return (
     <CardItem>
-      {schoolInfo.tags.map((v, idx) => {
-        return <TagsItem key={idx}>{v}</TagsItem>;
+      {schoolInfo?.map((v, idx) => {
+        return <TagsItem key={idx}>{v.tagName}</TagsItem>;
       })}
     </CardItem>
   );

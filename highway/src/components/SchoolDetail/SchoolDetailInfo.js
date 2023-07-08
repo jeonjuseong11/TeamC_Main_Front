@@ -1,27 +1,31 @@
 import { Col, Row, Tabs } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { LOAD_SCHOOL_INFO_REQUEST } from "../../constants/actionTypes";
 import SchoolDetailReview from "./SchoolDetailReview";
 import { QuestionWrapper, SubPageWrapper } from "./SchoolDetailStyle";
 
 const SchoolDetailInfo = ({ rateAverages, roundedTotalRate, reviewCount }) => {
-  const { schoolId } = useParams();
-  const schools = useSelector((state) => state.school.schools);
-  const school = schools[schoolId - 1];
-  // console.log(school);
+  const { singleSchool } = useSelector((state) => state.school);
   const [departsList, setDepartsList] = useState([]);
-  school.departs.map((v, idx) => {
-    departsList.push({
+
+  useEffect(() => {
+    const departs = singleSchool?.dept;
+    const updatedDepartsList = departs?.map((v, idx) => ({
       key: `${idx}`,
-      label: `${v.depart}`,
+      label: `${v.deptName}`,
       children: `${v.description}`,
-    });
-    return departsList;
-  });
+    }));
+    setDepartsList(updatedDepartsList);
+  }, [singleSchool]);
+
+  const [activeTab, setActiveTab] = useState("0");
+
   const onChange = (key) => {
-    console.log(key);
+    setActiveTab(key);
   };
+
   return (
     <SubPageWrapper>
       <Row justify="center" gutter={[16, 16]} style={{ marginBottom: "1rem" }}>
@@ -29,21 +33,28 @@ const SchoolDetailInfo = ({ rateAverages, roundedTotalRate, reviewCount }) => {
           <QuestionWrapper style={{ textAlign: "left", padding: "2rem" }}>
             <h3 style={{ margin: "0" }}>학교 정보</h3>
             <h4>주소</h4>
-            <p>{school.schul_RDNMA}</p>
+            <p>{singleSchool?.sch?.schoolStreetAddress}</p>
             <h4>연락처</h4>
-            <p style={{ margin: "0" }}>{school.user_TELNO}</p>
-            <p style={{ margin: "0" }}>{school.USER_TELNO_SW}(교무실)</p>
-            <p style={{ margin: "0" }}>{school.USER_TELNO_GA}(행정실)</p>
+            <p style={{ margin: "0" }}>{singleSchool?.sch?.telephoneNumber}</p>
+            {singleSchool?.sch?.administrationPhoneNumber == -1 ? null : (
+              <p style={{ margin: "0" }}>{singleSchool?.sch?.administrationPhoneNumber}(행정실)</p>
+            )}
+            {singleSchool?.sch?.officePhoneNumber == -1 ? null : (
+              <p style={{ margin: "0" }}>{singleSchool?.sch?.officePhoneNumber}(교무실)</p>
+            )}
             <h4>홈페이지</h4>
-            <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
-              {school.hmpg_ADRES}
+            <a
+              style={{ color: "black", textDecoration: "none" }}
+              href={singleSchool?.sch?.websiteAddress}
+            >
+              {singleSchool?.sch?.websiteAddress}
             </a>
           </QuestionWrapper>
         </Col>
         <Col xs={22} md={9} style={{ minWidth: "30rem" }}>
           <QuestionWrapper style={{ padding: "2rem", textAlign: "left" }}>
             <h3 style={{ margin: "0" }}>학과소개</h3>
-            <Tabs defaultActiveKey="0" items={departsList} onChange={onChange} />
+            <Tabs activeKey={activeTab} onChange={onChange} items={departsList} />
           </QuestionWrapper>
         </Col>
       </Row>

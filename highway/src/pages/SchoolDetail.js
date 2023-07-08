@@ -1,4 +1,4 @@
-import { Button, Col, Empty, Menu, Row } from "antd";
+import { Button, Col, Empty, Menu, Row, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import {
@@ -9,18 +9,31 @@ import {
 } from "../components/SchoolDetail/SchoolDetailStyle";
 import { SubWrapper } from "../styles/PageStyle";
 import { useDispatch, useSelector } from "react-redux";
-import { StarFilled, StarOutlined } from "@ant-design/icons";
+import { StarFilled, StarOutlined, TagsOutlined } from "@ant-design/icons";
 import DepartsTags from "../components/DepartsTags";
 import SchoolDetailInfo from "../components/SchoolDetail/SchoolDetailInfo";
-import { LOAD_SCHOOL_INFO_REQUEST, LOAD_SCHOOL_REVIEWS_REQUEST } from "../constants/actionTypes";
+import {
+  ADD_SAVED_SCHOOL_REQUEST,
+  LOAD_SAVED_SCHOOL_REQUEST,
+  LOAD_SCHOOL_INFO_REQUEST,
+  LOAD_SCHOOL_REVIEWS_REQUEST,
+  REMOVE_SAVED_SCHOOL_REQUEST,
+} from "../constants/actionTypes";
 import axios from "axios";
 
 const SchoolDetail = () => {
   const { schoolId } = useParams();
   const accessToken = localStorage.getItem("ACCESSTOKEN");
-  const { schools, schoolReviews } = useSelector((state) => state.school);
-  // console.log(school[schoolId - 1]);
+  const me = JSON.parse(localStorage.getItem("USERINFO"));
+
+  const { singleSchool, schoolReviews, followList } = useSelector((state) => state.school);
   const dispatch = useDispatch();
+  const [isFollowed, setIsFollowed] = useState(false);
+  useEffect(() => {
+    const followedSchool = followList.find((followed) => followed.schoolId === me.schoolId);
+    setIsFollowed(!!followedSchool);
+    console.log(isFollowed);
+  }, []);
   const loadSchoolReviews = () => {
     axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
     dispatch({
@@ -30,9 +43,40 @@ const SchoolDetail = () => {
       },
     });
   };
+  const loadSchoolInfo = () => {
+    dispatch({
+      type: LOAD_SCHOOL_INFO_REQUEST,
+      data: { schoolId: schoolId },
+    });
+  };
+
+  const loadSavedSchool = () => {
+    dispatch({
+      type: LOAD_SAVED_SCHOOL_REQUEST,
+    });
+  };
+  const addSavedSchool = () => {
+    dispatch({
+      type: ADD_SAVED_SCHOOL_REQUEST,
+      data: { schoolId },
+    });
+  };
+  const removeSavedSchool = () => {
+    dispatch({
+      type: REMOVE_SAVED_SCHOOL_REQUEST,
+      data: { heartId: parseInt(heartId) },
+    });
+  };
 
   useEffect(() => {
+    const followedSchool = followList.find((followed) => followed.schoolId === me.schoolId);
+    const heartId = followedSchool ? followedSchool.heartId : null;
+  }, []);
+
+  useEffect(() => {
+    loadSchoolInfo();
     loadSchoolReviews();
+    loadSavedSchool();
   }, []);
 
   useEffect(() => {
@@ -91,9 +135,6 @@ const SchoolDetail = () => {
     education: 0,
     employment: 0,
   });
-
-  const school = schools[schoolId - 1];
-
   return (
     <div>
       <SchoolDetailWrapper>
@@ -106,10 +147,10 @@ const SchoolDetail = () => {
           >
             <Button type="primary">배경 이미지 추가하기</Button>
           </Empty> */}
-          {school.logoURL !== null ? (
+          {singleSchool?.sch?.logoURL !== null ? (
             <SchoolLogo>
               <img
-                src={school.logoURL}
+                src={singleSchool?.sch?.logoURL}
                 alt="학교로고"
                 style={{
                   width: "100%",
@@ -128,7 +169,28 @@ const SchoolDetail = () => {
         <Row gutter={[24, 24]} justify="center">
           <Col xs={22} md={15}>
             <SchoolInfo>
-              <h2 style={{ margin: "0" }}>{school.schul_NM}</h2>
+              {isFollowed ? (
+                <Button
+                  type="primary"
+                  ghost
+                  style={{ float: "right", height: "2.5rem" }}
+                  onClick={addSavedSchool}
+                >
+                  <TagsOutlined /> 학교 찜하기
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  ghost
+                  style={{ float: "right", height: "2.5rem" }}
+                  onClick={removeSavedSchool}
+                >
+                  <TagsOutlined /> 학교 찜하기
+                </Button>
+              )}
+
+              <h2 style={{ margin: "0" }}>{singleSchool.sch?.schoolName}</h2>
+
               <div>
                 {averageRating == 0 ? (
                   <StarOutlined />
@@ -139,9 +201,12 @@ const SchoolDetail = () => {
                   </>
                 )}
 
-                <DepartsTags schoolInfo={school} />
-                <a style={{ color: "black", textDecoration: "none" }} href={school.hmpg_ADRES}>
-                  {school.hmpg_ADRES}
+                <DepartsTags schoolInfo={singleSchool.tag} />
+                <a
+                  style={{ color: "black", textDecoration: "none" }}
+                  href={singleSchool?.sch?.hmpg_ADRES}
+                >
+                  {singleSchool?.sch?.hmpg_ADRES}
                 </a>
               </div>
             </SchoolInfo>

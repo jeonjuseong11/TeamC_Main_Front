@@ -45,15 +45,15 @@ const SchoolList = ({ schools }) => {
                           text={item.reviews.length}
                           key="list-vertical-star-o"
                         /> */}
-                      <IconText
+                      {/* <IconText
                         icon={UserOutlined}
                         text={item.members.length}
                         key="list-vertical-message"
-                      />
+                      /> */}
                     </CardItem>
                   }
                 />
-                <Meta title={<DepartsTags schoolInfo={item} />} />
+                {/* <Meta title={<DepartsTags schoolInfo={item} />} /> */}
               </Card>
             </Link>
           </List.Item>

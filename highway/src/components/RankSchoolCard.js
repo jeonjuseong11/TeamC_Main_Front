@@ -1,14 +1,8 @@
-import {
-  EyeOutlined,
-  FileImageOutlined,
-  ProfileOutlined,
-  SearchOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { EyeOutlined, FileImageOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import CircleChart from "./CircleChart";
+// import CircleChart from "./CircleChart";
 import DepartsTags from "./DepartsTags";
 
 const RankSchoolCard = ({ selectedSchool }) => {
@@ -29,19 +23,19 @@ const RankSchoolCard = ({ selectedSchool }) => {
             size={64}
           ></Avatar>
         }
-        title={selectedSchool.schul_NM}
+        title={selectedSchool.schoolName}
         description={
           <>
-            <DepartsTags schoolInfo={selectedSchool} />
+            {/* <DepartsTags schoolInfo={selectedSchool} /> */}
             <p>
-              <a href={selectedSchool.hmpg_ADRES}>{selectedSchool.hmpg_ADRES}</a>
+              <a href={selectedSchool.websiteAddress}>{selectedSchool.websiteAddress}</a>
             </p>
             {/* <p>
               <ProfileOutlined />
               <span style={{ marginRight: "1rem" }}>리뷰 수</span>
               {selectedSchool.reviews}
             </p> */}
-            <p>
+            {/* <p>
               <UserOutlined />
               <span style={{ marginRight: "1rem" }}>사용자 수</span>
               {selectedSchool.members.length}
@@ -50,13 +44,13 @@ const RankSchoolCard = ({ selectedSchool }) => {
               <EyeOutlined />
               <span style={{ marginRight: "1rem" }}>조회 수</span>
               {selectedSchool.views}
-            </p>
+            </p> */}
           </>
         }
       />
-      <Card.Meta
+      {/* <Card.Meta
         description={<CircleChart male={selectedSchool.male} female={selectedSchool.female} />}
-      />
+      /> */}
     </Card>
   );
 };

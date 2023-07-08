@@ -22,6 +22,15 @@ import {
   LOAD_SAVED_SCHOOL_FAILURE,
   LOAD_SAVED_SCHOOL_SUCCESS,
   LOAD_SAVED_SCHOOL_REQUEST,
+  UPDATE_POST_COMMENT_FAILURE,
+  LOAD_POST_COMMENTS_REQUEST,
+  UPDATE_POST_COMMENT_SUCCESS,
+  ADD_SAVED_SCHOOL_REQUEST,
+  ADD_SAVED_SCHOOL_SUCCESS,
+  ADD_SAVED_SCHOOL_FAILURE,
+  REMOVE_SAVED_SCHOOL_SUCCESS,
+  REMOVE_SAVED_SCHOOL_FAILURE,
+  REMOVE_SAVED_SCHOOL_REQUEST,
 } from "../constants/actionTypes";
 
 const loadSchoolListAPI = () => {
@@ -43,14 +52,14 @@ function* loadSchoolList() {
   }
 }
 const loadSchoolInfoAPI = (data) => {
-  // return axios.get(`/school/info?schId=${data.schoolId}`); 백엔드 오류 수정시 다시 주석 해제
+  return axios.get(`/school/info?schId=${data.schoolId}`); //백엔드 오류 수정시 다시 주석 해제
 };
 function* loadSchoolInfo(action) {
-  // const result = yield call(loadSchoolInfoAPI, action.data);
+  const result = yield call(loadSchoolInfoAPI, action.data);
   try {
     yield put({
       type: LOAD_SCHOOL_INFO_SUCCESS,
-      data: action.data, //result.data
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -60,21 +69,61 @@ function* loadSchoolInfo(action) {
     });
   }
 }
-const loadSavedSchoolsAPI = (data) => {
-  //학교 찜하기
+const loadSavedSchoolsAPI = () => {
+  //찜한 학교 보기
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
   return axios.get(`/school/heart`);
 };
 function* loadSavedSchools(action) {
-  const result = yield call(loadSchoolInfoAPI, action.data);
+  const result = yield call(loadSavedSchoolsAPI);
   try {
     yield put({
       type: LOAD_SAVED_SCHOOL_SUCCESS,
-      data: action.data, //result.data
+      data: result.data.data, //result.data
     });
   } catch (err) {
     console.error(err);
     yield put({
       type: LOAD_SAVED_SCHOOL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+const addSavedSchoolAPI = (data) => {
+  //찜한 학교 보기
+  return axios.post(`/school/heart`, data);
+};
+function* addSavedSchool(action) {
+  const result = yield call(addSavedSchoolAPI, action.data);
+  try {
+    yield put({
+      type: ADD_SAVED_SCHOOL_SUCCESS,
+      data: result.data.data, //result.data
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_SAVED_SCHOOL_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+const removeSavedSchoolAPI = (data) => {
+  //찜한 학교 보기
+  return axios.delete(`/school/heart`, data);
+};
+function* removeSavedSchool(action) {
+  const result = yield call(removeSavedSchoolAPI, action.data);
+  try {
+    yield put({
+      type: REMOVE_SAVED_SCHOOL_SUCCESS,
+      data: result.data.data, //result.data
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: REMOVE_SAVED_SCHOOL_FAILURE,
       error: err.response.data,
     });
   }
@@ -239,6 +288,12 @@ function* watchRemoveSchoolReview() {
 function* watchLoadSavedSchools() {
   yield takeLatest(LOAD_SAVED_SCHOOL_REQUEST, loadSavedSchools);
 }
+function* watchAddSavedSchool() {
+  yield takeLatest(ADD_SAVED_SCHOOL_REQUEST, addSavedSchool);
+}
+function* watchRemoveSavedSchool() {
+  yield takeLatest(REMOVE_SAVED_SCHOOL_REQUEST, removeSavedSchool);
+}
 function* watchUpdateSchoolReview() {
   yield takeLatest(UPDATE_SCHOOL_REVIEW_REQUEST, updateSchoolReview);
 }
@@ -249,6 +304,9 @@ export default function* userSaga() {
     fork(watchLoadSchoolInfo),
     fork(watchLoadSchoolList),
     fork(watchLoadSchoolReview),
+    fork(watchLoadSavedSchools),
+    fork(watchAddSavedSchool),
+    fork(watchRemoveSavedSchool),
     fork(watchRemoveSchoolReview),
     fork(watchUpdateSchoolReview),
   ]);

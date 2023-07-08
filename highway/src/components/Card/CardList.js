@@ -18,8 +18,8 @@ const CardList = ({ filterValue }) => {
   // });
 
   const filtedSchool = schools.map((it) => {
-    const schoolDeparts = it.tags;
-    const FiltedTag = schoolDeparts.map((item) => {
+    const schoolDeparts = it?.tag;
+    const FiltedTag = schoolDeparts?.map((item) => {
       // schools.tags와 filterValue의 값을 하나하나 비교해 동일하면 true를 반환, 아니라면 false를 반환하여 배열을 return
       const FiltedTrueFalse = filterValue.map((v) => {
         if (item === v) {
@@ -34,19 +34,18 @@ const CardList = ({ filterValue }) => {
       return FiltedTrueFalse;
     });
     // 배열속에 true가 존재하면 해당 school 정보를 return
-    if (FiltedTag.some((i) => i.includes(true))) {
+    if (FiltedTag?.some((i) => i.includes(true))) {
       return it;
     }
   });
 
   const removeUndefinedList = filtedSchool.filter((it) => it !== undefined);
-
   return (
     <Row justify="center" gutter={[24, 24]} style={{ marginTop: "1rem" }}>
       <Col xs={24} md={15}>
         <List
           grid={{ gutter: 12, xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 5 }}
-          dataSource={removeUndefinedList}
+          dataSource={schools}
           renderItem={(item) => (
             <List.Item key={item.id}>
               <Col>
@@ -64,7 +63,7 @@ const CardList = ({ filterValue }) => {
                       />
                     }
                   >
-                    <Meta title={item.schul_NM} description={item.descript} />
+                    <Meta title={item.schoolName} description={item.descript} />
                     <Meta
                       description={
                         <CardItem>
@@ -73,15 +72,15 @@ const CardList = ({ filterValue }) => {
                             text={item.reviews.length}
                             key="list-vertical-star-o"
                           /> */}
-                          <IconText
+                          {/* <IconText
                             icon={UserOutlined}
                             text={item.members.length}
                             key="list-vertical-message"
-                          />
+                          /> */}
                         </CardItem>
                       }
                     />
-                    <Meta title={<DepartsTags schoolInfo={item} />} />
+                    {/* <Meta title={<DepartsTags schoolInfo={item} />} /> */}
                   </Card>
                 </Link>
               </Col>

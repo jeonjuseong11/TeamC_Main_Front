@@ -102,22 +102,29 @@ const ReviewDetailList = ({ setWrite, setEditing, setEditContent }) => {
                           item?.employmentRate) /
                           5}
                       </span>
-                      {item.userName === userinfo.userName && (
-                        <div
-                          style={{
-                            gap: "10px",
-                            fontWeight: "500",
-                            color: "#a2a2a2",
-                          }}
-                        >
-                          <span style={{ cursor: "pointer" }} onClick={() => handleEdit(item)}>
-                            수정
-                          </span>
-                          <br />
-                          <span style={{ cursor: "pointer" }} onClick={() => removeReview(item.id)}>
-                            삭제
-                          </span>
-                        </div>
+                      {item.userName === userinfo.userId && (
+                        <List.Item
+                          action={
+                            <div
+                              style={{
+                                gap: "10px",
+                                fontWeight: "500",
+                                color: "#a2a2a2",
+                              }}
+                            >
+                              <span style={{ cursor: "pointer" }} onClick={() => handleEdit(item)}>
+                                수정
+                              </span>
+                              <br />
+                              <span
+                                style={{ cursor: "pointer" }}
+                                onClick={() => removeReview(item.id)}
+                              >
+                                삭제
+                              </span>
+                            </div>
+                          }
+                        />
                       )}
                     </DetailReviewAvatarWrapper>
 
