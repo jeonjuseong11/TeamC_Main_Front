@@ -74,7 +74,7 @@ function* logIn(action) {
     setAccessToken(access_TOKEN, refresh_TOKEN, access_TOKEN_EXPIRATION);
     yield put({
       type: LOGIN_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
     yield put({
       type: LOAD_USER_REQUEST,
@@ -147,11 +147,11 @@ const loadUserAPI = () => {
 function* loadUser() {
   try {
     const result = yield call(loadUserAPI);
-    // console.log(action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data.data,
     });
+    // console.log(result.data);
   } catch (e) {
     yield put({
       type: LOAD_USER_FAILURE,

@@ -34,10 +34,12 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [role, setRole] = useState("");
-
+  const { me } = useSelector((state) => state.me);
   const { idValid } = useSelector((state) => state.user);
   const [isIdValid, setIsIdValid] = useState(false);
-
+  useEffect(() => {
+    navigate("/");
+  }, [me]);
   useEffect(() => {
     console.log(isIdValid);
     console.log("useEffet isIdValid : " + isIdValid);
@@ -226,10 +228,14 @@ const SignUp = () => {
                 value: 3,
                 label: "부모님",
               },
+              {
+                value: 4,
+                label: "예비 재학생",
+              },
             ]}
           />
         </Form.Item>
-        {role === 1 ? (
+        {role === 1 || role === 2 ? (
           <>
             <label>학교</label>
             <Form.Item name="schoolId" rules={[{ validator: schoolValidate }]}>
