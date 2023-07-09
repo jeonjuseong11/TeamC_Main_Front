@@ -23,7 +23,7 @@ const SchoolList = ({ schools }) => {
         grid={{ gutter: 16, xs: 2, sm: 3, md: 1, lg: 2, xl: 3, xxl: 3 }}
         renderItem={(item) => (
           <List.Item key={item.id} style={{ marginTop: "1rem" }}>
-            <Link to={`/schooldetail/${item.id}`}>
+            <Link to={`/schooldetail/${item.schoolId}`}>
               <Card
                 hoverable
                 bodyStyle={{
@@ -36,7 +36,7 @@ const SchoolList = ({ schools }) => {
                   />
                 }
               >
-                <Meta title={item.schul_NM} description={item.descript} />
+                <Meta title={item.schoolName} description={item.descript} />
                 <Meta
                   description={
                     <CardItem>

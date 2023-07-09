@@ -214,11 +214,16 @@ const SchoolDetail = () => {
 
               <div>
                 {averageRating == null || isNaN(averageRating) ? (
-                  <StarOutlined style={{ marginRight: "1rem", color: "#a2a2a2" }} />
+                  <>
+                    <StarOutlined style={{ fontSize: "1rem", color: "#a2a2a2" }} />
+                    <span style={{ marginRight: "1rem", color: "#a2a2a2", fontSize: "1rem" }}>
+                      0
+                    </span>
+                  </>
                 ) : (
                   <>
-                    <StarFilled style={{ color: "#FFDC82" }} />
-                    <span style={{ marginRight: "1rem" }}>{averageRating}</span>
+                    <StarFilled style={{ fontSize: "1rem", color: "#FFDC82" }} />
+                    <span style={{ marginRight: "1rem", fontSize: "1rem" }}>{averageRating}</span>
                   </>
                 )}
 
