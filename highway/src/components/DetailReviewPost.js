@@ -4,12 +4,7 @@ import TextArea from "antd/es/input/TextArea";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ADD_SCHOOL_REVIEW_REQUEST,
-  UPDATE_SCHOOL_REVIEW_REQUEST,
-  LOAD_SCHOOL_REVIEWS_REQUEST,
-} from "../constants/actionTypes";
-import axios from "axios";
+import { ADD_SCHOOL_REVIEW_REQUEST, UPDATE_SCHOOL_REVIEW_REQUEST } from "../constants/actionTypes";
 import { notYourSchool } from "../utils/Message";
 
 const FormItemWrapper = styled.div`
@@ -88,7 +83,7 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
     } else if (value === 5) {
       return "매우 좋음";
     } else {
-      return "";
+      return "평가해주세요";
     }
   };
 
@@ -103,7 +98,7 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
             data: {
               id: review.id,
               author: me.userId,
-              tags: me.userRole,
+              tags: me.userRole, //원래는 tag였는데 학생인지 교사인지를 보기 위해 역할로 변경
               content: values.content,
               trafficRate: values.trafficRate,
               facilityRate: values.facilityRate,
@@ -144,7 +139,7 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
     if (review) {
       form.setFieldsValue({
         content: review.content,
-        secretContent: review.secretContent,
+        // secretContent: review.secretContent, 못다한 이야기
         trafficRate: review.trafficRate,
         facilityRate: review.facilityRate,
         cafeteriaRate: review.cafeteriaRate,
@@ -152,6 +147,11 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
         employmentRate: review.employmentRate,
       });
     }
+    setTrafficMessage(getMessage(review.trafficRate));
+    setFacilityMessage(getMessage(review.facilityRate));
+    setCafeteriaMessage(getMessage(review.cafeteriaRate));
+    setEducationMessage(getMessage(review.educationRate));
+    setEmploymentMessage(getMessage(review.employmentRate));
   }, [form, review]);
 
   return (
@@ -169,14 +169,14 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
           maxLength={100}
         />
       </Form.Item>
-      <FormItemP>못다한 이야기</FormItemP>
+      {/* <FormItemP>못다한 이야기</FormItemP> 못다한 이야기
       <Form.Item rules={[{ required: true }]} name="secretContent">
         <TextArea
           style={{ resize: "none", width: "100%" }}
           placeholder="100자 이내로 입력해주세요."
           maxLength={100}
         />
-      </Form.Item>
+      </Form.Item> */}
       <FormItemWrapper>
         <FormItemP>교통</FormItemP>
         <Form.Item name="trafficRate" rules={[{ required: true }]} style={{ margin: "0" }}>
