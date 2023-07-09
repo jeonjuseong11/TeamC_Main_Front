@@ -27,13 +27,24 @@ const SchoolDetail = () => {
   const accessToken = localStorage.getItem("ACCESSTOKEN");
   const me = JSON.parse(localStorage.getItem("USERINFO"));
   const navigate = useNavigate();
-  const { singleSchool, schoolReviews, followList } = useSelector((state) => state.school);
+  const {
+    singleSchool,
+    schoolReviews,
+    followList,
+    addSavedSchoolLoading,
+    removeSaveSchoolLoading,
+  } = useSelector((state) => state.school);
   const dispatch = useDispatch();
   const [isFollowed, setIsFollowed] = useState(false);
   useEffect(() => {
     const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId));
     setIsFollowed(!!followedSchool);
-  }, [followList, schoolId]);
+  }, [followList]);
+  useEffect(() => {
+    if (!me) {
+      setIsFollowed(false);
+    }
+  }, [me]);
   const loadSchoolReviews = () => {
     axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
     dispatch({
@@ -44,6 +55,8 @@ const SchoolDetail = () => {
     });
   };
   const loadSchoolInfo = () => {
+    const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId));
+    setIsFollowed(!!followedSchool);
     dispatch({
       type: LOAD_SCHOOL_INFO_REQUEST,
       data: { schoolId: schoolId },
@@ -64,20 +77,21 @@ const SchoolDetail = () => {
     } else {
       needLoginError("로그인이 필요합니다", navigate);
     }
+    setIsFollowed(true);
   };
   const removeSavedSchool = () => {
-    console.log(heartId);
     dispatch({
       type: REMOVE_SAVED_SCHOOL_REQUEST,
       data: { heartId: heartId },
     });
+    setIsFollowed(false);
   };
-  const [heartId, setHeartId] = useState();
+
+  const [heartId, setHeartId] = useState(); //학교 찜하기 시 id
+
   useEffect(() => {
-    const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId));
-    console.log(followedSchool?.heartId);
+    const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId)); //기존에 찜하기 했나 확인
     setHeartId(followedSchool ? followedSchool.heartId : null);
-    // heartId를 사용하여 로컬 상태를 업데이트하는 로직 추가
   }, [followList, heartId, schoolId]);
 
   useEffect(() => {
@@ -128,7 +142,6 @@ const SchoolDetail = () => {
 
     const roundedTotalRate = Math.round(totalRate * 2) / 2;
 
-    // Update the average rating in the component's state
     setAverageRating(roundedTotalRate);
     setRateAverages(rateAverages);
   }, [schoolReviews]);
@@ -181,6 +194,7 @@ const SchoolDetail = () => {
                   type="primary"
                   style={{ float: "right", height: "2.5rem" }}
                   onClick={removeSavedSchool}
+                  loading={addSavedSchoolLoading}
                 >
                   <TagsOutlined /> 찜하기 취소
                 </Button>
@@ -190,6 +204,7 @@ const SchoolDetail = () => {
                   ghost
                   style={{ float: "right", height: "2.5rem" }}
                   onClick={addSavedSchool}
+                  loading={removeSaveSchoolLoading}
                 >
                   <TagsOutlined /> 학교 찜하기
                 </Button>

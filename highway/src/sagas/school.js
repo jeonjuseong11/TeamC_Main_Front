@@ -125,7 +125,7 @@ const removeSavedSchoolAPI = (heartId) => {
 };
 function* removeSavedSchool(action) {
   const result = yield call(removeSavedSchoolAPI, action.data.heartId);
-  console.log(result.data);
+  // console.log(result.data);
   try {
     yield put({
       type: REMOVE_SAVED_SCHOOL_SUCCESS,
@@ -300,10 +300,10 @@ function* watchLoadSavedSchools() {
   yield takeLatest(LOAD_SAVED_SCHOOL_REQUEST, loadSavedSchools);
 }
 function* watchAddSavedSchool() {
-  yield takeLatest(ADD_SAVED_SCHOOL_REQUEST, addSavedSchool);
+  yield throttle(5000, ADD_SAVED_SCHOOL_REQUEST, addSavedSchool);
 }
 function* watchRemoveSavedSchool() {
-  yield takeLatest(REMOVE_SAVED_SCHOOL_REQUEST, removeSavedSchool);
+  yield throttle(5000, REMOVE_SAVED_SCHOOL_REQUEST, removeSavedSchool);
 }
 function* watchUpdateSchoolReview() {
   yield takeLatest(UPDATE_SCHOOL_REVIEW_REQUEST, updateSchoolReview);
