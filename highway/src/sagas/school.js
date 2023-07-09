@@ -76,7 +76,7 @@ const loadSavedSchoolsAPI = () => {
   return axios.get(`/school/heart`);
 };
 function* loadSavedSchools(action) {
-  const result = yield call(loadSavedSchoolsAPI);
+  const result = yield call(loadSavedSchoolsAPI, action.data);
   try {
     yield put({
       type: LOAD_SAVED_SCHOOL_SUCCESS,
@@ -90,12 +90,17 @@ function* loadSavedSchools(action) {
     });
   }
 }
-const addSavedSchoolAPI = (data) => {
-  //찜한 학교 보기
-  return axios.post(`/school/heart`, data);
+const addSavedSchoolAPI = (schoolId) => {
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
+  const formData = new FormData();
+  formData.append("schoolId", schoolId);
+
+  return axios.post(`/school/heart`, formData);
 };
+
 function* addSavedSchool(action) {
-  const result = yield call(addSavedSchoolAPI, action.data);
+  const result = yield call(addSavedSchoolAPI, action.data.schoolId);
   try {
     yield put({
       type: ADD_SAVED_SCHOOL_SUCCESS,
@@ -109,12 +114,18 @@ function* addSavedSchool(action) {
     });
   }
 }
-const removeSavedSchoolAPI = (data) => {
+const removeSavedSchoolAPI = (heartId) => {
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
+  const formData = new FormData();
+  formData.append("heartId", heartId);
   //찜한 학교 보기
-  return axios.delete(`/school/heart`, data);
+  // return axios.delete(`/school/heart`, { heartId: formData });
+  return axios.delete(`/school/heart?heartId=${heartId}`);
 };
 function* removeSavedSchool(action) {
-  const result = yield call(removeSavedSchoolAPI, action.data);
+  const result = yield call(removeSavedSchoolAPI, action.data.heartId);
+  console.log(result.data);
   try {
     yield put({
       type: REMOVE_SAVED_SCHOOL_SUCCESS,

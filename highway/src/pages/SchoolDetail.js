@@ -30,10 +30,9 @@ const SchoolDetail = () => {
   const dispatch = useDispatch();
   const [isFollowed, setIsFollowed] = useState(false);
   useEffect(() => {
-    const followedSchool = followList.find((followed) => followed.schoolId === me.schoolId);
+    const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId));
     setIsFollowed(!!followedSchool);
-    console.log(isFollowed);
-  }, []);
+  }, [followList, schoolId]);
   const loadSchoolReviews = () => {
     axios.defaults.headers.common["ACCESS_TOKEN"] = accessToken;
     dispatch({
@@ -58,20 +57,23 @@ const SchoolDetail = () => {
   const addSavedSchool = () => {
     dispatch({
       type: ADD_SAVED_SCHOOL_REQUEST,
-      data: { schoolId },
+      data: { schoolId: parseInt(schoolId) },
     });
   };
   const removeSavedSchool = () => {
+    console.log(heartId);
     dispatch({
       type: REMOVE_SAVED_SCHOOL_REQUEST,
-      data: { heartId: parseInt(heartId) },
+      data: { heartId: heartId },
     });
   };
-
+  const [heartId, setHeartId] = useState();
   useEffect(() => {
-    const followedSchool = followList.find((followed) => followed.schoolId === me.schoolId);
-    const heartId = followedSchool ? followedSchool.heartId : null;
-  }, []);
+    const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId));
+    console.log(followedSchool?.heartId);
+    setHeartId(followedSchool ? followedSchool.heartId : null);
+    // heartId를 사용하여 로컬 상태를 업데이트하는 로직 추가
+  }, [followList, heartId, schoolId]);
 
   useEffect(() => {
     loadSchoolInfo();
@@ -172,18 +174,17 @@ const SchoolDetail = () => {
               {isFollowed ? (
                 <Button
                   type="primary"
-                  ghost
                   style={{ float: "right", height: "2.5rem" }}
-                  onClick={addSavedSchool}
+                  onClick={removeSavedSchool}
                 >
-                  <TagsOutlined /> 학교 찜하기
+                  <TagsOutlined /> 찜하기 취소
                 </Button>
               ) : (
                 <Button
                   type="primary"
                   ghost
                   style={{ float: "right", height: "2.5rem" }}
-                  onClick={removeSavedSchool}
+                  onClick={addSavedSchool}
                 >
                   <TagsOutlined /> 학교 찜하기
                 </Button>
