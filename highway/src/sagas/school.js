@@ -228,11 +228,13 @@ function* removeSchoolReview(action) {
 }
 function updateSchoolReviewAPI(data) {
   // 게시물 댓글 삭제
-  return axios.put(`/review/${data.id}`);
+  return axios.put(`/review/${data.id}`, data);
 }
 
 function* updateSchoolReview(action) {
   try {
+    const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+    axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
     const result = yield call(updateSchoolReviewAPI, action.data);
     yield put({
       type: UPDATE_SCHOOL_REVIEW_SUCCESS,

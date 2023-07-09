@@ -26,6 +26,15 @@ const SchoolDetail = () => {
   const { schoolId } = useParams();
   const accessToken = localStorage.getItem("ACCESSTOKEN");
   const me = JSON.parse(localStorage.getItem("USERINFO"));
+  const [averageRating, setAverageRating] = useState(0);
+  const [reviewCount, setReviewCount] = useState(0);
+  const [rateAverages, setRateAverages] = useState({
+    traffic: 0,
+    facility: 0,
+    cafeteria: 0,
+    education: 0,
+    employment: 0,
+  });
   const navigate = useNavigate();
   const {
     singleSchool,
@@ -41,6 +50,7 @@ const SchoolDetail = () => {
     setIsFollowed(!!followedSchool);
   }, [followList]);
   useEffect(() => {
+    console.log(me);
     if (!me) {
       setIsFollowed(false);
     }
@@ -95,12 +105,16 @@ const SchoolDetail = () => {
     const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId)); //기존에 찜하기 했나 확인
     setHeartId(followedSchool ? followedSchool.heartId : null);
     console.log(followList);
-    if (followList.find((followed) => followed.schoolId === parseInt(schoolId))) {
-      setIsFollowed(true);
+    if (me) {
+      if (followList.find((followed) => followed.schoolId === parseInt(schoolId))) {
+        setIsFollowed(true);
+      } else {
+        setIsFollowed(false);
+      }
     } else {
       setIsFollowed(false);
     }
-  }, [followList, heartId, schoolId, isFollowed]);
+  }, [followList, heartId, schoolId, isFollowed, me]);
 
   useEffect(() => {
     loadSchoolInfo();
@@ -123,7 +137,7 @@ const SchoolDetail = () => {
 
     for (let i = 0; i < reviewCount; i++) {
       const { trafficRate, facilityRate, cafeteriaRate, educationRate, employmentRate } =
-        schoolReviews[i];
+        filteredReviews[i];
 
       rateSums.traffic += trafficRate;
       rateSums.facility += facilityRate;
@@ -152,17 +166,8 @@ const SchoolDetail = () => {
 
     setAverageRating(roundedTotalRate);
     setRateAverages(rateAverages);
-  }, [schoolReviews]);
+  }, [schoolReviews, averageRating]);
 
-  const [averageRating, setAverageRating] = useState(0);
-  const [reviewCount, setReviewCount] = useState(0);
-  const [rateAverages, setRateAverages] = useState({
-    traffic: 0,
-    facility: 0,
-    cafeteria: 0,
-    education: 0,
-    employment: 0,
-  });
   return (
     <div>
       <SchoolDetailWrapper>
