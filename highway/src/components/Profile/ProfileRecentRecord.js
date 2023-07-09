@@ -1,11 +1,23 @@
 import { Col, List, Row, Segmented, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LOAD_SAVED_SCHOOL_REQUEST } from "../../constants/actionTypes";
+import { LOAD_SAVED_SCHOOL_REQUEST, LOAD_USER_POSTS_REQUEST } from "../../constants/actionTypes";
 import SchoolList from "../../pages/SchoolList";
+import { changeCategory } from "../../pages/Board/BoardMain";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
+export const ItemWrapper = styled.div`
+  padding-left: 1rem;
+  border-radius: 10px;
+  &:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+  }
+`;
 const ProfileRecentRecord = () => {
   const { followList } = useSelector((state) => state.school);
+  const { schoolBoardPosts } = useSelector((state) => state.post);
   const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   const [selection, setSelection] = useState("학교");
   const dispatch = useDispatch();
@@ -14,9 +26,19 @@ const ProfileRecentRecord = () => {
       type: LOAD_SAVED_SCHOOL_REQUEST,
     });
   };
+  const loadUserPosts = () => {
+    dispatch({
+      type: LOAD_USER_POSTS_REQUEST,
+    });
+  };
   useEffect(() => {
     loadSavedSchool();
+    loadUserPosts();
   }, []);
+  useEffect(() => {
+    console.log(schoolBoardPosts);
+  }, [schoolBoardPosts]);
+
   return (
     <>
       <Col xs={24} md={11}>
@@ -47,7 +69,8 @@ const ProfileRecentRecord = () => {
         >
           <h3 style={{ margin: "0" }}>좋아요 누른 게시물</h3>
           <List
-            dataSource={data}
+            dataSource={schoolBoardPosts}
+            style={{ marginTop: "1rem" }}
             pagination={{
               align: "center",
               onChange: (page) => {
@@ -56,9 +79,13 @@ const ProfileRecentRecord = () => {
               pageSize: 5,
             }}
             renderItem={(item) => (
-              <List.Item>
-                <Tag>ITEM</Tag> {item}
-              </List.Item>
+              <Link to={`/schoolboard/${item.category}/${item.id}`}>
+                <ItemWrapper className="hover-item">
+                  <List.Item>
+                    <Tag>{changeCategory(item.category)}</Tag> {item.title}
+                  </List.Item>
+                </ItemWrapper>
+              </Link>
             )}
           />
         </div>
