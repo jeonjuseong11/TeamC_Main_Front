@@ -143,17 +143,19 @@ function* loadPost(action) {
   }
 }
 
-function loadUserPostsAPI(data, lastId) {
-  //사용자 게시글 로딩
-  return axios.get(`/user/${data}/posts?lastId=${lastId || 0}`);
+function loadUserPostsAPI(data) {
+  //좋아요 누른 게시글 로딩
+  const localAccessToken = localStorage.getItem("ACCESSTOKEN");
+  axios.defaults.headers.common["ACCESS_TOKEN"] = localAccessToken;
+  return axios.get(`/board/list/heart`);
 }
 
 function* loadUserPosts(action) {
   try {
-    const result = yield call(loadUserPostsAPI, action.data, action.lastId);
+    const result = yield call(loadUserPostsAPI, action.data);
     yield put({
       type: LOAD_USER_POSTS_SUCCESS,
-      data: result.data,
+      data: result.data.data,
     });
   } catch (err) {
     console.error(err);
@@ -430,7 +432,7 @@ function* watchLoadPost() {
 }
 
 function* watchLoadUserPosts() {
-  yield throttle(5000, LOAD_USER_POSTS_REQUEST, loadUserPosts);
+  yield takeLatest(LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
 function* watchLoadTagPosts() {

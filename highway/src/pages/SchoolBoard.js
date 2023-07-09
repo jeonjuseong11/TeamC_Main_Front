@@ -38,6 +38,35 @@ const SchoolBoard = () => {
   // useEffect(() => {
   //   console.log(me);
   // }, [me]);
+
+  const menuItems = [
+    {
+      key: "/schoolboard/0",
+      icon: <SmileOutlined />,
+      label: "자유게시판",
+      onClick: () => navigate("/schoolboard/0"),
+    },
+    {
+      key: "/schoolboard/1",
+      icon: <SearchOutlined />,
+      label: "질문게시판",
+      onClick: () => navigate("/schoolboard/1"),
+    },
+    {
+      key: "/schoolboard/2",
+      icon: <TeamOutlined />,
+      label: "프로젝트 모집",
+      onClick: () => navigate("/schoolboard/2"),
+    },
+    ...(me?.tag
+      ? me.tag.map((t) => ({
+          key: `/schoolboard/${t.tagCode}`,
+          label: `${t.tagName} 커뮤니티`,
+          onClick: () => navigate(`/schoolboard/${t.tagCode}`),
+        }))
+      : []),
+  ];
+
   return (
     <div>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
@@ -80,26 +109,8 @@ const SchoolBoard = () => {
               backgroundColor: "white",
               borderRadius: "10px",
             }}
-          >
-            {/* <Menu.Item key="/schoolboard/0">
-              <NavLink to="/schoolboard/0">전체</NavLink>
-            </Menu.Item> */}
-            <Menu.Item key="/schoolboard/0">
-              <NavLink to="/schoolboard/0">
-                <SmileOutlined /> 자유게시판
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="/schoolboard/1">
-              <NavLink to="/schoolboard/1">
-                <SearchOutlined /> 질문게시판
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item key="/schoolboard/2">
-              <NavLink to="/schoolboard/2">
-                <TeamOutlined /> 프로젝트 모집
-              </NavLink>
-            </Menu.Item>
-          </Menu>
+            items={menuItems}
+          />
           {/* <div
             style={{
               border: "1px solid #f2f2f2",

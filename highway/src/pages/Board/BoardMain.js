@@ -38,6 +38,10 @@ export const changeCategory = (category) => {
     return "질문게시판";
   } else if (category == 2) {
     return "프로젝트 모집";
+  } else if (category == 3) {
+    return "IT";
+  } else if (category == 4) {
+    return "경영";
   }
 };
 const BoardMain = () => {

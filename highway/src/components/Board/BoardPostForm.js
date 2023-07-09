@@ -34,7 +34,7 @@ const BoardPostForm = () => {
           title: values.title,
           content: values.content.replace(/\r?\n/g, "<br>"),
           category: values.category,
-          schoolId: 1,
+          schoolId: me.schoolId,
         },
       });
       navigateToHomeBoard(values.category);
@@ -82,6 +82,19 @@ const BoardPostForm = () => {
     return isJpgOrPng && isLt2M;
   };
 
+  const [options, setOptions] = useState();
+  useEffect(() => {
+    if (me?.tag) {
+      const newOptions = [
+        { value: 0, label: "자유게시판" },
+        { value: 1, label: "질문게시판" },
+        { value: 2, label: "프로젝트 모집" },
+        ...me.tag.map((tag) => ({ value: tag.tagCode, label: tag.tagName })),
+      ];
+      setOptions(newOptions);
+    }
+  }, [me]);
+
   return (
     <Row gutter={[16, 16]} justify="center">
       <Col xs={24} md={15} style={{ textAlign: "left", marginTop: "1rem", padding: "1rem" }}>
@@ -93,11 +106,7 @@ const BoardPostForm = () => {
                 width: "30%",
                 borderRadius: "0",
               }}
-              options={[
-                { value: 0, label: "자유게시판" },
-                { value: 1, label: "질문게시판" },
-                { value: 2, label: "프로젝트 모집" },
-              ]}
+              options={options}
             />
           </Form.Item>
           <Form.Item name="title">
