@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   CHECK_DUPLICATE_ID_REQUEST,
+  LOAD_SCHOOL_INFO_REQUEST,
   RESET_DUPLICATE_ID_REQUEST,
   SIGNUP_REQUEST,
 } from "../constants/actionTypes";
@@ -30,16 +31,17 @@ import { useSelector } from "react-redux";
 import { error, info } from "../utils/Message";
 const SignUp = () => {
   const { schools } = useSelector((state) => state.school);
+  console.log(schools);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [role, setRole] = useState("");
-  const { me } = useSelector((state) => state.me);
+  // const { me } = useSelector((state) => state.me);
   const { idValid } = useSelector((state) => state.user);
   const [isIdValid, setIsIdValid] = useState(false);
-  useEffect(() => {
-    navigate("/");
-  }, [me]);
+  // useEffect(() => {
+  //   navigate("/");
+  // }, [me]);
   useEffect(() => {
     console.log(isIdValid);
     console.log("useEffet isIdValid : " + isIdValid);
@@ -79,7 +81,22 @@ const SignUp = () => {
       }
     }
   };
-
+  // 백엔드 오류 수정시 주석 해제
+  // const loadSchoolsInfo = () => {
+  //   dispatch({
+  //     type: LOAD_SCHOOL_INFO_REQUEST,
+  //   });
+  // };
+  // useEffect(() => {
+  //   loadSchoolsInfo();
+  // }, []);
+  const schoolsInfo = schools.map((it) => {
+    console.log(it);
+    return {
+      value: it.id,
+      label: it.schoolName,
+    };
+  });
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const onEmailChange = (value) => {
     if (!value) {
@@ -212,6 +229,8 @@ const SignUp = () => {
               } else if (value === 3) {
                 // alert("부모님");
                 setRole(3);
+              } else if (value === 4) {
+                setRole("예비 재학생");
               }
             }}
             placeholder="선택해주세요"
@@ -253,28 +272,7 @@ const SignUp = () => {
                     .toLowerCase()
                     .localeCompare((optionB?.label ?? "").toLowerCase())
                 }
-                options={[
-                  {
-                    value: schools[0].id,
-                    label: schools[0].schul_NM,
-                  },
-                  {
-                    value: schools[1].id,
-                    label: schools[1].schul_NM,
-                  },
-                  {
-                    value: schools[2].id,
-                    label: schools[2].schul_NM,
-                  },
-                  {
-                    value: schools[3].id,
-                    label: schools[3].schul_NM,
-                  },
-                  {
-                    value: schools[4].id,
-                    label: schools[4].schul_NM,
-                  },
-                ]}
+                options={schoolsInfo}
               />
             </Form.Item>
           </>

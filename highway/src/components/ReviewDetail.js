@@ -30,14 +30,10 @@ const ReviewPost = () => {
 
   return (
     <ReviewDetailWrapper>
-      {schoolId == me?.schoolId ? (
+      {schoolId == me?.schoolId && (me?.userRole === 1 || me?.userRole === 2) && (
         <div style={{ textAlign: "right" }}>
-          {me && !reviewWrite && (
-            <NoDecoLink onClick={onToggleWrite}>{write ? "" : "리뷰작성"}</NoDecoLink>
-          )}
+          {!reviewWrite && <NoDecoLink onClick={onToggleWrite}>리뷰작성</NoDecoLink>}
         </div>
-      ) : (
-        <></>
       )}
 
       {write ? (

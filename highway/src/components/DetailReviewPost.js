@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Form, Rate, Button } from "antd";
+import { Form, Rate, Button, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ import {
   LOAD_SCHOOL_REVIEWS_REQUEST,
 } from "../constants/actionTypes";
 import axios from "axios";
+import { notYourSchool } from "../utils/Message";
 
 const FormItemWrapper = styled.div`
   display: flex;
@@ -29,18 +30,29 @@ const MessageWrapper = styled.div`
 const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditContent }) => {
   const { schoolId } = useParams();
   const { me } = useSelector((state) => state.user);
+  const getUserRoleText = (userRole) => {
+    if (userRole === 1) {
+      return "재학생";
+    } else if (userRole === 2) {
+      return "선생님";
+    } else if (userRole === 3) {
+      return "부모님";
+    } else if (userRole === 4) {
+      return "예비재학생";
+    } else {
+      return "";
+    }
+  };
   // console.log(review);
   // Form instance with form hook
   const [form] = Form.useForm();
 
-  // State to manage messages for each rate category
   const [trafficMessage, setTrafficMessage] = useState("평가해주세요.");
   const [facilityMessage, setFacilityMessage] = useState("평가해주세요.");
   const [cafeteriaMessage, setCafeteriaMessage] = useState("평가해주세요.");
   const [educationMessage, setEducationMessage] = useState("평가해주세요.");
   const [employmentMessage, setEmploymentMessage] = useState("평가해주세요.");
 
-  // Function to handle rate change for each category
   const handleRateChange = (name, value) => {
     const message = getMessage(value);
     switch (name) {
@@ -64,7 +76,6 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
     }
   };
 
-  // Function to get the message based on the rate value
   const getMessage = (value) => {
     if (value === 1) {
       return "매우 나쁨";
@@ -83,18 +94,16 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
 
   const dispatch = useDispatch();
 
-  // Function to handle form submission
   const handleSubmit = useCallback(
     (values) => {
-      if (me.schoolId === schoolId) {
+      if (me.schoolId === parseInt(schoolId)) {
         if (editing) {
-          // When in edit mode, dispatch update review action
           dispatch({
             type: UPDATE_SCHOOL_REVIEW_REQUEST,
             data: {
               id: review.id,
               author: me.userId,
-              tags: "디자인",
+              tags: me.userRole,
               content: values.content,
               trafficRate: values.trafficRate,
               facilityRate: values.facilityRate,
@@ -104,15 +113,14 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
               schoolId: schoolId,
             },
           });
-          setEditing(false); // Disable edit mode
+          setEditing(false);
           setEditContent("");
         } else {
-          // When not in edit mode, dispatch add review action
           dispatch({
             type: ADD_SCHOOL_REVIEW_REQUEST,
             data: {
               author: me.userId,
-              tags: "디자인",
+              tags: getUserRoleText(me.userRole),
               content: values.content,
               trafficRate: values.trafficRate,
               facilityRate: values.facilityRate,
@@ -123,17 +131,16 @@ const DetailReviewForm = ({ setWrite, review, editing, setEditing, setEditConten
             },
           });
         }
-        form.setFieldsValue(""); // Clear form fields
-        setWrite(false); // Close write mode
+        form.setFieldsValue("");
+        setWrite(false);
       } else {
-        alert("현재 학교는 본인의 학교가 아닙니다.");
+        notYourSchool("해당학교에는 리뷰를 작성할 수 없습니다.");
       }
     },
     [form, me, schoolId, setWrite, dispatch, editing, review]
   );
 
   useEffect(() => {
-    // When a review is provided (entered edit mode), set the form fields with the review data
     if (review) {
       form.setFieldsValue({
         content: review.content,

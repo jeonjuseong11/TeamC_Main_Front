@@ -74,10 +74,10 @@ const SchoolDetail = () => {
         type: ADD_SAVED_SCHOOL_REQUEST,
         data: { schoolId: parseInt(schoolId) },
       });
+      setIsFollowed(true);
     } else {
       needLoginError("로그인이 필요합니다", navigate);
     }
-    setIsFollowed(true);
   };
   const removeSavedSchool = () => {
     dispatch({
@@ -210,24 +210,24 @@ const SchoolDetail = () => {
                 </Button>
               )}
 
-              <h2 style={{ margin: "0" }}>{singleSchool.sch?.schoolName}</h2>
+              <h2 style={{ margin: "0" }}>{singleSchool?.sch?.schoolName}</h2>
 
               <div>
-                {averageRating == 0 ? (
-                  <StarOutlined />
+                {averageRating == null || isNaN(averageRating) ? (
+                  <StarOutlined style={{ marginRight: "1rem", color: "#a2a2a2" }} />
                 ) : (
                   <>
                     <StarFilled style={{ color: "#FFDC82" }} />
-                    <span style={{ marginRight: "10px" }}>{averageRating}</span>
+                    <span style={{ marginRight: "1rem" }}>{averageRating}</span>
                   </>
                 )}
 
-                <DepartsTags schoolInfo={singleSchool.tag} />
+                <DepartsTags schoolInfo={singleSchool?.tag} />
                 <a
-                  style={{ color: "black", textDecoration: "none" }}
-                  href={singleSchool?.sch?.hmpg_ADRES}
+                  style={{ color: "#a2a2a2", textDecoration: "none", marginLeft: "1rem" }}
+                  href={singleSchool?.sch?.websiteAddress}
                 >
-                  {singleSchool?.sch?.hmpg_ADRES}
+                  {singleSchool?.sch?.websiteAddress}
                 </a>
               </div>
             </SchoolInfo>
