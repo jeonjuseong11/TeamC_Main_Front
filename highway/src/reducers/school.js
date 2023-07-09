@@ -141,11 +141,14 @@ const reducer = (state = initialState, action) =>
         break;
       case REMOVE_SAVED_SCHOOL_REQUEST:
         draft.addSavedSchoolLoading = true;
+        draft.followList = draft.followList.filter((v) => v.heartId !== action.data.heartId);
+
         draft.addSavedSchoolDone = false;
         draft.addSavedSchoolError = null;
         break;
       case REMOVE_SAVED_SCHOOL_SUCCESS:
-        draft.followList.shift(action.data);
+        // console.log(action.data);
+        // draft.followList = draft.followList.filter((v) => v.heartId !== action.data.heartId);
         draft.addSavedSchoolLoading = false;
         draft.addSavedSchoolDone = true;
         break;

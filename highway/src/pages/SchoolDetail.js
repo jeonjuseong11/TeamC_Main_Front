@@ -74,17 +74,19 @@ const SchoolDetail = () => {
         type: ADD_SAVED_SCHOOL_REQUEST,
         data: { schoolId: parseInt(schoolId) },
       });
-      setIsFollowed(true);
     } else {
       needLoginError("로그인이 필요합니다", navigate);
     }
   };
   const removeSavedSchool = () => {
-    dispatch({
-      type: REMOVE_SAVED_SCHOOL_REQUEST,
-      data: { heartId: heartId },
-    });
-    setIsFollowed(false);
+    if (me) {
+      dispatch({
+        type: REMOVE_SAVED_SCHOOL_REQUEST,
+        data: { heartId: heartId, schoolId: parseInt(schoolId) },
+      });
+    } else {
+      needLoginError("로그인이 필요합니다", navigate);
+    }
   };
 
   const [heartId, setHeartId] = useState(); //학교 찜하기 시 id
@@ -92,7 +94,13 @@ const SchoolDetail = () => {
   useEffect(() => {
     const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId)); //기존에 찜하기 했나 확인
     setHeartId(followedSchool ? followedSchool.heartId : null);
-  }, [followList, heartId, schoolId]);
+    console.log(followList);
+    if (followList.find((followed) => followed.schoolId === parseInt(schoolId))) {
+      setIsFollowed(true);
+    } else {
+      setIsFollowed(false);
+    }
+  }, [followList, heartId, schoolId, isFollowed]);
 
   useEffect(() => {
     loadSchoolInfo();
