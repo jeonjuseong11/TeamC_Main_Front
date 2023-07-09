@@ -1,5 +1,5 @@
 import { Col, List, Row, Segmented, Tag } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_SAVED_SCHOOL_REQUEST, LOAD_USER_POSTS_REQUEST } from "../../constants/actionTypes";
 import SchoolList from "../../pages/SchoolList";
@@ -15,28 +15,40 @@ export const ItemWrapper = styled.div`
     cursor: pointer;
   }
 `;
+
 const ProfileRecentRecord = () => {
   const { followList } = useSelector((state) => state.school);
   const { schoolBoardPosts } = useSelector((state) => state.post);
-  const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-  const [selection, setSelection] = useState("학교");
   const dispatch = useDispatch();
+  const listRef = useRef(null);
+
   const loadSavedSchool = () => {
     dispatch({
       type: LOAD_SAVED_SCHOOL_REQUEST,
     });
   };
+
   const loadUserPosts = () => {
     dispatch({
       type: LOAD_USER_POSTS_REQUEST,
     });
   };
+
   useEffect(() => {
     loadSavedSchool();
     loadUserPosts();
   }, []);
+
   useEffect(() => {
-    console.log(schoolBoardPosts);
+    if (listRef.current) {
+      const listHeight = listRef.current.offsetHeight;
+      const parentHeight = listRef.current.parentNode.offsetHeight;
+      if (listHeight > parentHeight) {
+        listRef.current.parentNode.style.height = `${listHeight}px`;
+      } else {
+        listRef.current.parentNode.style.height = "auto";
+      }
+    }
   }, [schoolBoardPosts]);
 
   return (
@@ -64,7 +76,7 @@ const ProfileRecentRecord = () => {
             borderRadius: "10px",
             textAlign: "left",
             padding: "2rem",
-            marginBottom: "5vh",
+            marginBottom: "1rem",
           }}
         >
           <h3 style={{ margin: "0" }}>좋아요 누른 게시물</h3>
@@ -74,7 +86,7 @@ const ProfileRecentRecord = () => {
             pagination={{
               align: "center",
               onChange: (page) => {
-                console.log(page);
+                // console.log(page);
               },
               pageSize: 5,
             }}
@@ -87,6 +99,7 @@ const ProfileRecentRecord = () => {
                 </ItemWrapper>
               </Link>
             )}
+            ref={listRef}
           />
         </div>
       </Col>

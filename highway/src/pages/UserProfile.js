@@ -13,7 +13,6 @@ const UserProfile = () => {
       navigate("/");
     }
   }, [me]);
-  const data = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   const renderUserRole = () => {
     if (me?.userRole === 1) {
       return " 학생";
@@ -26,53 +25,50 @@ const UserProfile = () => {
     }
   };
   return (
-    <div style={{ backgroundColor: "#f2f2f2", height: "100%" }}>
+    <div style={{ backgroundColor: "#f2f2f2" }}>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
         <Col xs={24} md={4}>
-          <Menu
-            className="custom-menu"
-            selectedKeys={location.pathname}
+          <div
             style={{
-              paddingBottom: "1rem",
+              padding: "2rem",
               backgroundColor: "white",
               borderRadius: "10px",
+              minWidth: "12rem",
             }}
           >
-            <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
-              <Avatar size={100} icon={<UserOutlined />} />
-              <h2 style={{ marginTop: "2rem" }}>
-                {me?.userName}
-                {renderUserRole()}
-              </h2>
-              <h4 style={{ paddingTop: "1rem" }}>{me?.schoolName}</h4>
-              <table style={{ marginTop: "1rem", width: "90%", height: "10rem", margin: "0 auto" }}>
-                <tbody>
-                  <tr>
-                    <th>아이디</th>
-                    <td>{me?.userId}</td>
-                  </tr>
-                  <tr>
-                    <th>이메일</th>
-                    <td>{me?.userEmail}</td>
-                  </tr>
-                  <tr>
-                    <th>성별</th>
-                    <td>{me?.userGender}</td>
-                  </tr>
-                  <tr>
-                    <th>소속학교</th>
-                    <td>{me?.schoolName}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            {/* <Menu.Item key="/profile">
+            <Avatar size={100} icon={<UserOutlined />} />
+            <h2 style={{ marginTop: "2rem" }}>
+              {me?.userName}
+              {renderUserRole()}
+            </h2>
+            <h4 style={{ paddingTop: "1rem" }}>{me?.schoolName}</h4>
+            <table style={{ marginTop: "1rem", width: "90%", height: "10rem", margin: "0 auto" }}>
+              <tbody>
+                <tr>
+                  <th>아이디</th>
+                  <td>{me?.userId}</td>
+                </tr>
+                <tr>
+                  <th>이메일</th>
+                  <td>{me?.userEmail}</td>
+                </tr>
+                <tr>
+                  <th>성별</th>
+                  <td>{me?.userGender}</td>
+                </tr>
+                <tr>
+                  <th>소속학교</th>
+                  <td>{me?.schoolName}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {/* <Menu.Item key="/profile">
               <NavLink to="/profile">회원 정보</NavLink>
             </Menu.Item>
             <Menu.Item key="/profile/recentrecord">
               <NavLink to="/profile/recentrecord">나의 관심</NavLink>
             </Menu.Item> */}
-          </Menu>
         </Col>
         <Outlet />
       </Row>
