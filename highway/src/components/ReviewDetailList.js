@@ -102,7 +102,7 @@ const ReviewDetailList = ({ setWrite, setEditing, setEditContent }) => {
                           item?.employmentRate) /
                           5}
                       </span>
-                      {item.userName === userinfo.userId && (
+                      {item?.userName === userinfo?.userId && (
                         <List.Item
                           action={
                             <div
