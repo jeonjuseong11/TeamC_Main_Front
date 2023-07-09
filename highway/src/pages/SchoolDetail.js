@@ -1,6 +1,6 @@
 import { Button, Col, Empty, Menu, Row, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   SchoolDetailWrapper,
   SchoolImg,
@@ -20,12 +20,13 @@ import {
   REMOVE_SAVED_SCHOOL_REQUEST,
 } from "../constants/actionTypes";
 import axios from "axios";
+import { needLoginError } from "../utils/Message";
 
 const SchoolDetail = () => {
   const { schoolId } = useParams();
   const accessToken = localStorage.getItem("ACCESSTOKEN");
   const me = JSON.parse(localStorage.getItem("USERINFO"));
-
+  const navigate = useNavigate();
   const { singleSchool, schoolReviews, followList } = useSelector((state) => state.school);
   const dispatch = useDispatch();
   const [isFollowed, setIsFollowed] = useState(false);
@@ -55,10 +56,14 @@ const SchoolDetail = () => {
     });
   };
   const addSavedSchool = () => {
-    dispatch({
-      type: ADD_SAVED_SCHOOL_REQUEST,
-      data: { schoolId: parseInt(schoolId) },
-    });
+    if (me) {
+      dispatch({
+        type: ADD_SAVED_SCHOOL_REQUEST,
+        data: { schoolId: parseInt(schoolId) },
+      });
+    } else {
+      needLoginError("로그인이 필요합니다", navigate);
+    }
   };
   const removeSavedSchool = () => {
     console.log(heartId);
