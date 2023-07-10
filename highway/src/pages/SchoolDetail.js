@@ -104,7 +104,7 @@ const SchoolDetail = () => {
   useEffect(() => {
     const followedSchool = followList.find((followed) => followed.schoolId === parseInt(schoolId)); //기존에 찜하기 했나 확인
     setHeartId(followedSchool ? followedSchool.heartId : null);
-    console.log(followList);
+    // console.log(followList);
     if (me) {
       if (followList.find((followed) => followed.schoolId === parseInt(schoolId))) {
         setIsFollowed(true);

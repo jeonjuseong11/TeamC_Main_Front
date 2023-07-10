@@ -141,7 +141,7 @@ function* removeSavedSchool(action) {
 }
 const loadSchoolReviewsAPI = (data) => {
   //학교 리뷰 로딩
-  return axios.get(`/review?schoolId=${data.schoolId}`);
+  return axios.get(`/review/list/${data.schoolId}`);
 };
 function* loadSchoolReviews(action) {
   try {
