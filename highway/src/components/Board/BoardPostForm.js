@@ -28,18 +28,19 @@ const BoardPostForm = () => {
   }, [navigate, accessToken]);
   const boardPost = useCallback(
     (values) => {
+      const schoolId = values.category == "10" ? 0 : me?.schoolId;
       dispatch({
         type: ADD_POST_REQUEST,
         data: {
           title: values.title,
           content: values.content.replace(/\r?\n/g, "<br>"),
           category: values.category,
-          schoolId: me.schoolId,
+          schoolId: schoolId,
         },
       });
       navigateToHomeBoard(values.category);
     },
-    [dispatch]
+    [dispatch, me]
   );
 
   const navigateToHomeBoard = useCallback(
@@ -89,6 +90,7 @@ const BoardPostForm = () => {
         { value: 0, label: "자유게시판" },
         { value: 1, label: "질문게시판" },
         { value: 2, label: "프로젝트 모집" },
+        { value: 10, label: "잼미니티" },
         ...me.tag.map((tag) => ({ value: tag.tagCode, label: tag.tagName })),
       ];
       setOptions(newOptions);

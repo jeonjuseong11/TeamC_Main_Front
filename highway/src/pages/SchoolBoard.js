@@ -58,6 +58,12 @@ const SchoolBoard = () => {
       label: "프로젝트 모집",
       onClick: () => navigate("/schoolboard/2"),
     },
+    {
+      key: "/schoolboard/10",
+      icon: <TeamOutlined />,
+      label: "잼민",
+      onClick: () => navigate("/schoolboard/10"),
+    },
     ...(me?.tag
       ? me.tag.map((t) => ({
           key: `/schoolboard/${t.tagCode}`,

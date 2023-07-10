@@ -55,11 +55,14 @@ const BoardMain = () => {
   const sortedData = [...schoolBoardPosts];
   const [searchText, setSearchText] = useState("");
   const loadPosts = (category) => {
+    let schoolId = parseInt(category) === 10 ? 0 : me && me.schoolId ? me.schoolId : 0;
+
     dispatch({
       type: LOAD_POSTS_REQUEST,
-      data: { category, schoolId: me.schoolId },
+      data: { category, schoolId },
     });
   };
+
   useEffect(() => {
     if (category) {
       loadPosts(category);
