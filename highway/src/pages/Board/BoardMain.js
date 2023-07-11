@@ -44,8 +44,15 @@ export const changeCategory = (category) => {
     return "경영";
   }
 };
+
+const stripTags = (html) => {
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+};
+
 const BoardMain = () => {
-  const MAX_CONTENT_LENGTH = 30; //최대 글자수
+  const MAX_CONTENT_LENGTH = 20; // 최대 글자수
   const { category } = useParams();
   const dispatch = useDispatch();
   const { schoolBoardPosts } = useSelector((state) => state.post);
@@ -54,6 +61,7 @@ const BoardMain = () => {
   const [sortOrder, setSortOrder] = useState("latest");
   const sortedData = [...schoolBoardPosts];
   const [searchText, setSearchText] = useState("");
+
   const loadPosts = (category) => {
     let schoolId = parseInt(category) === 10 ? 0 : me && me.schoolId ? me.schoolId : 0;
 
@@ -68,20 +76,10 @@ const BoardMain = () => {
       loadPosts(category);
     }
   }, [category]);
-  // if (category=="all") {
 
-  //   filteredData = sortedData.filter((item) => item.category.includes(category));
-  // }
   if (sortOrder === "latest") {
     sortedData.sort((a, b) => {
       return new Date(b.createDate) - new Date(a.createDate);
-    });
-  } else if (sortOrder === "most-liked") {
-    {
-      /* 해당 기능은 2023js에 새로 나온 기능인 toSorted 메서드 활용 가능 */
-    }
-    sortedData.sort((a, b) => {
-      return b.good - a.good;
     });
   }
 
@@ -95,15 +93,17 @@ const BoardMain = () => {
   const handleSortOrder = (order) => {
     setSortOrder((prevOrder) => (prevOrder === order ? "" : order));
   };
+
   const formatContent = (content, maxLength) => {
     if (!content) return null;
-    if (content.length <= maxLength) {
-      return content;
+    const strippedContent = stripTags(content); // 태그 제거
+    if (strippedContent.length <= maxLength) {
+      return strippedContent;
     }
-
-    const truncatedContent = content.slice(0, maxLength);
+    const truncatedContent = strippedContent.slice(0, maxLength);
     return truncatedContent.trim() + "...";
   };
+
   return (
     <Col xs={24} md={11}>
       <Input
@@ -129,17 +129,6 @@ const BoardMain = () => {
         >
           최신순
         </Button>
-        {/* <Button
-          type="text"
-          style={{
-            borderRadius: "50px",
-            background: sortOrder === "most-liked" ? "#8282ff" : "transparent",
-            color: sortOrder === "most-liked" ? "white" : "black",
-          }}
-          onClick={() => handleSortOrder("most-liked")}
-        >
-          좋아요 많은순
-        </Button> */}
       </div>
       <List
         itemLayout="vertical"
@@ -156,8 +145,6 @@ const BoardMain = () => {
               padding: "1rem",
             }}
           >
-            {/* <Link to={`/schoolboard/${item.category}/${item.id}`}> */}
-            {/* 카테고리를 주소에 첨부할지 말지는 아직 고민중 */}
             <Link to={`/schoolboard/${item.category}/${item.id}`}>
               <List.Item
                 key={item.title}
@@ -171,10 +158,6 @@ const BoardMain = () => {
                   background: hoveredItem === index ? "#f5f5f5" : "transparent",
                   transition: "background 0.3s",
                 }}
-                // actions={[
-                //   <IconText icon={LikeOutlined} text={item.good} key="list-vertical-like-o" />,
-                //   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                // ]}
               >
                 <span style={{ color: "gray" }}>{changeCategory(item.category)}</span>
                 <List.Item.Meta
@@ -183,12 +166,12 @@ const BoardMain = () => {
                     <div
                       style={{
                         height: "40px",
-                        maxHeight: "40px", // 원하는 높이값으로 변경
+                        maxHeight: "40px",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 1, // 원하는 줄 수로 변경
+                        WebkitLineClamp: 1,
                       }}
                     >
                       <span

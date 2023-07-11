@@ -31,6 +31,7 @@ import ProfileRecentRecord from "./components/Profile/ProfileRecentRecord";
 import BoardMain from "./pages/Board/BoardMain";
 import BoardPostForm from "./components/Board/BoardPostForm";
 import { info } from "./utils/Message";
+import BoardDetailUptadeForm from "./components/Board/BoardDetailUptadeForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -92,9 +93,6 @@ function App() {
         <Routes>
           <Route exact path="/terms" element={<Terms />} />
           <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/signup/student/terms" element={<Terms />} />
-          <Route exact path="/signup/other/terms" element={<Terms />} />
-
           <Route element={<TopMenu />}>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
@@ -109,6 +107,7 @@ function App() {
               <Route exact path="/schoolboard/:category/:postId" element={<SchoolBoardDetail />} />
             </Route>
             <Route exact path="/schoolboard/post" element={<BoardPostForm />} />
+            <Route exact path="/schoolboard/:postId/update" element={<BoardDetailUptadeForm />} />
             <Route exact path="/promotion" element={<Promotion />}>
               <Route exact path="/promotion" element={<PromotionHome />} />
               <Route exact path="/promotion/news" element={<PromotionNews />} />
