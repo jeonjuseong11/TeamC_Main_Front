@@ -192,7 +192,9 @@ const BoardMain = () => {
                       }}
                     >
                       <span
-                        dangerouslySetInnerHTML={{ __html: formatContent(item?.content, 50) }}
+                        dangerouslySetInnerHTML={{
+                          __html: formatContent(item?.content, MAX_CONTENT_LENGTH),
+                        }}
                       ></span>
                     </div>
                   }

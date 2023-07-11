@@ -31,6 +31,7 @@
 }
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   padding: 0.3rem;
+  padding-left: 1rem;
   height: 2.5rem;
   border: none;
   box-shadow: none;
@@ -40,7 +41,6 @@
 .ant-select-selector .ant-select-selection-placeholder {
   color: #c2c2c2; /* 원하는 색상으로 변경 */
   font-weight: 700;
-  margin-left: 1rem;
 }
 .ant-select-selector:focus .ant-select-selection-placeholder {
   color: #a8a8fe; /* 원하는 색상으로 변경 */
