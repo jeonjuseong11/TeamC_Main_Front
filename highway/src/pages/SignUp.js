@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CHECK_DUPLICATE_ID_REQUEST,
   LOAD_SCHOOL_INFO_REQUEST,
+  LOAD_SCHOOL_LIST_REQUEST,
   RESET_DUPLICATE_ID_REQUEST,
   SIGNUP_REQUEST,
 } from "../constants/actionTypes";
@@ -31,17 +32,18 @@ import { useSelector } from "react-redux";
 import { error, info } from "../utils/Message";
 const SignUp = () => {
   const { schools } = useSelector((state) => state.school);
-  console.log(schools);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [role, setRole] = useState("");
-  // const { me } = useSelector((state) => state.me);
+  const me = localStorage.getItem("USERINFO");
   const { idValid } = useSelector((state) => state.user);
   const [isIdValid, setIsIdValid] = useState(false);
-  // useEffect(() => {
-  //   navigate("/");
-  // }, [me]);
+  useEffect(() => {
+    if (me) {
+      navigate("/");
+    }
+  }, [me]);
   useEffect(() => {
     console.log(isIdValid);
     console.log("useEffet isIdValid : " + isIdValid);
@@ -82,16 +84,18 @@ const SignUp = () => {
     }
   };
   // 백엔드 오류 수정시 주석 해제
-  // const loadSchoolsInfo = () => {
-  //   dispatch({
-  //     type: LOAD_SCHOOL_INFO_REQUEST,
-  //   });
-  // };
-  // useEffect(() => {
-  //   loadSchoolsInfo();
-  // }, []);
+  const loadSchoolsInfo = () => {
+    dispatch({
+      type: LOAD_SCHOOL_LIST_REQUEST,
+    });
+    console.log(schools);
+  };
+
+  useEffect(() => {
+    // console.log("school");
+    loadSchoolsInfo();
+  }, []);
   const schoolsInfo = schools.map((it) => {
-    console.log(it);
     return {
       value: it.id,
       label: it.schoolName,

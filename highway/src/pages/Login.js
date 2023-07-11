@@ -17,6 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Login = () => {
   const { me, logInError } = useSelector((state) => state.user);
+  const access = localStorage.getItem("ACCESSTOKEN");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -30,11 +31,10 @@ const Login = () => {
 
   useEffect(() => {
     // console.log(me);
-    if (me) {
-      navigate(-1);
+    if (access) {
+      navigate("/");
     }
-  }, [me]);
-  useEffect(() => {}, []);
+  }, [me, navigate]);
 
   return (
     <LoginWrapper>

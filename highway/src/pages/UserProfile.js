@@ -8,8 +8,9 @@ const UserProfile = () => {
   const { me } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
+  const access = localStorage.getItem("ACCESSTOKEN");
   useEffect(() => {
-    if (me === null) {
+    if (access === null) {
       navigate("/");
     }
   }, [me]);
