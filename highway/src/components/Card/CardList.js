@@ -1,7 +1,7 @@
 import { StarOutlined, UserOutlined } from "@ant-design/icons";
 import { Card, Col, List, Row } from "antd";
 import Meta from "antd/es/card/Meta";
-import { CardItem, IconText } from "./CardStyle";
+import { CardItem, IconText, TagsItem } from "./CardStyle";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DepartsTags from "../DepartsTags";
@@ -46,6 +46,11 @@ const CardList = ({ filterValue }) => {
         <List
           grid={{ gutter: 12, xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 5 }}
           dataSource={schools}
+          pagination={{
+            pageSize: 5,
+            position: "bottom",
+            align: "center",
+          }}
           renderItem={(item) => (
             <List.Item key={item.id}>
               <Col>
@@ -63,24 +68,36 @@ const CardList = ({ filterValue }) => {
                       />
                     }
                   >
-                    <Meta title={item.schoolName} description={item.descript} />
+                    <Meta title={item.schoolName} />
                     <Meta
                       description={
                         <CardItem>
                           {/* <IconText
                             icon={StarOutlined}
-                            text={item.reviews.length}
+                            // text={item.reviews.length}
                             key="list-vertical-star-o"
                           /> */}
-                          {/* <IconText
+                          <IconText
                             icon={UserOutlined}
-                            text={item.members.length}
+                            text={item.studentCount}
                             key="list-vertical-message"
-                          /> */}
+                          />
                         </CardItem>
                       }
                     />
-                    {/* <Meta title={<DepartsTags schoolInfo={item} />} /> */}
+                    <Meta
+                      title={
+                        <CardItem>
+                          {item.tag?.map((v, idx) => {
+                            return (
+                              <TagsItem key={idx} style={{ marginRight: "0.5rem" }}>
+                                {v}
+                              </TagsItem>
+                            );
+                          })}
+                        </CardItem>
+                      }
+                    />
                   </Card>
                 </Link>
               </Col>
