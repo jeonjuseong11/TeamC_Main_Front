@@ -2,6 +2,7 @@ import { EyeOutlined, FileImageOutlined, SearchOutlined, UserOutlined } from "@a
 import { Avatar, Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
+import { CardItem, TagsItem } from "./Card/CardStyle";
 // import CircleChart from "./CircleChart";
 import DepartsTags from "./DepartsTags";
 
@@ -26,7 +27,15 @@ const RankSchoolCard = ({ selectedSchool }) => {
         title={selectedSchool.schoolName}
         description={
           <>
-            {/* <DepartsTags schoolInfo={selectedSchool} /> */}
+            <CardItem>
+              {selectedSchool?.tag?.map((v, idx) => {
+                return (
+                  <TagsItem key={idx} style={{ marginRight: "0.5rem" }}>
+                    {v}
+                  </TagsItem>
+                );
+              })}
+            </CardItem>
             <p>
               <a href={selectedSchool.websiteAddress}>{selectedSchool.websiteAddress}</a>
             </p>
@@ -35,12 +44,12 @@ const RankSchoolCard = ({ selectedSchool }) => {
               <span style={{ marginRight: "1rem" }}>리뷰 수</span>
               {selectedSchool.reviews}
             </p> */}
-            {/* <p>
-              <UserOutlined />
-              <span style={{ marginRight: "1rem" }}>사용자 수</span>
-              {selectedSchool.members.length}
-            </p>
             <p>
+              <UserOutlined />
+              <span style={{ marginRight: "1rem" }}>사용중인 재학생 수</span>
+              {selectedSchool.studentCount}
+            </p>
+            {/* <p>
               <EyeOutlined />
               <span style={{ marginRight: "1rem" }}>조회 수</span>
               {selectedSchool.views}
