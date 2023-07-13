@@ -32,6 +32,7 @@ const Header = () => {
     });
     // navigate(-1);
     window.localStorage.clear();
+    window.location.replace(`/`);
   };
 
   useEffect(() => {
@@ -62,8 +63,13 @@ const Header = () => {
               </Button>
             </>
           ) : (
-            <div style={{ marginTop: "0.7rem" }}>
-              <Link to="/login">로그인</Link>
+            <div style={{ marginTop: "0.5rem" }}>
+              <Link to="/login" style={{ marginRight: "1rem", color: "black" }}>
+                로그인
+              </Link>
+              <Link to="/signup" style={{ color: "black" }}>
+                회원가입
+              </Link>
             </div>
           )}
         </Col>

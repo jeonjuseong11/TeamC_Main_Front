@@ -158,6 +158,7 @@ function* loadUser() {
       data: e.response.data,
     });
     alert(e.response.data);
+    localStorage.clear();
   }
 }
 const refreshTokenAPI = () => {
