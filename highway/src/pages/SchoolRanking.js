@@ -12,44 +12,42 @@ const SchoolRanking = () => {
   const [selectedSchool, setSelectedSchool] = useState(null);
   const [filterValue, setFilterValue] = useState("");
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch({
       type: LOAD_SCHOOL_LIST_REQUEST,
     });
   }, []);
-  useEffect(() => {
-    // 데이터 가져오는 로직을 여기에 구현
 
+  useEffect(() => {
     const copiedData = schools.slice();
     const rankedData = copiedData.map((item, index) => ({
       ...item,
-      rank: index + 1,
-      // views: Math.floor(Math.random() * 101), //더미데이터 생성
+      rank: index,
       reviews: schoolReviews.length,
     }));
-    setRankData(rankedData);
+    setRankData(rankedData.filter((item) => item.id !== 0));
   }, [schools]);
+
+  useEffect(() => {
+    setSelectedSchool(rankData[0]);
+  }, [rankData]);
+
   const handleSchoolSelect = (school) => {
     setSelectedSchool(school);
   };
+
   const handleFilterValueChange = (value) => {
     setFilterValue(value);
   };
 
   const filteredData = rankData.filter((item) => {
-    if (filterValue == "") {
+    if (filterValue === "") {
       return true;
     }
     return item.tag.some((tag) => filterValue.includes(tag));
   });
-  useEffect(() => {
-    if (selectedSchool == null) {
-      setSelectedSchool(filteredData[0]);
-    }
-  }, [filteredData]);
-  useEffect(() => {
-    setSelectedSchool(filteredData[0]);
-  }, [filterValue]);
+
   const columns = [
     {
       title: "랭킹",
@@ -72,25 +70,21 @@ const SchoolRanking = () => {
         </a>
       ),
     },
-    // {
-    //   title: "리뷰 수",
-    //   dataIndex: "reviews",
-    //   key: "reviews",
-    //   render: (reviews) => reviews,
-    // },
-    // {
-    //   title: "유저 수",
-    //   dataIndex: "members",
-    //   key: "members",
-    //   render: (members) => members.length,
-    // },
+    {
+      title: "사용자 수",
+      dataIndex: "studentCount",
+      key: "studentCount",
+      render: (studentCount) => studentCount,
+    },
   ];
+
   const rowClassName = (record) => {
-    if (selectedSchool && selectedSchool.schoolName === record.schoolName) {
+    if (selectedSchool && selectedSchool.id === record.id) {
       return "selected-row";
     }
     return "";
   };
+
   return (
     <>
       <Row gutter={[24, 24]} justify="center">
@@ -116,8 +110,12 @@ const SchoolRanking = () => {
           <Table
             style={{ minWidth: "14rem" }}
             columns={columns}
-            dataSource={filteredData}
-            pagination={false}
+            dataSource={filterValue == "" ? rankData : filteredData}
+            pagination={{
+              pageSize: 10,
+              position: "bottom",
+              align: "center",
+            }}
             rowClassName={rowClassName}
             rowKey={(record) => record.id}
           />
