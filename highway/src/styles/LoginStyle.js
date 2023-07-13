@@ -12,6 +12,7 @@ export const LoginWrapper = styled.div`
   background-color: #f2f2f2;
 `;
 export const LoginForm = styled(Form)`
+  margin-top: 10rem;
   text-align: left;
   width: 25%;
   min-width: 15rem;
@@ -21,13 +22,15 @@ export const LoginForm = styled(Form)`
   margin-bottom: 18.4rem;
 `;
 export const LoginFormTitle = styled.h1`
-  margin-top: 10rem;
   text-align: center;
 `;
 export const LoginInput = styled(Input)`
   width: 100%;
   height: 3rem;
   font-weight: 700;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: #f2f2f2;
 `;
 export const LoginBtn = styled(Button)`
   width: 100%;

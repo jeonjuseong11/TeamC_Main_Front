@@ -6,8 +6,10 @@ import { RankTopic } from "./RankSelector";
 
 const SearchInput = styled(Input)`
   width: 60%;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: #f2f2f2;
   height: 3rem;
-  border-radius: 50px;
 `;
 const SearchForm = ({ setFilterValue, filterValue }) => {
   const [searchText, setSearchText] = useState([""]);

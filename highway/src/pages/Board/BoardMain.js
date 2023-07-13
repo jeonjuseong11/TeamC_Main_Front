@@ -108,7 +108,7 @@ const BoardMain = () => {
     <Col xs={24} md={11}>
       <Input
         placeholder="궁금한 내용을 찾아보세요"
-        style={{ borderRadius: "50px", padding: "1rem", marginBottom: "1rem" }}
+        style={{ padding: "1rem", marginBottom: "1rem" }}
         onChange={(e) => setSearchText(e.target.value)}
         value={searchText}
         onKeyPress={(e) => {
@@ -130,6 +130,7 @@ const BoardMain = () => {
           최신순
         </Button>
       </div>
+
       <List
         itemLayout="vertical"
         size="large"

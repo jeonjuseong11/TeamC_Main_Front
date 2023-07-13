@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN_REQUEST } from "../constants/actionTypes";
 import { useSelector, useDispatch } from "react-redux";
 
+const imgUrl = "/assets/TitleIcon.png";
 const Login = () => {
   const { me, logInError } = useSelector((state) => state.user);
   const access = localStorage.getItem("ACCESSTOKEN");
@@ -38,7 +39,6 @@ const Login = () => {
 
   return (
     <LoginWrapper>
-      <LoginFormTitle>로그인</LoginFormTitle>
       <LoginForm
         name="normal_login"
         className="login-form"
@@ -47,13 +47,22 @@ const Login = () => {
         }}
         onFinish={onFinish}
       >
+        <LoginFormTitle>
+          <img src={imgUrl} alt="Logo" style={{ width: "13rem" }} />
+        </LoginFormTitle>
         <Form.Item
           name="userId"
           rules={[
-            {
-              required: true,
-              message: "아이디를 입력해주세요",
-            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (getFieldValue("normal_login")) {
+                  if (!value) {
+                    return Promise.reject("아이디를 입력해주세요");
+                  }
+                }
+                return Promise.resolve();
+              },
+            }),
           ]}
         >
           <LoginInput
@@ -64,10 +73,16 @@ const Login = () => {
         <Form.Item
           name="userPw"
           rules={[
-            {
-              required: true,
-              message: "비밀번호를 입력해주세요",
-            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (getFieldValue("normal_login")) {
+                  if (!value) {
+                    return Promise.reject("아이디를 입력해주세요");
+                  }
+                }
+                return Promise.resolve();
+              },
+            }),
           ]}
         >
           <LoginInput
@@ -83,10 +98,21 @@ const Login = () => {
         >
           <Checkbox>로그인 상태 유지</Checkbox>
         </Form.Item> */}
-        <Form.Item>
-          <LoginBtn type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </LoginBtn>
+        <Form.Item shouldUpdate>
+          {({ getFieldsError, getFieldValue }) => (
+            <LoginBtn
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              disabled={
+                !getFieldValue("userId") ||
+                !getFieldValue("userPw") ||
+                getFieldsError().some((field) => field.errors.length)
+              }
+            >
+              Log in
+            </LoginBtn>
+          )}
         </Form.Item>
         <LoginMenu>
           <LoginMenuItem to="/terms">회원가입</LoginMenuItem>
