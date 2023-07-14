@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Col, Breadcrumb, Button, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  LOAD_POST_COMMENTS_REQUEST,
-  LOAD_POST_REQUEST,
-  REMOVE_POST_REQUEST,
-} from "../../constants/actionTypes";
+import { LOAD_POST_REQUEST, REMOVE_POST_REQUEST } from "../../constants/actionTypes";
 import { useNavigate, useParams } from "react-router-dom";
 import ToggleComment from "../../components/schoolBoardDetail/ToggleComment";
 import { changeCategory, formatDate } from "./BoardMain";
@@ -17,16 +13,6 @@ const SchoolBoardDetail = () => {
   const { schoolBoardPost } = useSelector((state) => state.post);
   const { me } = useSelector((state) => state.user);
   const { postId, category } = useParams();
-  const loadPostComments = (postId) => {
-    if (postId) {
-      dispatch({
-        type: LOAD_POST_COMMENTS_REQUEST,
-        data: {
-          boardId: postId,
-        },
-      });
-    }
-  };
 
   const removePost = () => {
     dispatch({
@@ -45,7 +31,6 @@ const SchoolBoardDetail = () => {
 
   useEffect(() => {
     loadPost(postId);
-    loadPostComments(postId);
   }, [postId, category]);
 
   return (
@@ -104,7 +89,7 @@ const SchoolBoardDetail = () => {
           </Button>
         </div>
       </Col>
-      <ToggleComment loadPostComments={loadPostComments} />
+      <ToggleComment />
     </>
   );
 };

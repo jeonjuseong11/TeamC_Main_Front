@@ -1,11 +1,12 @@
 import { Col, Input } from "antd";
-import React, { useEffect, useState } from "react";
-import { ADD_COMMENT_REQUEST } from "../../constants/actionTypes";
+import React, { useState } from "react";
+import { ADD_POST_COMMENT_REQUEST } from "../../constants/actionTypes";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import ToggleGoodAndCommentBtn from "./ToggleGoodAndCommentBtn";
-import SchoolBoardDetailComments from "./SchoolBoardDetailComments";
+import CommentList from "./CommentList";
+import Item from "antd/es/list/Item";
 
 export const formatDate = (dateString) => {
   const currentTime = moment();
@@ -31,10 +32,9 @@ export const formatDate = (dateString) => {
   }
 };
 
-const ToggleComment = React.memo(({ loadPostComments }) => {
+const ToggleComment = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-
   const { postId } = useParams();
   const [toggle, setToggle] = useState(false);
   const [commentValue, setCommentValue] = useState("");
@@ -53,20 +53,16 @@ const ToggleComment = React.memo(({ loadPostComments }) => {
     setToggle(false);
 
     dispatch({
-      type: ADD_COMMENT_REQUEST,
+      type: ADD_POST_COMMENT_REQUEST,
       data: {
         content: commentValue,
-        userId: me.userId,
-        boardId: postId,
+        boardId: parseInt(postId),
+        parentId: Item.parentId,
       },
     });
 
     setCommentValue(""); // 댓글 작성 후 입력 값 초기화
   };
-
-  useEffect(() => {
-    loadPostComments();
-  }, []);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -96,9 +92,9 @@ const ToggleComment = React.memo(({ loadPostComments }) => {
           </Col>
         </>
       )}
-      <SchoolBoardDetailComments />
+      <CommentList />
     </>
   );
-});
+};
 
 export default ToggleComment;

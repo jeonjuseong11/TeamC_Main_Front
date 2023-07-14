@@ -1,8 +1,8 @@
 import produce from "immer";
 import {
-  ADD_COMMENT_FAILURE,
-  ADD_COMMENT_REQUEST,
-  ADD_COMMENT_SUCCESS,
+  ADD_POST_COMMENT_FAILURE,
+  ADD_POST_COMMENT_REQUEST,
+  ADD_POST_COMMENT_SUCCESS,
   ADD_POST_FAILURE,
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
@@ -226,17 +226,17 @@ const reducer = (state = initialState, action) =>
         draft.removePostLoading = false;
         draft.removePostError = action.error;
         break;
-      case ADD_COMMENT_REQUEST:
+      case ADD_POST_COMMENT_REQUEST:
         draft.addCommentLoading = true;
         draft.addCommentDone = false;
         draft.addCommentError = null;
         break;
-      case ADD_COMMENT_SUCCESS: {
+      case ADD_POST_COMMENT_SUCCESS: {
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
       }
-      case ADD_COMMENT_FAILURE:
+      case ADD_POST_COMMENT_FAILURE:
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
         break;
@@ -276,7 +276,9 @@ const reducer = (state = initialState, action) =>
       case REMOVE_POST_COMMENT_SUCCESS:
         draft.removePostCommentLoading = false;
         draft.removePostCommentDone = true;
-        draft.mainPosts = draft.schoolBoardPosts.filter((v) => v.id !== action.data.PostId);
+        // draft.schoolBoardPostComments = draft.schoolBoardPostComments.filter(
+        //   (v) => v.id !== action.data.PostId
+        // );
         break;
       case REMOVE_POST_COMMENT_FAILURE:
         draft.removePostCommentLoading = false;
