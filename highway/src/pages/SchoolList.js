@@ -3,7 +3,7 @@ import { Card, Col, List } from "antd";
 import Meta from "antd/es/card/Meta";
 import React from "react";
 import { Link } from "react-router-dom";
-import { CardItem, IconText } from "../components/Card/CardStyle";
+import { CardItem, IconText, TagsItem } from "../components/Card/CardStyle";
 import DepartsTags from "../components/DepartsTags";
 
 const SchoolList = ({ schools }) => {
@@ -45,15 +45,27 @@ const SchoolList = ({ schools }) => {
                           text={item.reviews.length}
                           key="list-vertical-star-o"
                         /> */}
-                      {/* <IconText
+                      <IconText
                         icon={UserOutlined}
-                        text={item.members.length}
+                        text={item.studentCount}
                         key="list-vertical-message"
-                      /> */}
+                      />
                     </CardItem>
                   }
                 />
-                {/* <Meta title={<DepartsTags schoolInfo={item} />} /> */}
+                <Meta
+                  title={
+                    <CardItem>
+                      {item?.tag?.map((v, idx) => {
+                        return (
+                          <TagsItem key={idx} style={{ marginRight: "0.5rem" }}>
+                            {v}
+                          </TagsItem>
+                        );
+                      })}
+                    </CardItem>
+                  }
+                />
               </Card>
             </Link>
           </List.Item>
