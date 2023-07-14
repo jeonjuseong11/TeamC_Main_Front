@@ -37,8 +37,8 @@ const SignUp = () => {
   const [form] = Form.useForm();
   const [role, setRole] = useState("");
   const me = localStorage.getItem("USERINFO");
-  const { idValid } = useSelector((state) => state.user);
-  const [isIdValid, setIsIdValid] = useState(false);
+  const { idValid, checkIdLoading, checkIdDone, checkIdError } = useSelector((state) => state.user);
+  const [isIdValid, setIsIdValid] = useState(null);
   useEffect(() => {
     if (me) {
       navigate("/");
@@ -47,9 +47,12 @@ const SignUp = () => {
   useEffect(() => {
     console.log(isIdValid);
     console.log("useEffet isIdValid : " + isIdValid);
-  }, [idValid, isIdValid]);
+  }, [isIdValid]);
   useEffect(() => {
-    setIsIdValid(idValid);
+    if (idValid !== null) {
+      // idValid 상태가 null이 아닐 때에만 상태를 업데이트
+      setIsIdValid(idValid);
+    }
   }, [idValid]);
   const onCancel = () => {
     dispatch({
@@ -88,13 +91,14 @@ const SignUp = () => {
     dispatch({
       type: LOAD_SCHOOL_LIST_REQUEST,
     });
-    console.log(schools);
   };
 
   useEffect(() => {
     // console.log("school");
+    onCancel();
     loadSchoolsInfo();
   }, []);
+
   const schoolsInfo = schools.map((it) => {
     return {
       value: it.id,
@@ -138,12 +142,17 @@ const SignUp = () => {
         >
           <Space.Compact style={{ width: "100%" }}>
             <SignUpInput allowClear placeholder="아이디를 입력해주세요" disabled={isIdValid} />
-            <Button onClick={onCheckUserId} disabled={isIdValid} style={{ height: "3rem" }}>
+            <Button
+              loading={checkIdLoading}
+              onClick={onCheckUserId}
+              disabled={isIdValid}
+              style={{ height: "3rem", borderColor: "#f2f2f2" }}
+            >
               중복확인
             </Button>
           </Space.Compact>
         </Form.Item>
-        {isIdValid.data ? (
+        {isIdValid ? (
           <p
             style={{
               color: "green",
