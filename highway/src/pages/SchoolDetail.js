@@ -1,6 +1,6 @@
-import { Button, Col, Empty, Menu, Row, Tooltip } from "antd";
+import { Button, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   SchoolDetailWrapper,
   SchoolImg,
@@ -50,7 +50,6 @@ const SchoolDetail = () => {
     setIsFollowed(!!followedSchool);
   }, [followList]);
   useEffect(() => {
-    console.log(me);
     if (!me) {
       setIsFollowed(false);
     }

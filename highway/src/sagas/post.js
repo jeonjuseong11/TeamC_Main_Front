@@ -44,11 +44,8 @@ import {
   REMOVE_POST_COMMENT_REQUEST,
   REMOVE_POST_COMMENT_SUCCESS,
   REMOVE_POST_COMMENT_FAILURE,
-  ADD_POST_COMMENT_REPLY_FAILURE,
-  ADD_POST_COMMENT_REPLY_REQUEST,
-  ADD_POST_COMMENT_REPLY_SUCCESS,
 } from "../constants/actionTypes";
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../constants/actionTypes";
+import { REMOVE_POST_OF_ME } from "../constants/actionTypes";
 
 function uploadImagesAPI(data) {
   //이미지 업로드
@@ -129,7 +126,6 @@ function loadPostAPI(data) {
 function* loadPost(action) {
   try {
     const result = yield call(loadPostAPI, action.data);
-    // console.log(result.data.data);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data.data,
@@ -188,7 +184,6 @@ function* loadTagPosts(action) {
 }
 
 function loadPostsAPI(data) {
-  // console.log(data)
   return axios.get(`/board/list/${data.schoolId}?cateNo=${data.category}`);
 }
 
@@ -217,7 +212,6 @@ function addPostAPI(data) {
 }
 
 function* addPost(action) {
-  // console.log(action.data);
   try {
     const result = yield call(addPostAPI, action.data);
     yield put({
@@ -228,10 +222,6 @@ function* addPost(action) {
       type: LOAD_POSTS_REQUEST,
       data: { category: action.data.category, schoolId: action.data.schoolId },
     });
-    // yield put({
-    //   type: ADD_POST_TO_ME,
-    //   data: result.data.id,
-    // });
   } catch (err) {
     console.error(err);
     yield put({
@@ -249,7 +239,6 @@ function removePostAPI(data) {
 function* removePost(action) {
   try {
     const result = yield call(removePostAPI, action.data);
-    console.log(action.data);
     yield put({
       type: REMOVE_POST_SUCCESS,
       data: result.data.board.id,
@@ -278,7 +267,6 @@ function updatePostAPI(data) {
 function* updatePost(action) {
   try {
     const result = yield call(updatePostAPI, action.data);
-    console.log(action.data);
     yield put({
       type: UPDATE_POST_SUCCESS,
       data: result.data,
@@ -293,7 +281,6 @@ function* updatePost(action) {
 }
 
 function addPostCommentAPI(data) {
-  console.log("addComment" + data);
   // 게시물 댓글 작성
   // return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
   return axios.post(`/comment`, data); // POSTMAN에 나온 주소
@@ -342,7 +329,6 @@ function* loadPostComments(action) {
 
 function removePostCommentAPI(data) {
   // 게시물 댓글 삭제
-  console.log("삭제" + data);
   return axios.put(`/comment/delete`, data);
 }
 
@@ -390,34 +376,6 @@ function* updatePostComment(action) {
     });
   }
 }
-
-// function addCommentReplyAPI(data) {
-//   console.log("대댓작성" + data);
-
-//   // 게시물 대댓글 작성
-//   // return axios.post(`/post/${data.postId}/comment`, data); // POST /post/1/comment
-//   return axios.post(`/comment`, data); // POSTMAN에 나온 주소
-// }
-
-// function* addCommentReply(action) {
-//   try {
-//     const result = yield call(addCommentReplyAPI, action.data);
-//     yield put({
-//       type: ADD_POST_COMMENT_REPLY_SUCCESS,
-//       data: result.data.data,
-//     });
-//     yield put({
-//       type: LOAD_POST_COMMENTS_REQUEST,
-//       data: { boardId: action.data.boardId },
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     yield put({
-//       type: ADD_POST_COMMENT_REPLY_FAILURE,
-//       error: err.response.data,
-//     });
-//   }
-// }
 
 function* watchUploadImages() {
   yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
@@ -478,10 +436,6 @@ function* watchRemovePostComment() {
   yield takeLatest(REMOVE_POST_COMMENT_REQUEST, removePostComment);
 }
 
-// function* watchAddCommentReply() {
-//   yield takeLatest(ADD_POST_COMMENT_REPLY_REQUEST, addCommentReply);
-// }
-
 export default function* postSaga() {
   yield all([
     fork(watchUploadImages),
@@ -498,6 +452,5 @@ export default function* postSaga() {
     fork(watchLoadPostComments),
     fork(watchUpdatePostComment),
     fork(watchRemovePostComment),
-    // fork(watchAddCommentReply),
   ]);
 }

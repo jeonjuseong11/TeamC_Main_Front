@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { HeartOutlined, HeartTwoTone, MessageOutlined, MessageTwoTone } from "@ant-design/icons";
-import { Button, Col, Row } from "antd";
-import CommentDummyDatas from "../../utils/CommentDummyDatas";
+import { Button, Col } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from "../../constants/actionTypes";
 import { useParams } from "react-router-dom";
 
 const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
-  const { schoolBoardPost, Likers } = useSelector((state) => state.post);
-  // console.log(schoolBoardPost);
-  // console.log(Likers);
+  const { schoolBoardPost } = useSelector((state) => state.post);
+
   const dispatch = useDispatch();
   const { likePostLoading, unlikePostLoading, schoolBoardPostComments } = useSelector(
     (state) => state.post
@@ -19,7 +17,6 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
   const [good, setGood] = useState(false);
   const { postId } = useParams();
   useEffect(() => {
-    console.log(schoolBoardPost);
     if (schoolBoardPost) {
       setGood(schoolBoardPost.heart == null ? false : true);
     }
@@ -32,7 +29,6 @@ const ToggleGoodAndCommentBtn = ({ toggle, setToggle }) => {
     setGood(true);
   };
   const unlikePost = () => {
-    // console.log(schoolBoardPost);
     dispatch({
       type: UNLIKE_POST_REQUEST,
       data: { boardId: postId, heartId: schoolBoardPost.heart.id },

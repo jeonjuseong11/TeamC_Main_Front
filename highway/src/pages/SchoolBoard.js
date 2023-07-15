@@ -1,21 +1,10 @@
-import { Avatar, Button, Col, List, Menu, Row } from "antd";
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Button, Col, Menu, Row } from "antd";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { EditOutlined, SearchOutlined, SmileOutlined, TeamOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { needLoginError } from "../utils/Message";
-export const data = [
-  {
-    id: 1,
-    title: "User1",
-    good: 1,
-  },
-  {
-    id: 2,
-    title: "User2",
-    good: 2,
-  },
-];
+
 const SchoolBoard = () => {
   const { category } = useParams();
   const location = useLocation();
@@ -117,55 +106,17 @@ const SchoolBoard = () => {
             }}
             items={menuItems}
           />
-          {/* <div
+          <div
             style={{
-              border: "1px solid #f2f2f2",
-              borderRadius: "10px",
+              backgroundColor: "#f2f2f2",
               padding: "1rem",
-              marginTop: "1rem",
+              borderRadius: "10px",
+              fontWeight: "500",
+              color: "#a1a1a1",
             }}
           >
-            <h3 style={{ marginTop: "0", textAlign: "left" }}>하이웨이 Top user</h3> */}
-          {/* <List
-              className="custom-list"
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item, index) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-                      />
-                    }
-                    title={
-                      <p
-                        style={{
-                          marginTop: "0.4rem",
-                          marginLeft: "1rem",
-                          fontSize: "0.8rem",
-                          fontWeight: "500",
-                          textAlign: "left",
-                        }}
-                      >
-                        {item.title}
-                      </p>
-                    }
-                  />
-                  <p
-                    style={{
-                      marginTop: "0.4rem",
-                      marginLeft: "1rem",
-                      fontSize: "0.8rem",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {item.good}
-                  </p>
-                </List.Item>
-              )}
-            /> */}
-          {/* </div> */}
+            커뮤니티는 학교별 태그에 따라 생겨요
+          </div>
         </Col>
         <Outlet />
       </Row>

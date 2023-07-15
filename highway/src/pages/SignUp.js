@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   CHECK_DUPLICATE_ID_REQUEST,
-  LOAD_SCHOOL_INFO_REQUEST,
   LOAD_SCHOOL_LIST_REQUEST,
   RESET_DUPLICATE_ID_REQUEST,
   SIGNUP_REQUEST,
@@ -106,7 +105,7 @@ const SignUp = () => {
       label: it.schoolName,
     }));
   useEffect(() => {
-    console.log(schoolsInfo);
+    // console.log(schoolsInfo);
   }, [schoolsInfo]);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const onEmailChange = (value) => {

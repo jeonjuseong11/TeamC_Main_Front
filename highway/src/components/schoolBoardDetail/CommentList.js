@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Dropdown, List, Menu, Input, Button } from "antd";
 import { CommentDateSpan } from "./SchoolBoardDetailComments";
 import { formatDate } from "./ToggleComment";
-import { EllipsisOutlined, MessageOutlined } from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   LOAD_POST_COMMENTS_REQUEST,
@@ -55,7 +55,6 @@ const CommentList = () => {
 
   const removePostComment = useCallback(
     (id) => {
-      console.log("RemovePostComment");
       dispatch({
         type: REMOVE_POST_COMMENT_REQUEST,
         data: {

@@ -1,4 +1,4 @@
-import { Col, List, Row, Segmented, Tag } from "antd";
+import { Col, List, Tag } from "antd";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_SAVED_SCHOOL_REQUEST, LOAD_USER_POSTS_REQUEST } from "../../constants/actionTypes";
@@ -60,6 +60,7 @@ const ProfileRecentRecord = () => {
             borderRadius: "10px",
             textAlign: "left",
             padding: "2rem",
+            minHeight: "25rem",
           }}
         >
           <h3>찜한 학교들</h3>
@@ -76,13 +77,13 @@ const ProfileRecentRecord = () => {
             borderRadius: "10px",
             textAlign: "left",
             padding: "2rem",
-            marginBottom: "1rem",
+            marginBottom: "2.4rem",
           }}
         >
           <h3 style={{ margin: "0" }}>좋아요 누른 게시물</h3>
           <List
             dataSource={schoolBoardPosts}
-            style={{ marginTop: "1rem" }}
+            style={{ marginTop: "1rem", minHeight: "13rem" }}
             pagination={{
               align: "center",
               onChange: (page) => {

@@ -1,17 +1,15 @@
-import { EyeOutlined, FileImageOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
+import { FileImageOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { CardItem, TagsItem } from "./Card/CardStyle";
-// import CircleChart from "./CircleChart";
-import DepartsTags from "./DepartsTags";
 
 const RankSchoolCard = ({ selectedSchool }) => {
   return (
     <Card
       style={{ backgroundColor: "#f2f2f2", minWidth: "18rem" }}
       actions={[
-        <Link to={`/schooldetail/${selectedSchool.id}`}>
+        <Link to={`/schooldetail/${selectedSchool.schoolId}`}>
           <SearchOutlined /> 상세 정보 보기
         </Link>,
       ]}
@@ -57,9 +55,6 @@ const RankSchoolCard = ({ selectedSchool }) => {
           </>
         }
       />
-      {/* <Card.Meta
-        description={<CircleChart male={selectedSchool.male} female={selectedSchool.female} />}
-      /> */}
     </Card>
   );
 };

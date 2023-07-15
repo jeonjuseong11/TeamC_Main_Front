@@ -18,9 +18,9 @@ const UserProfile = () => {
     if (me?.userRole === 1) {
       return " 학생";
     } else if (me?.userRole === 2) {
-      return " 부모님";
-    } else if (me?.userRole === 3) {
       return " 선생님";
+    } else if (me?.userRole === 3) {
+      return " 학부모";
     } else {
       return "";
     }
@@ -64,12 +64,6 @@ const UserProfile = () => {
               </tbody>
             </table>
           </div>
-          {/* <Menu.Item key="/profile">
-              <NavLink to="/profile">회원 정보</NavLink>
-            </Menu.Item>
-            <Menu.Item key="/profile/recentrecord">
-              <NavLink to="/profile/recentrecord">나의 관심</NavLink>
-            </Menu.Item> */}
         </Col>
         <Outlet />
       </Row>
