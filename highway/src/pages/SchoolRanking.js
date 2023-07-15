@@ -61,7 +61,7 @@ const SchoolRanking = () => {
   });
   useEffect(() => {
     setSelectedSchool(filteredData[0]);
-  }, [filteredData]);
+  }, [filterValue]);
   const columns = [
     {
       title: "랭킹",
