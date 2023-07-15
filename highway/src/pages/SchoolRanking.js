@@ -26,7 +26,7 @@ const SchoolRanking = () => {
       rank: index,
       reviews: schoolReviews.length,
     }));
-    setRankData(rankedData.filter((item) => item.id !== 0));
+    setRankData(rankedData.filter((item) => item.schoolId !== 0));
   }, [schools]);
 
   useEffect(() => {

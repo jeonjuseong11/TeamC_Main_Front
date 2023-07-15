@@ -1,4 +1,5 @@
 import {
+  AppstoreOutlined,
   DesktopOutlined,
   ExperimentOutlined,
   HighlightOutlined,
@@ -14,9 +15,47 @@ import React from "react";
 
 export const RankTopic = [
   {
-    icon: <ProfileOutlined />,
+    icon: <AppstoreOutlined />,
     content: "전체보기",
-    value: "",
+    value: [
+      "체육",
+      "스포츠",
+      "의학",
+      "보건",
+      "물리학",
+      "화학",
+      "생물학",
+      "지구과학",
+      "건축",
+      "기계",
+      "전자",
+      "컴퓨터",
+      "정보통신",
+      "소프트웨어",
+      "네트워크",
+      "시스템",
+      "IT",
+      "예술",
+      "디자인",
+      "음악",
+      "영상",
+      "애니메이션",
+      "연극",
+      "역사",
+      "경제",
+      "정치",
+      "사회",
+      "경제 ",
+      "경학",
+      "경영",
+      "심리",
+      "한국어",
+      "영어",
+      "독일어",
+      "중국어",
+      "일본어",
+      "프랑스어",
+    ],
   },
   {
     icon: <ExperimentOutlined />,
@@ -67,7 +106,7 @@ export const RankTopic = [
 const RankSelector = ({ setFilterValue }) => {
   const handleFilterChange = (value) => {
     setFilterValue(value);
-    console.log(value);
+    // console.log(value);
   };
   return (
     <Row justify="center">

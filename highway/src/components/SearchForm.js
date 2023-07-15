@@ -11,10 +11,32 @@ const SearchInput = styled(Input)`
   border: #f2f2f2;
   height: 3rem;
 `;
-const SearchForm = ({ setFilterValue, filterValue }) => {
-  const [searchText, setSearchText] = useState([""]);
 
-  useEffect(() => {}, [searchText, filterValue]);
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  align-items: center;
+`;
+
+const SearchForm = ({ setFilterValue, filterValue }) => {
+  const [searchText, setSearchText] = useState("");
+  const [activeButton, setActiveButton] = useState("");
+
+  useEffect(() => {
+    setFilterValue(filterValue);
+  }, [filterValue, setFilterValue]);
+
+  const handleButtonClick = (value) => {
+    if (activeButton === value) {
+      setFilterValue("");
+      setActiveButton("");
+    } else {
+      setFilterValue(value);
+      setActiveButton(value);
+    }
+  };
+
   return (
     <>
       <Row justify="center" gutter={[24, 24]} style={{ marginTop: "3rem" }}>
@@ -26,9 +48,10 @@ const SearchForm = ({ setFilterValue, filterValue }) => {
         <Col xs={24} md={15}>
           <SearchInput
             placeholder="검색"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
-                setSearchText([e.target.value]);
                 setFilterValue(searchText);
               }
             }}
@@ -36,28 +59,31 @@ const SearchForm = ({ setFilterValue, filterValue }) => {
           />
         </Col>
       </Row>
-      <Row justify="center" gutter={[24, 24]} style={{ marginBottom: "2rem" }}>
+      <Row justify="center" gutter={[24, 24]} style={{ marginBottom: "1rem" }}>
         <Col xs={24} md={15}>
-          {RankTopic.map((item) => {
-            return (
+          <ButtonContainer>
+            {RankTopic.map((item) => (
               <Button
-                onClick={() => {
-                  setFilterValue(item.value);
-                  setSearchText([""]);
-                }}
+                onClick={() => handleButtonClick(item.value)}
                 key={item.value}
-                shape="circle"
+                shape="square"
                 style={{
-                  height: "4em",
-                  width: "4em",
-                  marginTop: "1rem",
-                  marginLeft: "0.5rem",
-                  marginRight: "0.5rem",
+                  height: "5.5rem",
+                  width: "5.5rem",
+                  margin: "0 0.5rem",
+                  backgroundColor: item.value === activeButton ? "#8282ff" : "",
+                  color: item.value === activeButton ? "white" : "",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
-                icon={item.icon}
-              />
-            );
-          })}
+              >
+                {item.icon}
+                <span style={{ margin: "0.5rem" }}>{item.content}</span>
+              </Button>
+            ))}
+          </ButtonContainer>
         </Col>
       </Row>
     </>
