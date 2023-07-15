@@ -41,7 +41,7 @@ export const initialState = {
   loadUserError: null,
   myNo: null, //로그인한 유저 번호(백엔드쪽)
   me: null, //로그인한 유저 정보
-  idValid: false,
+  idValid: null,
   refreshToken: null, //jwt 토큰
   accessToken: null,
   expire: null,
@@ -51,19 +51,17 @@ const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case RESET_DUPLICATE_ID_REQUEST:
-        draft.idValid = false;
+        draft.idValid = null;
+        break;
       case CHECK_DUPLICATE_ID_REQUEST:
         draft.checkIdLoading = true;
         draft.checkIdError = null;
         draft.checkIdDone = false;
         break;
-      // 요기가 saga에 의해 실행된다.
       case CHECK_DUPLICATE_ID_SUCCESS:
         draft.idValid = action.data;
-        console.log(draft.idValid);
         draft.checkIdLoading = false;
         draft.checkIdDone = true;
-
         break;
       case CHECK_DUPLICATE_ID_FAILURE:
         draft.idValid = false;

@@ -27,11 +27,10 @@ const checkUserIdAPI = (data) => {
 };
 function* checkUserId(action) {
   try {
-    // console.log(action.data);
     const result = yield call(checkUserIdAPI, action.data);
     yield put({
       type: CHECK_DUPLICATE_ID_SUCCESS,
-      data: result.data.data,
+      data: result.data.data, // 수정된 부분
     });
   } catch (err) {
     console.error(err);

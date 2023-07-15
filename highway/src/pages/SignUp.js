@@ -1,6 +1,6 @@
 import { AutoComplete, Button, Form, Radio, Select, Space } from "antd";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   CHECK_DUPLICATE_ID_REQUEST,
@@ -17,6 +17,7 @@ import {
   SignUpInput,
   SignUpInputPassword,
   SignUpWrapper,
+  SchoolSelector,
 } from "../styles/SignUpStyle";
 import {
   idRegExp,
@@ -28,37 +29,47 @@ import {
   validateNickname,
   validatePassword,
 } from "../utils/signUpValidator";
-import { useSelector } from "react-redux";
 import { error, info } from "../utils/Message";
+import { CSSTransition } from "react-transition-group";
+
 const SignUp = () => {
-  const { schools } = useSelector((state) => state.school);
+  const { schools, idValid, checkIdLoading, checkIdDone, me } = useSelector((state) => ({
+    schools: state.school.schools,
+    idValid: state.user.idValid,
+    checkIdLoading: state.user.checkIdLoading,
+    checkIdDone: state.user.checkIdDone,
+    me: state.user.me,
+  }));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [role, setRole] = useState("");
-  const me = localStorage.getItem("USERINFO");
-  const { idValid, checkIdLoading, checkIdDone, checkIdError } = useSelector((state) => state.user);
-  const [isIdValid, setIsIdValid] = useState(null);
+
   useEffect(() => {
     if (me) {
       navigate("/");
     }
-  }, [me]);
+  }, [me, navigate]);
+
   useEffect(() => {
-    console.log(isIdValid);
-    console.log("useEffet isIdValid : " + isIdValid);
-  }, [isIdValid]);
-  useEffect(() => {
-    if (idValid !== null) {
-      // idValid 상태가 null이 아닐 때에만 상태를 업데이트
+    if (checkIdDone) {
       setIsIdValid(idValid);
     }
-  }, [idValid]);
+  }, [checkIdDone, idValid]);
+
+  useEffect(() => {
+    onCancel();
+    loadSchoolsInfo();
+  }, []);
+
   const onCancel = () => {
     dispatch({
       type: RESET_DUPLICATE_ID_REQUEST,
     });
+    setIsIdValid(null);
   };
+
   const onFinish = (values) => {
     dispatch({
       type: SIGNUP_REQUEST,
@@ -75,36 +86,28 @@ const SignUp = () => {
     } else if (!idRegExp.test(userIdValue)) {
       error("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요");
     } else {
+      setIsIdValid(null);
       dispatch({
         type: CHECK_DUPLICATE_ID_REQUEST,
         data: userIdValue,
       });
-      console.log("isIdValid : " + isIdValid);
-      setIsIdValid(idValid);
-      if (isIdValid) {
-        info("사용가능한 아이디입니다.");
-      }
     }
   };
-  // 백엔드 오류 수정시 주석 해제
+
   const loadSchoolsInfo = () => {
     dispatch({
       type: LOAD_SCHOOL_LIST_REQUEST,
     });
   };
-
-  useEffect(() => {
-    // console.log("school");
-    onCancel();
-    loadSchoolsInfo();
-  }, []);
-
-  const schoolsInfo = schools.map((it) => {
-    return {
-      value: it.id,
+  const schoolsInfo = schools
+    ?.filter((it) => it.schoolId !== 0)
+    .map((it) => ({
+      value: it.schoolId,
       label: it.schoolName,
-    };
-  });
+    }));
+  useEffect(() => {
+    console.log(schoolsInfo);
+  }, [schoolsInfo]);
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   const onEmailChange = (value) => {
     if (!value) {
@@ -115,10 +118,43 @@ const SignUp = () => {
       );
     }
   };
+
   const emailOptions = autoCompleteResult.map((email) => ({
     label: email,
     value: email,
   }));
+
+  const isCheckingId = checkIdLoading;
+  const [isIdValid, setIsIdValid] = useState(null);
+
+  const handlePopstate = () => {
+    onCancel();
+  };
+
+  useEffect(() => {
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, []);
+
+  const [selectedSchool, setSelectedSchool] = useState(null);
+  const [showSchoolOptions, setShowSchoolOptions] = useState(false); //true이면 학교 옵션을 보여주고, false이면 숨깁
+
+  const handleSchoolSelect = (value, option) => {
+    console.log(value);
+    if (value === "school") {
+      setShowSchoolOptions(true);
+      setSelectedSchool(null);
+    } else {
+      setShowSchoolOptions(false);
+      const selectedSchool = schools.find((school) => school.schoolId === value);
+      // console.log(selectedSchool);
+      setSelectedSchool(selectedSchool?.label);
+      form.setFieldsValue({ schoolId: value });
+    }
+  };
 
   return (
     <SignUpWrapper>
@@ -135,24 +171,24 @@ const SignUp = () => {
         <label>아이디</label>
         <Form.Item
           name="uid"
-          tooltip="아이디는 영어로 시작해여 숫자와의 조합으로 작성해주세요"
+          tooltip="아이디는 영어로 시작하여 숫자와 조합으로 작성해주세요"
           rules={[{ validator: validateId }]}
           hasFeedback
-          validateStatus={isIdValid ? "success" : "error"}
+          validateStatus={isIdValid === null ? "error" : isIdValid ? "success" : "error"}
         >
           <Space.Compact style={{ width: "100%" }}>
             <SignUpInput allowClear placeholder="아이디를 입력해주세요" disabled={isIdValid} />
             <Button
-              loading={checkIdLoading}
+              loading={isCheckingId}
               onClick={onCheckUserId}
-              disabled={isIdValid}
+              disabled={isIdValid || isCheckingId}
               style={{ height: "3rem", borderColor: "#f2f2f2" }}
             >
               중복확인
             </Button>
           </Space.Compact>
         </Form.Item>
-        {isIdValid ? (
+        {isIdValid === true && (
           <p
             style={{
               color: "green",
@@ -160,10 +196,19 @@ const SignUp = () => {
               marginBottom: "0rem",
             }}
           >
-            사용가능한 아이디입니다
+            사용 가능한 아이디입니다
           </p>
-        ) : (
-          <></>
+        )}
+        {isIdValid === false && (
+          <p
+            style={{
+              color: "red",
+              marginTop: "-1.5rem",
+              marginBottom: "0rem",
+            }}
+          >
+            이미 사용 중인 아이디입니다
+          </p>
         )}
         <label>비밀번호</label>
         <Form.Item
@@ -180,7 +225,7 @@ const SignUp = () => {
         <label>비밀번호 확인</label>
         <Form.Item
           name="confirm"
-          dependencies={["userPw"]}
+          dependencies={["pwd"]}
           hasFeedback
           rules={[
             ({ getFieldValue }) => ({
@@ -234,13 +279,10 @@ const SignUp = () => {
           <Select
             onSelect={(value) => {
               if (value === 1) {
-                // alert("학생");
                 setRole(1);
               } else if (value === 2) {
-                // alert("선생님");
                 setRole(2);
               } else if (value === 3) {
-                // alert("부모님");
                 setRole(3);
               } else if (value === 4) {
                 setRole("예비 재학생");
@@ -267,32 +309,34 @@ const SignUp = () => {
             ]}
           />
         </Form.Item>
-        {role === 1 || role === 2 ? (
+        <CSSTransition
+          in={role === 1 || role === 2}
+          timeout={500}
+          classNames="loading"
+          unmountOnExit
+        >
           <>
             <label>학교</label>
             <Form.Item name="schoolId" rules={[{ validator: schoolValidate }]}>
-              <Select
+              <SchoolSelector
                 showSearch
-                type="number"
-                style={{
-                  width: 200,
-                }}
-                placeholder="Search to Select"
+                placeholder="학교를 선택해주세요"
                 optionFilterProp="children"
-                filterOption={(input, option) => (option?.label ?? "").includes(input)}
+                filterOption={(input, option) =>
+                  (option?.label ?? "").toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
                 filterSort={(optionA, optionB) =>
                   (optionA?.label ?? "")
                     .toLowerCase()
                     .localeCompare((optionB?.label ?? "").toLowerCase())
                 }
                 options={schoolsInfo}
+                onSelect={handleSchoolSelect}
+                value={selectedSchool}
               />
             </Form.Item>
           </>
-        ) : (
-          <></>
-        )}
-
+        </CSSTransition>
         <Form.Item>
           <ButtonWrapper>
             <StudentSignUpBtn type="primary" htmlType="submit">
@@ -312,4 +356,5 @@ const SignUp = () => {
     </SignUpWrapper>
   );
 };
+
 export default SignUp;
