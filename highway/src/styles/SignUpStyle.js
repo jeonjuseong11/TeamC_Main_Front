@@ -1,7 +1,25 @@
-import styled from "styled-components";
-import { Button, Form, Input } from "antd";
+import styled, { keyframes } from "styled-components";
+import { Button, Form, Input, Select } from "antd";
 //회원가입 페이지 전체를 감싸고 배경색을 담당
 //안에 것들을 화면 중앙에 배치함
+
+// 애니메이션 키프레임
+const slideDownAnimation = keyframes`
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+// 학교 선택 셀렉터 컴포넌트
+export const SchoolSelector = styled(Select)`
+  animation: ${slideDownAnimation} 0.5s ease-in-out;
+`;
+
 export const SignUpWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -34,9 +52,15 @@ export const SignUpForm = styled(Form)`
 //회원가입 폼 안에 input style
 export const SignUpInput = styled(Input)`
   height: 3rem;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: #f2f2f2;
 `;
 export const SignUpInputPassword = styled(Input.Password)`
   height: 3rem;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  border: #f2f2f2;
 `;
 export const ButtonWrapper = styled.div`
   display: flex;

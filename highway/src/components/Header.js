@@ -24,7 +24,7 @@ const Header = () => {
   const { me } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const userInfo = localStorage.getItem("USERINFO");
   const onLogOut = () => {
     info("로그아웃");
     dispatch({
@@ -67,7 +67,7 @@ const Header = () => {
               <Link to="/login" style={{ marginRight: "1rem", color: "black" }}>
                 로그인
               </Link>
-              <Link to="/signup" style={{ color: "black" }}>
+              <Link to="/terms" style={{ color: "black" }}>
                 회원가입
               </Link>
             </div>
