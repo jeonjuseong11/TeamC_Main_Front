@@ -8,6 +8,9 @@
 .selected-row {
   background-color: #f2f2f2;
 }
+.ant-table-tbody > tr > td {
+  border: none;
+}
 .ant-segmented .ant-segmented-item-selected {
   background-color: #8282ff;
   color: white;
@@ -59,12 +62,14 @@
   border: 0;
   border-radius: 0;
   box-shadow: none;
+  border-radius: 10px;
   border-bottom: 1px solid #c1c1ff;
 }
 .ant-input {
   background-color: #f2f2f2;
   border-radius: 10px;
   border: #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 .ant-input::placeholder {
   color: #c2c2c2;

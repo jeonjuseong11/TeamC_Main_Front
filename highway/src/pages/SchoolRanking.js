@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Row, Table } from "antd";
+import styled from "styled-components";
 
 import RankSchoolCard from "../components/RankSchoolCard";
 import RankSelector from "../components/RankSelector";
 import { LOAD_SCHOOL_LIST_REQUEST } from "../constants/actionTypes";
+
+const StyledTable = styled(Table)`
+  && {
+    .ant-table-tbody > tr:hover > td {
+      cursor: pointer;
+    }
+    .ant-table-tbody > tr > td {
+      border: none;
+    }
+  }
+`;
 
 const SchoolRanking = () => {
   const { schools, schoolReviews } = useSelector((state) => state.school);
@@ -79,7 +91,7 @@ const SchoolRanking = () => {
   ];
 
   const rowClassName = (record) => {
-    if (selectedSchool && selectedSchool.id === record.id) {
+    if (selectedSchool && selectedSchool.schoolId === record.schoolId) {
       return "selected-row";
     }
     return "";
@@ -107,17 +119,17 @@ const SchoolRanking = () => {
       </Row>
       <Row gutter={[24, 24]} justify="center" style={{ textAlign: "left", marginTop: "1rem" }}>
         <Col xs={24} md={10} flex="auto">
-          <Table
+          <StyledTable
             style={{ minWidth: "14rem" }}
             columns={columns}
-            dataSource={filterValue == "" ? rankData : filteredData}
+            dataSource={filterValue === "" ? rankData : filteredData}
             pagination={{
               pageSize: 10,
-              position: "bottom",
-              align: "center",
+              position: "bottomCenter",
             }}
             rowClassName={rowClassName}
-            rowKey={(record) => record.id}
+            rowKey={(record) => record.rank}
+            bordered={false}
           />
         </Col>
         <Col xs={24} md={5} flex="auto">
