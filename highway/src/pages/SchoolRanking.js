@@ -59,7 +59,9 @@ const SchoolRanking = () => {
     }
     return item.tag.some((tag) => filterValue.includes(tag));
   });
-
+  useEffect(() => {
+    setSelectedSchool(filteredData[0]);
+  }, [filteredData]);
   const columns = [
     {
       title: "랭킹",
