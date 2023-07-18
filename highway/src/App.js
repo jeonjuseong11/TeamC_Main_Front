@@ -15,7 +15,6 @@ import SchoolRanking from "./pages/SchoolRanking";
 import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
 import UserProfile from "./pages/UserProfile";
-import Terms from "./pages/Terms";
 import PromotionNews from "./components/Promotion/PromotionNews";
 import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
@@ -26,7 +25,6 @@ import SchoolBoardDetail from "./pages/Board/SchoolBoardDetail";
 import moment from "moment";
 import PromotionHome from "./components/Promotion/PromotionHome";
 import PromotionVideoDetail from "./components/Promotion/PromotionVideoDetail";
-import UserInfo from "./components/Profile/UserInfo";
 import ProfileRecentRecord from "./components/Profile/ProfileRecentRecord";
 import BoardMain from "./pages/Board/BoardMain";
 import BoardPostForm from "./components/Board/BoardPostForm";
@@ -95,11 +93,8 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/search" element={<Search />} />
-            <Route exact path="/terms" element={<Terms />} />
             <Route exact path="/signup" element={<SignUp />} />
-
             <Route element={<UserProfile />}>
-              <Route exact path="/profile/recentrecord" element={<UserInfo />} />
               <Route exact path="/profile/" element={<ProfileRecentRecord />} />
             </Route>
             <Route element={<SchoolBoard />}>

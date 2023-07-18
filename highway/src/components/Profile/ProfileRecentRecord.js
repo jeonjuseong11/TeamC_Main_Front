@@ -63,7 +63,7 @@ const ProfileRecentRecord = () => {
             minHeight: "25rem",
           }}
         >
-          <h3>찜한 학교들</h3>
+          <h3 style={{ margin: "0" }}>찜한 학교들</h3>
           찜한 학교는 최대 10개까지 볼 수 있습니다.
           <div>
             <SchoolList schools={followList} />

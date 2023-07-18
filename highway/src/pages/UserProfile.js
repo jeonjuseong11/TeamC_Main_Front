@@ -43,7 +43,15 @@ const UserProfile = () => {
               {renderUserRole()}
             </h2>
             <h4 style={{ paddingTop: "1rem" }}>{me?.schoolName}</h4>
-            <table style={{ marginTop: "1rem", width: "90%", height: "10rem", margin: "0 auto" }}>
+            <table
+              style={{
+                marginTop: "1rem",
+                width: "90%",
+                height: "10rem",
+                margin: "0 auto",
+                textAlign: "left",
+              }}
+            >
               <tbody>
                 <tr>
                   <th>아이디</th>
@@ -64,6 +72,12 @@ const UserProfile = () => {
               </tbody>
             </table>
           </div>
+          {/* <Menu.Item key="/profile">
+              <NavLink to="/profile">회원 정보</NavLink>
+            </Menu.Item>
+            <Menu.Item key="/profile/recentrecord">
+              <NavLink to="/profile/recentrecord">나의 관심</NavLink>
+            </Menu.Item> */}
         </Col>
         <Outlet />
       </Row>
