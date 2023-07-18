@@ -53,8 +53,13 @@ const SchoolDetailInfo = ({ rateAverages, roundedTotalRate, reviewCount }) => {
         </Col>
         <Col xs={22} md={9} style={{ minWidth: "30rem" }}>
           <QuestionWrapper style={{ padding: "2rem", textAlign: "left" }}>
-            <h3 style={{ margin: "0" }}>학과소개</h3>
-            <Tabs activeKey={activeTab} onChange={onChange} items={departsList} />
+            <h3 style={{ margin: "0", marginBottom: "0.5rem" }}>학과소개</h3>
+            <Tabs
+              activeKey={activeTab}
+              onChange={onChange}
+              tabBarStyle={{ marginBottom: "1.5rem" }}
+              items={departsList}
+            />
           </QuestionWrapper>
         </Col>
       </Row>

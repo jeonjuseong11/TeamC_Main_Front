@@ -8,11 +8,13 @@ export const SubPageWrapper = styled.div`
 export const StarRateWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 13rem;
+  height: 11rem;
   margin-bottom: 1rem;
   padding: 2rem;
   text-align: left;
   display: flex;
+  min-width: 30rem;
+  justify-content: space-between;
 `;
 export const OneLineReviewWrapper = styled.div`
   background-color: white;
@@ -55,7 +57,7 @@ export const SchoolLogo = styled.div`
 export const QuestionWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
-  height: 18rem;
+  height: 17rem;
 `;
 export const FrequentAsked = styled.div`
   background: white;

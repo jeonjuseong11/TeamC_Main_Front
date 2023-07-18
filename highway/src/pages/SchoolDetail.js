@@ -198,7 +198,7 @@ const SchoolDetail = () => {
             </SchoolLogo>
           )}
         </SchoolImg>
-        <Row gutter={[24, 24]} justify="center">
+        <Row gutter={[16, 16]} justify="center">
           <Col xs={22} md={15}>
             <SchoolInfo>
               {isFollowed ? (

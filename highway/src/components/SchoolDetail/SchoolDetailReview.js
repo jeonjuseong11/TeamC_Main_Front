@@ -9,13 +9,18 @@ const SchoolDetailReview = ({ reviewCount, rateAverages, roundedTotalRate }) => 
     <Row gutter={[16, 16]} justify="center">
       <Col xs={22} md={10} style={{ minWidth: "30rem" }}>
         <StarRateWrapper>
-          <div style={{ width: "60%" }}>
-            <p>전체 리뷰 통계 ({reviewCount})</p>
+          <div>
+            <p style={{ margin: "0" }}>전체 리뷰 통계 ({reviewCount})</p>
             {reviewCount === 0 ? (
               <p style={{ fontSize: "1rem" }}>리뷰가 없습니다.</p>
             ) : (
               <>
-                <h1 style={{ fontSize: "3rem", fontWeight: "500" }}>
+                <h1
+                  style={{
+                    fontSize: "3rem",
+                    fontWeight: "500",
+                  }}
+                >
                   {roundedTotalRate.toFixed(1)}
                 </h1>
                 <Rate
@@ -31,62 +36,35 @@ const SchoolDetailReview = ({ reviewCount, rateAverages, roundedTotalRate }) => 
           </div>
           <div
             style={{
-              display: "inline-block",
-              paddingTop: "1rem",
+              height: "100%",
               paddingLeft: "3rem",
-              lineHeight: "1.1rem",
+              display: "flex",
+              flexDirection: "column",
+              width: "15rem",
+
+              gap: "5px",
             }}
           >
-            <p style={{ margin: "0" }}>교통</p>
-            <Rate
-              disabled
-              allowHalf
-              value={rateAverages.traffic}
-              style={{
-                alignItems: "center",
-                fontSize: "1rem",
-              }}
-            />
-            <p style={{ margin: "0" }}>시설만족도</p>
-            <Rate
-              disabled
-              allowHalf
-              value={rateAverages.facility}
-              style={{
-                alignItems: "center",
-                fontSize: "1rem",
-              }}
-            />
-            <p style={{ margin: "0" }}>급식</p>
-            <Rate
-              disabled
-              allowHalf
-              value={rateAverages.cafeteria}
-              style={{
-                alignItems: "center",
-                fontSize: "1rem",
-              }}
-            />
-            <p style={{ margin: "0" }}>수업만족도</p>
-            <Rate
-              disabled
-              allowHalf
-              value={rateAverages.education}
-              style={{
-                alignItems: "center",
-                fontSize: "1rem",
-              }}
-            />
-            <p style={{ margin: "0" }}>취업</p>
-            <Rate
-              disabled
-              allowHalf
-              value={rateAverages.employment}
-              style={{
-                alignItems: "center",
-                fontSize: "1rem",
-              }}
-            />
+            <div style={{ display: "flex", justifyContent: "space-between", height: "2rem" }}>
+              <h4 style={{ margin: "0", lineHeight: "2rem", fontWeight: "500" }}>교통</h4>
+              <Rate disabled allowHalf value={rateAverages.traffic} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", height: "2rem" }}>
+              <h4 style={{ margin: "0", lineHeight: "2rem", fontWeight: "500" }}>시설만족도</h4>
+              <Rate disabled allowHalf value={rateAverages.facility} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", height: "2rem" }}>
+              <h4 style={{ margin: "0", lineHeight: "2rem", fontWeight: "500" }}>급식</h4>
+              <Rate disabled allowHalf value={rateAverages.cafeteria} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", height: "2rem" }}>
+              <h4 style={{ margin: "0", lineHeight: "2rem", fontWeight: "500" }}>수업만족도</h4>
+              <Rate disabled allowHalf value={rateAverages.education} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", height: "2rem" }}>
+              <h4 style={{ margin: "0", lineHeight: "2rem", fontWeight: "500" }}>취업</h4>
+              <Rate disabled allowHalf value={rateAverages.employment} />
+            </div>
           </div>
         </StarRateWrapper>
         <ReviewDetail />
