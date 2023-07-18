@@ -16,7 +16,7 @@ const TopMenu = () => {
     <div>
       <Header />
       <MenuWrapper>
-        <Row justify="center" gutter={[24, 24]}>
+        <Row justify="center" gutter={[16, 16]}>
           <Col xs={24} md={15}>
             <Menu mode="horizontal" items={MenuLists} selectedKeys={[selectedKey]} />
           </Col>

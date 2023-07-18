@@ -1,23 +1,29 @@
 .slick-slide {
   height: 25rem;
-}
-.slick-slider .slick-slide {
+  width: 100%;
   margin-top: 4rem;
-  border-radius: 5px;
 }
+
 .slick-slide div {
   transition: all ease-in-out 0.3s;
   background-color: lightgray;
   height: 20rem;
 }
 
-.slick-active div {
-  border-radius: 5px;
-}
 .slick-slide.slick-active.slick-center.slick-current div {
   background-color: gray;
-  width: 50vw;
-  margin-left: -5vw;
-
   transform: scale(1.1);
+  width: 46.5vw;
+  position: relative;
+  border-radius: 5px;
+
+  left: -2vw;
+}
+.slick-slide.active {
+  transform: scale(1.1);
+  background-color: gray;
+}
+
+.slick-slide.active {
+  width: 51vw;
 }

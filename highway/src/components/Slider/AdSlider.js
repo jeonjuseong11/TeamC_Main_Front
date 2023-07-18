@@ -25,16 +25,31 @@ function AdSlider() {
         },
       },
     ],
+    beforeChange: (current, next) => {
+      const slides = document.querySelectorAll(".slick-slide");
+      slides.forEach((slide) => slide.classList.remove("active"));
+      slides[next].classList.add("active");
+    },
   };
 
   return (
     <div>
       <Slider {...settings}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div className="slide-item">
+          <div className="content">Slide 1</div>
+        </div>
+        <div className="slide-item">
+          <div className="content">Slide 2</div>
+        </div>
+        <div className="slide-item">
+          <div className="content">Slide 3</div>
+        </div>
+        <div className="slide-item">
+          <div className="content">Slide 4</div>
+        </div>
+        <div className="slide-item">
+          <div className="content">Slide 5</div>
+        </div>
       </Slider>
     </div>
   );
