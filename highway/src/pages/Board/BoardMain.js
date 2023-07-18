@@ -143,7 +143,8 @@ const BoardMain = () => {
           <div
             style={{
               borderTop: "1px solid #f2f2f2",
-              padding: "1rem",
+              paddingTop: "1rem",
+              paddingBottom: "1rem",
             }}
           >
             <Link to={`/schoolboard/${item.category}/${item.id}`}>

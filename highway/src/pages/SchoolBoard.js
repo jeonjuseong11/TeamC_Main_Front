@@ -11,10 +11,7 @@ const SchoolBoard = () => {
   const [title, setTItle] = useState("커뮤니티");
   const { me } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const tag = [
-    { id: 1, departs: "IT" },
-    { id: 2, departs: "디자인" },
-  ];
+
   useEffect(() => {
     if (category == "0") {
       setTItle("자유게시판");
@@ -65,7 +62,7 @@ const SchoolBoard = () => {
   return (
     <div>
       <Row gutter={[16, 16]} justify="center" style={{ paddingTop: "1rem" }}>
-        <Col xs={23} md={15}>
+        <Col xs={24} md={15}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <h1 style={{ margin: "0", marginLeft: "1rem" }}>{title}</h1>
             {/* <Link to="/schoolboard/post"> */}
