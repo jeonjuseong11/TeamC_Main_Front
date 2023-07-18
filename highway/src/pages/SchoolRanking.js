@@ -67,6 +67,19 @@ const SchoolRanking = () => {
       title: "랭킹",
       dataIndex: "rank",
       key: "rank",
+      render: (text, record) => (
+        <a
+          style={{
+            marginLeft: ".5rem",
+            textAlign: "center",
+            textDecoration: "none",
+            color: "black",
+          }}
+          onClick={() => handleSchoolSelect(record)}
+        >
+          {text}
+        </a>
+      ),
     },
     {
       title: "학교 명",
@@ -75,6 +88,7 @@ const SchoolRanking = () => {
       render: (text, record) => (
         <a
           style={{
+            textAlign: "center",
             textDecoration: "none",
             color: "black",
           }}
@@ -88,7 +102,19 @@ const SchoolRanking = () => {
       title: "사용자 수",
       dataIndex: "studentCount",
       key: "studentCount",
-      render: (studentCount) => studentCount,
+      render: (text, record) => (
+        <a
+          style={{
+            marginLeft: "1.3rem",
+            textAlign: "center",
+            textDecoration: "none",
+            color: "black",
+          }}
+          onClick={() => handleSchoolSelect(record)}
+        >
+          {text}
+        </a>
+      ),
     },
   ];
 
@@ -101,7 +127,7 @@ const SchoolRanking = () => {
 
   return (
     <>
-      <Row gutter={[24, 24]} justify="center">
+      <Row gutter={[16, 16]} justify="center">
         <Col xs={24} md={15}>
           <div
             style={{
@@ -119,7 +145,7 @@ const SchoolRanking = () => {
           <RankSelector setFilterValue={handleFilterValueChange} />
         </Col>
       </Row>
-      <Row gutter={[24, 24]} justify="center" style={{ textAlign: "left", marginTop: "1rem" }}>
+      <Row gutter={[16, 16]} justify="center" style={{ textAlign: "left", marginTop: "1rem" }}>
         <Col xs={24} md={10} flex="auto">
           <StyledTable
             style={{ minWidth: "14rem" }}
@@ -127,7 +153,6 @@ const SchoolRanking = () => {
             dataSource={filterValue === "" ? rankData : filteredData}
             pagination={{
               pageSize: 10,
-              position: "bottomCenter",
             }}
             rowClassName={rowClassName}
             rowKey={(record) => record.rank}
